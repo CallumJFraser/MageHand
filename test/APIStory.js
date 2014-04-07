@@ -5,11 +5,6 @@ var assert = require('assert');
 var dndAPI = require('../DnDAPI.js');
 var validUsername = 'Test1';
 var validPassword = 'password';
-var authObject = {
-	AID: 1,
-	SessionID: '',
-	Username: validUsername
-};
 
 describe('GetStory -', function(){
 	beforeEach(function(done){
@@ -21,8 +16,7 @@ describe('GetStory -', function(){
 	describe('Valid call:', function(){
 		it('Should return Success:true', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				authObject.SessionID = loginResponse.SessionID;
-				dndAPI.GetStory(authObject, 1, function(result){
+				dndAPI.GetStory(loginResponse.AID, loginResponse.SessionID, 1, function(result){
 					assert.equal(result.Auth.Success, true);
 					done();
 				});
@@ -30,7 +24,6 @@ describe('GetStory -', function(){
 		})
 		it('Should return a Result', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				authObject.SessionID = loginResponse.SessionID;
 				dndAPI.GetStory(authObject, 1, function(result){
 					assert.notEqual(result.Result, undefined);
 					done();
@@ -39,8 +32,7 @@ describe('GetStory -', function(){
 		})
 		it('Should return Result.ID: 1', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				authObject.SessionID = loginResponse.SessionID;
-				dndAPI.GetStory(authObject, 1, function(result){
+				dndAPI.GetStory(loginResponse.AID, loginResponse.SessionID, 1, function(result){
 					assert.equal(result.Result.ID, 1);
 					assert.equal(result.Result.Title, 'Three little pigs');
 					assert.equal(result.Result.Description, 'blown by wolf');
@@ -54,8 +46,7 @@ describe('GetStory -', function(){
 	describe('Invalid call (missing param: "RaceID"):', function(){
 		it('Should return a Result', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				authObject.SessionID = loginResponse.SessionID;
-				dndAPI.GetStory(authObject, undefined, function(result){
+				dndAPI.GetStory(loginResponse.AID, loginResponse.SessionID, undefined, function(result){
 					assert.notEqual(result.Result, undefined);
 					done();
 				});
@@ -63,8 +54,7 @@ describe('GetStory -', function(){
 		})
 		it('Should return Success:false', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				authObject.SessionID = loginResponse.SessionID;
-				dndAPI.GetStory(authObject, undefined, function(result){
+				dndAPI.GetStory(loginResponse.AID, loginResponse.SessionID, undefined, function(result){
 					assert.equal(result.Result.Success, false);
 					done();
 				});
@@ -72,8 +62,7 @@ describe('GetStory -', function(){
 		})
 		it('Should return a result with error information', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				authObject.SessionID = loginResponse.SessionID;
-				dndAPI.GetStory(authObject, undefined, function(result){
+				dndAPI.GetStory(loginResponse.AID, loginResponse.SessionID, undefined, function(result){
 					assert.equal(result.Result.Success, false);
 					assert.notEqual(result.Result.Reason, undefined);
 					done();
@@ -97,8 +86,7 @@ describe('ListStory -', function(){
 	describe('Valid search by full Title:', function(){
 		it('Should return Success:true', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				authObject.SessionID = loginResponse.SessionID;
-				dndAPI.ListStory(authObject, validSearchFullTitle, function(result){
+				dndAPI.ListStory(loginResponse.AID, loginResponse.SessionID, validSearchFullTitle, function(result){
 					assert.equal(result.Auth.Success, true);
 					done();
 				});
@@ -106,8 +94,7 @@ describe('ListStory -', function(){
 		})
 		it('Should return a Result', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				authObject.SessionID = loginResponse.SessionID;
-				dndAPI.ListStory(authObject, validSearchFullTitle, function(result){
+				dndAPI.ListStory(loginResponse.AID, loginResponse.SessionID, validSearchFullTitle, function(result){
 					assert.notEqual(result.Result, undefined);
 					done();
 				});
@@ -115,8 +102,7 @@ describe('ListStory -', function(){
 		})
 		it('Should return Result.ID: 1', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				authObject.SessionID = loginResponse.SessionID;
-				dndAPI.ListStory(authObject, validSearchFullTitle, function(result){
+				dndAPI.ListStory(loginResponse.AID, loginResponse.SessionID, validSearchFullTitle, function(result){
 					assert.equal(result.Result.ID, 1);
 					assert.equal(result.Result.Title, 'Three little pigs');
 					assert.equal(result.Result.Description, 'blown by wolf');
@@ -130,8 +116,7 @@ describe('ListStory -', function(){
 	describe('Valid search by partial Title:', function(){
 		it('Should return Success:true', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				authObject.SessionID = loginResponse.SessionID;
-				dndAPI.ListStory(authObject, validSearchPartialTitle, function(result){
+				dndAPI.ListStory(loginResponse.AID, loginResponse.SessionID, validSearchPartialTitle, function(result){
 					assert.equal(result.Auth.Success, true);
 					done();
 				});
@@ -139,8 +124,7 @@ describe('ListStory -', function(){
 		})
 		it('Should return a Result', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				authObject.SessionID = loginResponse.SessionID;
-				dndAPI.ListStory(authObject, validSearchPartialTitle, function(result){
+				dndAPI.ListStory(loginResponse.AID, loginResponse.SessionID, validSearchPartialTitle, function(result){
 					assert.notEqual(result.Result, undefined);
 					done();
 				});
@@ -148,8 +132,7 @@ describe('ListStory -', function(){
 		})
 		it('Should return Result.ID: 1', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				authObject.SessionID = loginResponse.SessionID;
-				dndAPI.ListStory(authObject, validSearchPartialTitle, function(result){
+				dndAPI.ListStory(loginResponse.AID, loginResponse.SessionID, validSearchPartialTitle, function(result){
 					assert.equal(result.Result.ID, 1);
 					assert.equal(result.Result.Title, 'Three little pigs');
 					assert.equal(result.Result.Description, 'blown by wolf');
@@ -163,8 +146,7 @@ describe('ListStory -', function(){
 	describe('Valid search by Description:', function(){
 		it('Should return Success:true', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				authObject.SessionID = loginResponse.SessionID;
-				dndAPI.ListStory(authObject, validSearchDescription, function(result){
+				dndAPI.ListStory(loginResponse.AID, loginResponse.SessionID, validSearchDescription, function(result){
 					assert.equal(result.Auth.Success, true);
 					done();
 				});
@@ -172,8 +154,7 @@ describe('ListStory -', function(){
 		})
 		it('Should return a Result', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				authObject.SessionID = loginResponse.SessionID;
-				dndAPI.ListStory(authObject, validSearchDescription, function(result){
+				dndAPI.ListStory(loginResponse.AID, loginResponse.SessionID, validSearchDescription, function(result){
 					assert.notEqual(result.Result, undefined);
 					done();
 				});
@@ -181,8 +162,7 @@ describe('ListStory -', function(){
 		})
 		it('Should return Result.ID: 1', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				authObject.SessionID = loginResponse.SessionID;
-				dndAPI.ListStory(authObject, validSearchDescription, function(result){
+				dndAPI.ListStory(loginResponse.AID, loginResponse.SessionID, validSearchDescription, function(result){
 					assert.equal(result.Result.ID, 1);
 					assert.equal(result.Result.Title, 'Three little pigs');
 					assert.equal(result.Result.Description, 'blown by wolf');
@@ -196,8 +176,7 @@ describe('ListStory -', function(){
 	describe('Valid call (missing param: "Search"):', function(){
 		it('Should return a Result', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				authObject.SessionID = loginResponse.SessionID;
-				dndAPI.ListStory(authObject, undefined, function(result){
+				dndAPI.ListStory(loginResponse.AID, loginResponse.SessionID, undefined, function(result){
 					assert.notEqual(result.Result, undefined);
 					done();
 				});
@@ -205,8 +184,7 @@ describe('ListStory -', function(){
 		})
 		it('Should return a result of more than 1:', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				authObject.SessionID = loginResponse.SessionID;
-				dndAPI.ListStory(authObject, undefined, function(result){
+				dndAPI.ListStory(loginResponse.AID, loginResponse.SessionID, undefined, function(result){
 					assert.notEqual(result.Result.length, 0);
 					assert.notEqual(result.Result.length, 1);
 					done();

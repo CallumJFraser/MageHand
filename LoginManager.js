@@ -44,12 +44,12 @@ function login(username, password, callback){
 	}
 }
 
-function authorise(aID, sessionID, username, callback){
-	if(aID == undefined || sessionID == undefined || username == undefined){
+function authorise(aID, sessionID, callback){
+	if(aID == undefined || sessionID == undefined){
 		callback(new Failed('Missing authentication parameters'));
 	}
 	else{
-		var query = "SELECT * FROM Account WHERE AID='" + aID + "' AND Username='" + username + "'";
+		var query = "SELECT * FROM Account WHERE AID='" + aID + "'";
 		databaseObject.Query(query, function(rows){
 			if(rows.length > 0 ){
 				var login = new Login(rows[0]);

@@ -159,8 +159,7 @@ describe('Authorise -', function(){
 	describe('Valid call:', function(){
 		it('Should return Success:true', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				var authObject = { AID: loginResponse.AID, SessionID: loginResponse.SessionID, Username: loginResponse.Username };
-				dndAPI.Authorise(authObject, function(result){
+				dndAPI.Authorise(loginResponse.AID, loginResponse.SessionID, function(result){
 					assert.equal(result.Success, true);
 					done();
 				});
@@ -168,8 +167,7 @@ describe('Authorise -', function(){
 		})
 		it('Should return a SessionID', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				var authObject = { AID: loginResponse.AID, SessionID: loginResponse.SessionID, Username: loginResponse.Username };
-				dndAPI.Authorise(authObject, function(result){
+				dndAPI.Authorise(loginResponse.AID, loginResponse.SessionID, function(result){
 					assert.equal(result.SessionID, loginResponse.SessionID);
 					done();
 				});
@@ -180,8 +178,7 @@ describe('Authorise -', function(){
 	describe('Invalid call (missing param: "AID"):', function(){
 		it('Should return Success:false', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				var authObject = { AID: 'FAIL', SessionID: loginResponse.SessionID, Username: loginResponse.Username };
-				dndAPI.Authorise(authObject, function(result){
+				dndAPI.Authorise('FAIL', loginResponse.SessionID, function(result){
 					assert.equal(result.Success, false);
 					done();
 				});
@@ -189,8 +186,7 @@ describe('Authorise -', function(){
 		})
 		it('Should not return a SessionID', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				var authObject = { AID: 'FAIL', SessionID: loginResponse.SessionID, Username: loginResponse.Username };
-				dndAPI.Authorise(authObject, function(result){
+				dndAPI.Authorise('FAIL', loginResponse.SessionID, function(result){
 					assert.notEqual(result.SessionID, loginResponse.SessionID);
 					done();
 				});
@@ -201,8 +197,7 @@ describe('Authorise -', function(){
 	describe('Invalid call (missing param: "SessionID"):', function(){
 		it('Should return Login:false', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				var authObject = { AID: loginResponse.AID, SessionID: 'FAIL', Username: loginResponse.Username };
-				dndAPI.Authorise(authObject, function(result){
+				dndAPI.Authorise(loginResponse.AID, 'FAIL', function(result){
 					assert.equal(result.Success, false);
 					done();
 				});
@@ -211,29 +206,7 @@ describe('Authorise -', function(){
 			//	20
 		it('Should not return a SessionID', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				var authObject = { AID: loginResponse.AID, SessionID: 'FAIL', Username: loginResponse.Username };
-				dndAPI.Authorise(authObject, function(result){
-					assert.notEqual(result.SessionID, loginResponse.SessionID);
-					done();
-				});
-			});
-		})
-	})
-
-	describe('Invalid call (missing param: "Username"):', function(){
-		it('Should return Success:false', function(done){
-			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				var authObject = { AID: loginResponse.AID, SessionID: loginResponse.SessionID, Username: 'FAIL' };
-				dndAPI.Authorise(authObject, function(result){
-					assert.equal(result.Success, false);
-					done();
-				});
-			});
-		})
-		it('Should not return a SessionID', function(done){
-			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				var authObject = { AID: loginResponse.AID, SessionID: loginResponse.SessionID, Username: 'FAIL' };
-				dndAPI.Authorise(authObject, function(result){
+				dndAPI.Authorise(loginResponse.AID, 'FAIL', function(result){
 					assert.notEqual(result.SessionID, loginResponse.SessionID);
 					done();
 				});

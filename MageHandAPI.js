@@ -4,28 +4,20 @@ var app = express();
 var database = require('./Database.js');
 var dndAPI = require('./DnDAPI.js');
 
-app.get('/login', function(req, res){
-	GetData(req, res, function(data, response){
-		Login(data, response);
-	});
+app.get('/login/:Username/:Password', function(req, res){
+	Login(req, res);
 });
-app.get('/account/:AID', function(req, res){
-	GetData(req, res, function(data, response){
-		GetAccount(data, response);
-	});
+app.get('/account/:AID/:SessionID/:Username', function(req, res){
+	GetAccount(req, res);
 });
-app.get('/character/:CharacterID', function(req, res){
+app.get('/character/:AID/:SessionID/:CharacterID', function(req, res){
 	GetCharacter(req, res);
 });
-app.get('/account/character', function(req, res){
-	GetData(req, res, function(data, response){
-		GetAccountCharacters(data, response);
-	});
+app.get('/account/character/:AID/:SessionID/:AccountAID', function(req, res){
+	GetAccountCharacters(req, res);
 });
-app.get('/get/session', function(req, res){
-	GetData(req, res, function(data, response){
-		GetSession(data, response);
-	});
+app.get('/session/:AID/:SessionID/:SessionID', function(req, res){
+	GetSession(req, res);
 });
 
 var server = app.listen(1234, function() {
@@ -36,14 +28,17 @@ dndAPI.Start(function(){
 	console.log('Starting...');
 });
 
+/***************    .    ****************/
+/*
+	This will be removed soon, as I plan to move over to the Sodium library shortly:
+	http://bitwiseshiftleft.github.io/sjcl/
+	
 //	Acceptable hash algorithms in order of 'best' to 'worst'.
 var acceptableHashes = ['sha512WithRSAEncryption', 'sha512', 'sha384WithRSAEncryption', 'sha384', 'sha256WithRSAEncryption', 'sha256'];
 var availableHashes = crypto.getHashes();
 var selectedHash = GetBestHash(acceptableHashes, availableHashes);
 //console.log('Selected hash: "' + selectedHash + '"');
 
-/***************    .    ****************/
-/*
 function GetData(request, response, callback){
 	var data = '';
 	request.on('data', function(chunk){
@@ -60,7 +55,7 @@ function GetData(request, response, callback){
 	//	Expect Username, Password. Return AID + sessionID
 	function Login(request, response){
 		if(request.params != undefined){
-			dndAPI.Login(request.params.username, request.params.password, function(loginResponse){
+			dndAPI.Login(request.params.Username, request.params.Password, function(loginResponse){
 				if(loginResponse.Error){
 					EndResponse(response, 500, loginResponse);
 				}
@@ -71,8 +66,8 @@ function GetData(request, response, callback){
 		}
 	}
 
-	function GetAccount(object, response){
-		dndAPI.GetAccount(object, function(accountResponse){
+	function GetAccount(request, response){
+		dndAPI.GetAccount(request.params.AID, request.params.SessionID, request.params.Username, function(accountResponse){
 			if(accountResponse.Error){
 				EndResponse(response, 500, accountResponse);
 			}
@@ -82,8 +77,8 @@ function GetData(request, response, callback){
 		});
 	}
 
-	function GetCharacter(object, response){
-		dndAPI.getCharacter(object, function(characterResponse){
+	function GetCharacter(request, response){
+		dndAPI.getCharacter(request.params.AID, request.params.SessionID, request.params.CharacterID, function(characterResponse){
 			if(characterResponse.Error){
 				EndResponse(response, 500, characterResponse);
 			}
@@ -93,8 +88,8 @@ function GetData(request, response, callback){
 		});
 	}
 
-	function GetAccountCharacters(object, response){
-		dndAPI.getAccountCharacters(object, function(characterListResponse){
+	function GetAccountCharacters(request, response){
+		dndAPI.getAccountCharacters(request.params.AID, request.params.SessionID, request.params.AccountAID, function(characterListResponse){
 			if(characterListResponse.Error){
 				EndResponse(response, 500, characterListResponse);
 			}
@@ -104,19 +99,8 @@ function GetData(request, response, callback){
 		});
 	}
 
-	function GetSession(object, response){
-		dndAPI.getSession(object, function(sessionCharacterListResponse){
-			if(sessionCharacterListResponse.Error){
-				EndResponse(response, 500, sessionCharacterListResponse);
-			}
-			else{
-				EndResponse(response, 200, sessionCharacterListResponse);
-			}
-		});
-	}
-	
-	function GetAdminAccount(object, response){
-		dndAPI.getAdminAccount(object, function(sessionCharacterListResponse){
+	function GetSession(request, response){
+		dndAPI.getSession(request.params.AID, request.params.SessionID, request.params.SessionID, function(sessionCharacterListResponse){
 			if(sessionCharacterListResponse.Error){
 				EndResponse(response, 500, sessionCharacterListResponse);
 			}
@@ -126,26 +110,20 @@ function GetData(request, response, callback){
 		});
 	}
 
+/*
+	function GetAdminAccount(request, response){
+		dndAPI.getAdminAccount(request.params.AID, request.params.SessionID, request.params., function(sessionCharacterListResponse){
+			if(sessionCharacterListResponse.Error){
+				EndResponse(response, 500, sessionCharacterListResponse);
+			}
+			else{
+				EndResponse(response, 200, sessionCharacterListResponse);
+			}
+		});
+	}
+*/
 //	Utility Functions
 
-function EndResponse(response, code, endObject){ 
-	response.writeHead(code, {
-		'Content-Type': 'text/javascript',
-		'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
-		'Access-Control-Allow-Origin': 'http://localhost:3000'
-	});
+function EndResponse(response, code, endObject){
 	response.send(JSON.stringify(endObject));
 }
-
-function GetBestHash(accHashes, avaHashes){
-	for(var i = 0; i < accHashes.length; i++){
-		//	For each acceptable hash:
-		for (var j = 0; j < avaHashes.length; j++){
-			//	For each available
-			if(accHashes[i] == avaHashes[j]){
-				return avaHashes[j];
-			}
-		}
-	}
-	return '';
-};

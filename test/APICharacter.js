@@ -5,11 +5,6 @@ var assert = require('assert');
 var dndAPI = require('../DnDAPI.js');
 var validUsername = 'Test1';
 var validPassword = 'password';
-var authObject = {
-	AID: 1,
-	SessionID: '',
-	Username: validUsername
-};
 	
 describe('GetCharacter:', function(){
 	beforeEach(function(done){
@@ -21,8 +16,7 @@ describe('GetCharacter:', function(){
 	describe('Valid call:', function(){
 		it('Should return a Result', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				authObject.SessionID = loginResponse.SessionID;
-				dndAPI.GetCharacter(authObject, 1, function(result){
+				dndAPI.GetCharacter(loginResponse.AID, loginResponse.SessionID, 1, function(result){
 					assert.notEqual(result.Result, undefined);
 					done();
 				});
@@ -30,8 +24,7 @@ describe('GetCharacter:', function(){
 		})
 		it('Should not return Success:false', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				authObject.SessionID = loginResponse.SessionID;
-				dndAPI.GetCharacter(authObject, 1, function(result){
+				dndAPI.GetCharacter(loginResponse.AID, loginResponse.SessionID, 1, function(result){
 					assert.notEqual(result.Result.Success, false);
 					done();
 				});
@@ -39,8 +32,7 @@ describe('GetCharacter:', function(){
 		})
 		it('Should return a valid Result', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				authObject.SessionID = loginResponse.SessionID;
-				dndAPI.GetCharacter(authObject, 1, function(result){
+				dndAPI.GetCharacter(loginResponse.AID, loginResponse.SessionID, 1, function(result){
 					var resultObject = result.Result;
 					assert.equal(result.Result.ID, 1);
 					assert.equal(resultObject.Name, 'Test');
@@ -74,8 +66,7 @@ describe('GetCharacter:', function(){
 	describe('Invalid call (missing param: "CharacterID"):', function(){
 		it('Should return a Result', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				authObject.SessionID = loginResponse.SessionID;
-				dndAPI.GetCharacter(authObject, undefined, function(result){
+				dndAPI.GetCharacter(loginResponse.AID, loginResponse.SessionID, undefined, function(result){
 					assert.notEqual(result.Result, undefined);
 					done();
 				});
@@ -83,8 +74,7 @@ describe('GetCharacter:', function(){
 		})
 		it('Should return Success:false', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				authObject.SessionID = loginResponse.SessionID;
-				dndAPI.GetCharacter(authObject, undefined, function(result){
+				dndAPI.GetCharacter(loginResponse.AID, loginResponse.SessionID, undefined, function(result){
 					assert.equal(result.Result.Success, false);
 					done();
 				});
@@ -92,8 +82,7 @@ describe('GetCharacter:', function(){
 		})
 		it('Should return a valid Result', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				authObject.SessionID = loginResponse.SessionID;
-				dndAPI.GetCharacter(authObject, undefined, function(result){
+				dndAPI.GetCharacter(loginResponse.AID, loginResponse.SessionID, undefined, function(result){
 					assert.equal(result.Result.Success, false);
 					assert.notEqual(result.Result.Reason, undefined);
 					done();
@@ -113,8 +102,7 @@ describe('GetAccountCharacters:', function(){
 	describe('Valid call:', function(){
 		it('Should return a Result', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				authObject.SessionID = loginResponse.SessionID;
-				dndAPI.GetAccountCharacters(authObject, 1, function(result){
+				dndAPI.GetAccountCharacters(loginResponse.AID, loginResponse.SessionID, 1, function(result){
 					assert.notEqual(result.Result, undefined);
 					done();
 				});
@@ -122,8 +110,7 @@ describe('GetAccountCharacters:', function(){
 		})
 		it('Should return a Result array', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				authObject.SessionID = loginResponse.SessionID;
-				dndAPI.GetAccountCharacters(authObject, 1, function(result){
+				dndAPI.GetAccountCharacters(loginResponse.AID, loginResponse.SessionID, 1, function(result){
 					assert.equal(result.Result.length, 2);
 					done();
 				});
@@ -131,8 +118,7 @@ describe('GetAccountCharacters:', function(){
 		})
 		it('Should return Success:true in results', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				authObject.SessionID = loginResponse.SessionID;
-				dndAPI.GetAccountCharacters(authObject, 1, function(result){
+				dndAPI.GetAccountCharacters(loginResponse.AID, loginResponse.SessionID, 1, function(result){
 					assert.equal(result.Result[0].Success, true);
 					done();
 				});
@@ -140,8 +126,7 @@ describe('GetAccountCharacters:', function(){
 		})
 		it('Should return a valid Result', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				authObject.SessionID = loginResponse.SessionID;
-				dndAPI.GetAccountCharacters(authObject, 1, function(result){
+				dndAPI.GetAccountCharacters(loginResponse.AID, loginResponse.SessionID, 1, function(result){
 					var resultObject = result.Result[0];
 					assert.equal(resultObject.ID, 1);
 					assert.equal(resultObject.Name, 'Test');
@@ -175,8 +160,7 @@ describe('GetAccountCharacters:', function(){
 	describe('Invalid call (missing param: "AccountAID"):', function(){
 		it('Should return Success:false', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				authObject.SessionID = loginResponse.SessionID;
-				dndAPI.GetAccountCharacters(authObject, undefined, function(result){
+				dndAPI.GetAccountCharacters(loginResponse.AID, loginResponse.SessionID, undefined, function(result){
 					assert.equal(result.Result.Success, false);
 					done();
 				});
@@ -185,8 +169,7 @@ describe('GetAccountCharacters:', function(){
 			//	40
 		it('Should return a Result', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				authObject.SessionID = loginResponse.SessionID;
-				dndAPI.GetAccountCharacters(authObject, undefined, function(result){
+				dndAPI.GetAccountCharacters(loginResponse.AID, loginResponse.SessionID, undefined, function(result){
 					assert.notEqual(result.Result, undefined);
 					done();
 				});
@@ -194,8 +177,7 @@ describe('GetAccountCharacters:', function(){
 		})
 		it('Should return a valid Result', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				authObject.SessionID = loginResponse.SessionID;
-				dndAPI.GetAccountCharacters(authObject, undefined, function(result){
+				dndAPI.GetAccountCharacters(loginResponse.AID, loginResponse.SessionID, undefined, function(result){
 					assert.equal(result.Result.Success, false);
 					assert.notEqual(result.Result.Reason, undefined);
 					done();
