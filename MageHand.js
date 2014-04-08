@@ -7,16 +7,16 @@ var dndAPI = require('./DnDAPI.js');
 app.get('/login/:Username/:Password', function(req, res){
 	Login(req, res);
 });
-app.get('/account/:AID/:SessionID/:Username', function(req, res){
+app.get('/account/:AID/:SID/:Username', function(req, res){
 	GetAccount(req, res);
 });
-app.get('/character/:AID/:SessionID/:CharacterID', function(req, res){
+app.get('/character/:AID/:SID/:CharacterID', function(req, res){
 	GetCharacter(req, res);
 });
-app.get('/account/character/:AID/:SessionID/:AccountAID', function(req, res){
+app.get('/account/character/:AID/:SID/:AccountAID', function(req, res){
 	GetAccountCharacters(req, res);
 });
-app.get('/session/:AID/:SessionID/:SessionID', function(req, res){
+app.get('/session/:AID/:SID/:SessionID', function(req, res){
 	GetSession(req, res);
 });
 
@@ -67,7 +67,7 @@ function GetData(request, response, callback){
 	}
 
 	function GetAccount(request, response){
-		dndAPI.GetAccount(request.params.AID, request.params.SessionID, request.params.Username, function(accountResponse){
+		dndAPI.GetAccount(request.params.AID, request.params.SID, request.params.Username, function(accountResponse){
 			if(accountResponse.Error){
 				EndResponse(response, 500, accountResponse);
 			}
@@ -78,7 +78,7 @@ function GetData(request, response, callback){
 	}
 
 	function GetCharacter(request, response){
-		dndAPI.getCharacter(request.params.AID, request.params.SessionID, request.params.CharacterID, function(characterResponse){
+		dndAPI.GetCharacter(request.params.AID, request.params.SID, request.params.CharacterID, function(characterResponse){
 			if(characterResponse.Error){
 				EndResponse(response, 500, characterResponse);
 			}
@@ -89,7 +89,7 @@ function GetData(request, response, callback){
 	}
 
 	function GetAccountCharacters(request, response){
-		dndAPI.getAccountCharacters(request.params.AID, request.params.SessionID, request.params.AccountAID, function(characterListResponse){
+		dndAPI.GetAccountCharacters(request.params.AID, request.params.SID, request.params.AccountAID, function(characterListResponse){
 			if(characterListResponse.Error){
 				EndResponse(response, 500, characterListResponse);
 			}
@@ -100,7 +100,7 @@ function GetData(request, response, callback){
 	}
 
 	function GetSession(request, response){
-		dndAPI.getSession(request.params.AID, request.params.SessionID, request.params.SessionID, function(sessionCharacterListResponse){
+		dndAPI.GetSession(request.params.AID, request.params.SID, request.params.SessionID, function(sessionCharacterListResponse){
 			if(sessionCharacterListResponse.Error){
 				EndResponse(response, 500, sessionCharacterListResponse);
 			}
@@ -112,7 +112,7 @@ function GetData(request, response, callback){
 
 /*
 	function GetAdminAccount(request, response){
-		dndAPI.getAdminAccount(request.params.AID, request.params.SessionID, request.params., function(sessionCharacterListResponse){
+		dndAPI.getAdminAccount(request.params.AID, request.params.SID, request.params.AccountAID, function(sessionCharacterListResponse){
 			if(sessionCharacterListResponse.Error){
 				EndResponse(response, 500, sessionCharacterListResponse);
 			}

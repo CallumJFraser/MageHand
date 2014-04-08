@@ -1,13 +1,15 @@
 var databaseObject = require('./Database.js');
 
 function Login(row){
-	this.Login = true;
-	this.SessionID = row.Created + row.Hash + row.AID + row.LastLogin;
+	this.Success = true;
+	this.AccountID = row.ID;
+	this.Username = row.Username;
+	this.AID = row.AID;
+	this.SID = row.Created + row.Hash + row.AID + row.LastLogin;
 }
 
 Login.prototype.Session = function(){
-	var manager = this;
-	return manager.SessionID;
+	return this.SID;
 }
 
 function Failed(reason){
@@ -26,14 +28,8 @@ function login(username, password, callback){
 				var date = new Date();
 				var updateQuery = "UPDATE Account SET LastLogin = '" + date.getTime() + "' WHERE ID = '" + rows[0].ID + "' AND AID = '" + rows[0].AID + "'";
 				return databaseObject.Query(updateQuery, function(temp){
-					var sessionID = rows[0].Created + rows[0].Hash + rows[0].AID + date.getTime();
-					var account = {
-						Success: true,
-						AccountID: rows[0].ID,
-						AID: rows[0].AID,
-						Username: rows[0].Username,
-						SessionID: sessionID
-					};
+					var account = new Login(rows[0]);
+					account.SID = rows[0].Created + rows[0].Hash + rows[0].AID + date.getTime();
 					callback(account);
 				});
 			}
@@ -44,8 +40,8 @@ function login(username, password, callback){
 	}
 }
 
-function authorise(aID, sessionID, callback){
-	if(aID == undefined || sessionID == undefined){
+function authorise(aID, sID, callback){
+	if(aID == undefined || sID == undefined){
 		callback(new Failed('Missing authentication parameters'));
 	}
 	else{
@@ -53,8 +49,8 @@ function authorise(aID, sessionID, callback){
 		databaseObject.Query(query, function(rows){
 			if(rows.length > 0 ){
 				var login = new Login(rows[0]);
-				if(login.Session() == sessionID){
-					callback({ Success: true, SessionID: sessionID });
+				if(login.Session() == sID){
+					callback({ Success: true, SID: sID });
 				}
 				else{
 					callback(new Failed('Incorrect authentication details'));
@@ -71,7 +67,7 @@ module.exports = {
 	Login: function(username, password, callback){
 		login(username, password, callback);
 	},
-	Authorise: function (aID, sessionID, username, callback){
-		authorise(aID, sessionID, username, callback);
+	Authorise: function (aID, sID, callback){
+		authorise(aID, sID, callback);
 	}
 };

@@ -1,7 +1,6 @@
 var databaseObject = require('./Database.js');
 
 function Character(row){
-	this.Success = true;
 	this.ID = row.ID;
 	this.Name = row.Name;
 	this.AccountID = row.AccountID;
@@ -43,7 +42,9 @@ function getCharacter(characterID, callback){
 		var query = 'SELECT * FROM Characters WHERE ID = ' + characterID;
 		databaseObject.Query(query, function(rows){
 			if(rows.length > 0){
-				callback(new Character(rows[0]));
+				var character = new Character(rows[0]);
+				character.Success = true;
+				callback(character);
 			}
 			else{
 				callback(new Failed('No matching results'));
