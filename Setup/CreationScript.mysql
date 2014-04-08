@@ -5,7 +5,6 @@
 	
 	...Work in progress...
 */
-
 DELIMITER GO
 
 DROP PROCEDURE sp_Login GO
@@ -47,9 +46,10 @@ CREATE TABLE Account
 )
 GO
 
-CREATE PROCEDURE sp_Login (UsernameParam VARCHAR(100), PasswordParam VARCHAR(200))
+CREATE PROCEDURE sp_Login (UsernameParam VARCHAR(100), PasswordParam VARCHAR(200), TimeParam DOUBLE)
 BEGIN
-	SELECT ID, AID, Username, Email, Created, Hash FROM Account WHERE Username = UsernameParam AND Password = PasswordParam;
+	UPDATE Account SET LastLogin = TimeParam WHERE Username = UsernameParam AND Password = PasswordParam;
+	SELECT ID, AID, Username, Email, Created, Hash, LastLogin FROM Account WHERE Username = UsernameParam AND Password = PasswordParam;
 END
 GO
 

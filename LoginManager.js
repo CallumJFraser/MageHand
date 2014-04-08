@@ -22,15 +22,10 @@ function login(username, password, callback){
 		callback(new Failed('Incorrect sign-in details'));
 	}
 	else{
-		databaseObject.Procedure('sp_Login', [username, password], function(rows){
+		var date = new Date();
+		databaseObject.Procedure('sp_Login', [username, password, date.getTime()], function(rows){
 			if(rows.length > 0){
-				var date = new Date();
-				var updateQuery = "UPDATE Account SET LastLogin = '" + date.getTime() + "' WHERE ID = '" + rows[0].ID + "' AND AID = '" + rows[0].AID + "'";
-				return databaseObject.Query(updateQuery, function(temp){
-					var account = new Login(rows[0]);
-					account.SID = rows[0].Created + rows[0].Hash + rows[0].AID + date.getTime();
-					callback(account);
-				});
+				callback(new Login(rows[0]));
 			}
 			else{
 				callback(new Failed('Incorrect sign-in details'));
