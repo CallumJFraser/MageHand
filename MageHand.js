@@ -2,7 +2,7 @@ var crypto = require('crypto');
 var express = require('express');
 var app = express();
 var database = require('./Database.js');
-var dndAPI = require('./DnDAPI.js');
+var dndAPI = require('./MageHandAPI.js');
 
 app.get('/login/:Username/:Password', function(req, res){
 	Login(req, res);
