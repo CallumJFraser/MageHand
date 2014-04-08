@@ -22,8 +22,7 @@ function login(username, password, callback){
 		callback(new Failed('Incorrect sign-in details'));
 	}
 	else{
-		var query = "SELECT * FROM Account WHERE Username = '" + username + "' AND Password='" + password + "'";
-		databaseObject.Query(query, function(rows){
+		databaseObject.Procedure('sp_Login', [username, password], function(rows){
 			if(rows.length > 0){
 				var date = new Date();
 				var updateQuery = "UPDATE Account SET LastLogin = '" + date.getTime() + "' WHERE ID = '" + rows[0].ID + "' AND AID = '" + rows[0].AID + "'";

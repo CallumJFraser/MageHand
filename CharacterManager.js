@@ -38,9 +38,7 @@ function getCharacter(characterID, callback){
 		callback(new Failed('Missing parameter'));
 	}
 	else{
-		var manager = this;
-		var query = 'SELECT * FROM Characters WHERE ID = ' + characterID;
-		databaseObject.Query(query, function(rows){
+		databaseObject.Procedure('sp_GetCharacterByID', [characterID], function(rows){
 			if(rows.length > 0){
 				var character = new Character(rows[0]);
 				character.Success = true;
@@ -58,9 +56,7 @@ function getAccountCharacters(accountAID, callback){
 		callback(new Failed('Missing parameter'));
 	}
 	else{
-		var manager = this;
-		var query = 'SELECT * FROM Characters WHERE AccountAID = ' + accountAID;
-		databaseObject.Query(query, function(rows){
+		databaseObject.Procedure('sp_GetCharacterByAccount', accountAID, function(rows){
 			if(rows.length > 0){
 				var rowArray = [];
 				for(var i = 0; i < rows.length; i++){

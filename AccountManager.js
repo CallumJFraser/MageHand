@@ -1,11 +1,11 @@
 var databaseObject = require('./Database.js');
 
 function BasicAccount(row){
-	this.Success = true;
 	this.ID = row.ID;
 	this.AID = row.AID;
 	this.Username = row.Username;
 	this.Created = row.Created;
+	this.Success = true;
 }
 
 function Failed(reason){
@@ -35,11 +35,10 @@ function getBasicByID(id, callback){
 		callback(new Failed('Missing parameter'));
 	}
 	else{
-		var manager = this;
-		var query = 'SELECT * FROM Account WHERE ID = "' + id + '"';
-		databaseObject.Query(query, function(rows){
+		databaseObject.Procedure('sp_GetAccountByAID', id, function(rows){
 			if(rows.length > 0){
-				callback(new BasicAccount(rows[0]));
+				var value = new BasicAccount(rows[0]);
+				callback(value);
 			}
 			else{
 				callback(new Failed('No matching results'));
@@ -53,9 +52,7 @@ function getBasicByUsername(username, callback){
 		callback(new Failed('Missing parameter'));
 	}
 	else{
-		var manager = this;
-		var query = 'SELECT * FROM Account WHERE Username = "' + username + '"';
-		databaseObject.Query(query, function(rows){
+		databaseObject.Procedure('sp_GetAccountByUsername', [username], function(rows){
 			if(rows.length > 0){
 				callback(new BasicAccount(rows[0]));
 			}
@@ -71,9 +68,7 @@ function getBasicByEmail(email, callback){
 		callback(new Failed('Missing parameter'));
 	}
 	else{
-		var manager = this;
-		var query = 'SELECT * FROM Account WHERE Email = "' + email + '"';
-		databaseObject.Query(query, function(rows){
+		databaseObject.Procedure('sp_GetAccountByEmail', [email], function(rows){
 			if(rows.length > 0){
 				callback(new BasicAccount(rows[0]));
 			}
@@ -89,9 +84,7 @@ function searchBasic(text, callback){
 		callback(new Failed('Missing parameter'));
 	}
 	else{
-		var manager = this;
-		var query = 'SELECT * FROM Account WHERE Email like "%' + text + '%" OR Name like "%' + text + '%"';
-		databaseObject.Query(query, function(rows){
+		databaseObject.Query('sp_SearchAccounts', [text], function(rows){
 			if(rows.length > 0){
 				callback(new BasicAccount(rows[0]));
 			}

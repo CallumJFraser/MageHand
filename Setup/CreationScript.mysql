@@ -1,0 +1,281 @@
+/*
+	MageHand API Database creation script
+	
+	Version: 0.1
+	
+	...Work in progress...
+*/
+
+DELIMITER GO
+
+DROP PROCEDURE sp_Login GO
+DROP PROCEDURE sp_GetAccountByAID GO
+DROP PROCEDURE sp_GetAccountByUsername GO
+DROP PROCEDURE sp_GetAccountByEmail GO
+DROP PROCEDURE sp_SearchAccounts GO
+DROP PROCEDURE sp_GetCharacterByID GO
+DROP PROCEDURE sp_GetCharacterByAccount GO
+
+DROP TABLE CharacterSkill GO
+DROP TABLE Skill GO
+DROP TABLE AbilityType GO
+DROP TABLE SessionCharacters GO
+DROP TABLE Session GO
+DROP TABLE Runthrough GO
+DROP TABLE Story GO
+DROP TABLE Characters GO
+DROP TABLE Race GO
+DROP TABLE Size GO
+DROP TABLE Class GO
+DROP TABLE Version GO
+DROP TABLE Account GO
+
+CREATE TABLE Account
+(
+	ID INTEGER NOT NULL AUTO_INCREMENT,
+	AID CHAR(36) NOT NULL,
+	Username VARCHAR(100) NOT NULL,
+	Email VARCHAR(200) NOT NULL,
+	Hash VARCHAR(100) NOT NULL,
+	Created DOUBLE NOT NULL,
+	LastLogin DOUBLE NULL,
+	Password VARCHAR(200) NOT NULL,
+	CONSTRAINT pk_Account PRIMARY KEY (ID),
+	CONSTRAINT un_AccountAID UNIQUE (AID),
+	CONSTRAINT un_AccountUserName UNIQUE (UserName),
+	CONSTRAINT un_AccountEmail UNIQUE (Email)
+)
+GO
+
+CREATE PROCEDURE sp_Login (UsernameParam VARCHAR(100), PasswordParam VARCHAR(200))
+BEGIN
+	SELECT ID, AID, Username, Email, Created, Hash FROM Account WHERE Username = UsernameParam AND Password = PasswordParam;
+END
+GO
+
+CREATE PROCEDURE sp_GetAccountByAID (AccountAIDParam INTEGER)
+BEGIN
+	SELECT ID, AID, Username, Email FROM Account WHERE AID = AccountAIDParam;
+END
+GO
+
+CREATE PROCEDURE sp_GetAccountByUsername (UsernameParam VARCHAR(100))
+BEGIN
+	SELECT ID, AID, Username, Email FROM Account WHERE Username = UsernameParam;
+END
+GO
+
+CREATE PROCEDURE sp_GetAccountByEmail (EmailParam VARCHAR(100))
+BEGIN
+	SELECT ID, AID, Username, Email FROM Account WHERE Email = EmailParam;
+END
+GO
+
+CREATE PROCEDURE sp_SearchAccounts (TextParam VARCHAR(100))
+BEGIN
+	SELECT ID, AID, Username, Email FROM Account WHERE Username LIKE TextParam OR Email LIKE TextParam;
+END
+GO
+
+INSERT INTO Account (AID, Username, Email, Hash, Created, Password)
+VALUES ('1', 'Test1', 'test@test.com', 'hash', 1395788542978, 'password')
+GO
+
+INSERT INTO Account (AID, Username, Email, Hash, Created, Password)
+VALUES ('2', 'Test2', 'testing@test.com', 'hash', 1395788542998, 'password')
+GO
+
+CREATE TABLE Version
+(
+	ID INTEGER NOT NULL AUTO_INCREMENT,
+	Name VARCHAR(100) NOT NULL,
+	CONSTRAINT pk_Version PRIMARY KEY (ID)
+)
+GO
+
+INSERT INTO Version (Name) VALUES ('3.5')
+GO
+
+CREATE TABLE Class
+(
+	ID INTEGER NOT NULL AUTO_INCREMENT,
+	Name VARCHAR(100) NOT NULL,
+	VersionID INTEGER NOT NULL,
+	Description VARCHAR(4000) NULL,
+	CONSTRAINT pk_Class PRIMARY KEY (ID),
+	CONSTRAINT fk_ClassVersionID FOREIGN KEY (VersionID) REFERENCES Version(ID)
+)
+GO
+
+INSERT INTO Class (Name, VersionID, Description)
+VALUES ('Bard', 1, '')
+GO
+
+CREATE TABLE Size
+(
+	ID INTEGER NOT NULL AUTO_INCREMENT,
+	Name VARCHAR(100) NOT NULL,
+	CONSTRAINT pk_Size PRIMARY KEY (ID)
+)
+GO
+
+INSERT INTO Size (Name)
+VALUES ('Small')
+GO
+
+CREATE TABLE Race
+(
+	ID INTEGER NOT NULL AUTO_INCREMENT,
+	Name VARCHAR(100) NOT NULL,
+	Description VARCHAR(4000) NULL,
+	SizeID INTEGER NOT NULL,
+	Speed INTEGER NOT NULL,
+	CONSTRAINT pk_Race PRIMARY KEY (ID)
+)
+GO
+
+INSERT INTO Race (Name, Description, SizeID, Speed)
+VALUES ('Gnome', 'They are, like, waay small.', 1, 20)
+GO
+
+CREATE TABLE Characters
+(
+	ID INTEGER NOT NULL AUTO_INCREMENT,
+	AccountAID CHAR(36) NOT NULL,
+	Name VARCHAR(100) NOT NULL,
+	ClassID INTEGER NOT NULL,
+	Experiance DOUBLE NOT NULL,
+	RaceID INTEGER NOT NULL,
+	Age INTEGER NOT NULL,
+	Height INTEGER NOT NULL,
+	Strength INTEGER NOT NULL,
+	Dexterity INTEGER NOT NULL,
+	Constitution INTEGER NOT NULL,
+	Inteligence INTEGER NOT NULL,
+	Wisdom INTEGER NOT NULL,
+	Charisma INTEGER NOT NULL,
+	HP INTEGER NOT NULL,
+	AC INTEGER NOT NULL,
+	Initiative INTEGER NOT NULL,
+	Fortitude INTEGER NOT NULL,
+	Reflex INTEGER NOT NULL,
+	Will INTEGER NOT NULL,
+	Grapple INTEGER NOT NULL,
+	BaseAttack INTEGER NOT NULL,
+	SpellResistance INTEGER NOT NULL,
+	TouchAC INTEGER NOT NULL,
+	FlatFootedAC INTEGER NOT NULL,
+	CONSTRAINT pk_Character PRIMARY KEY (ID),
+	CONSTRAINT fk_CharacterAccountID FOREIGN KEY (AccountAID) REFERENCES Account(AID),
+	CONSTRAINT fk_CharacterClassID FOREIGN KEY (ClassID) REFERENCES Class(ID),
+	CONSTRAINT fk_CharacterRaceID FOREIGN KEY (RaceID) REFERENCES Race(ID)
+)
+GO
+
+CREATE PROCEDURE sp_GetCharacterByID (CharacterIDParam INTEGER)
+BEGIN
+	SELECT ID, AccountAID, Name, ClassID, Experiance, RaceID, Age, Height, Strength, Dexterity, Constitution, Inteligence, Wisdom, Charisma, HP, AC, Initiative, Fortitude, Reflex, Will, Grapple, BaseAttack, SpellResistance, TouchAC, FlatFootedAC FROM Characters WHERE ID = CharacterIDParam;
+END
+GO
+
+CREATE PROCEDURE sp_GetCharacterByAccount (AccountIDParam INTEGER)
+BEGIN
+	SELECT ID, AccountAID, Name, ClassID, Experiance, RaceID, Age, Height, Strength, Dexterity, Constitution, Inteligence, Wisdom, Charisma, HP, AC, Initiative, Fortitude, Reflex, Will, Grapple, BaseAttack, SpellResistance, TouchAC, FlatFootedAC FROM Characters WHERE AccountAID = AccountIDParam;
+END
+GO
+
+INSERT INTO Characters (AccountAID, Name, ClassID, Experiance, RaceID, Age, Height, Strength, Dexterity, Constitution, Inteligence, Wisdom, Charisma, HP, AC, Initiative, Fortitude, Reflex, Will, Grapple, BaseAttack, SpellResistance, TouchAC, FlatFootedAC)
+VALUES ('1', 'Test', 1, 4500, 1, 100, 100, 10, 14, 10, 10, 10, 19, 20, 18, 3, 3, 3, 3, 2, 3, 10, 18, 15)
+GO
+INSERT INTO Characters (AccountAID, Name, ClassID, Experiance, RaceID, Age, Height, Strength, Dexterity, Constitution, Inteligence, Wisdom, Charisma, HP, AC, Initiative, Fortitude, Reflex, Will, Grapple, BaseAttack, SpellResistance, TouchAC, FlatFootedAC)
+VALUES ('1', 'Test', 1, 4500, 1, 100, 100, 10, 14, 10, 10, 10, 19, 20, 18, 3, 3, 3, 3, 2, 3, 10, 18, 15);
+GO
+
+CREATE TABLE Story
+(
+	ID INTEGER NOT NULL AUTO_INCREMENT,
+	Title VARCHAR(100) NOT NULL,
+	Description VARCHAR(3000) NOT NULL,
+	ParentID INTEGER NULL,
+	CONSTRAINT pk_Story PRIMARY KEY (ID),
+	CONSTRAINT fk_StoryParentID FOREIGN KEY (ParentID) REFERENCES Story(ID)
+)GO
+
+INSERT INTO Story (Title, Description)
+VALUES ('Three little pigs', 'blown by wolf')GO
+
+CREATE TABLE Runthrough
+(
+	ID INTEGER NOT NULL AUTO_INCREMENT,
+	StoryID INTEGER NOT NULL,
+	CONSTRAINT pk_Runthrough PRIMARY KEY (ID),
+	CONSTRAINT fk_RunthroughStoryID FOREIGN KEY (StoryID) REFERENCES Story(ID)
+)
+GO
+
+INSERT INTO Runthrough (StoryID)
+VALUES (1)
+GO
+
+CREATE TABLE Session
+(
+	ID INTEGER NOT NULL AUTO_INCREMENT,
+	Start DATE NOT NULL,
+	END DATE NULL,
+	RunthroughID INTEGER NULL,
+	CONSTRAINT pk_Session PRIMARY KEY (ID),
+	CONSTRAINT fk_SessionRunthroughID FOREIGN KEY (RunthroughID) REFERENCES Runthrough(ID)
+)
+GO
+
+INSERT INTO Session (Start, RunthroughID)
+VALUES ('2014-10-10', 1)
+GO
+
+CREATE TABLE SessionCharacters
+(
+	SessionID INTEGER NOT NULL,
+	CharacterID INTEGER NOT NULL,
+	Experiance DOUBLE NULL,
+	CONSTRAINT pk_SessionCharacters PRIMARY KEY (SessionID, CharacterID),
+	CONSTRAINT fk_SessionCharactersSessionID FOREIGN KEY (SessionID) REFERENCES Session(ID),
+	CONSTRAINT fk_SessionCharactersCharacterID FOREIGN KEY (CharacterID) REFERENCES Characters(ID)
+)
+GO
+
+INSERT INTO SessionCharacters (SessionID, CharacterID, Experiance)
+VALUES (1, 1, 1000)
+GO
+
+CREATE TABLE AbilityType
+(
+	ID INTEGER NOT NULL AUTO_INCREMENT,
+	Name VARCHAR(100) NOT NULL,
+	CONSTRAINT fk_AbilityType PRIMARY KEY (ID)
+)GO
+
+CREATE TABLE Skill
+(
+	ID INTEGER NOT NULL AUTO_INCREMENT,
+	Name VARCHAR(100) NOT NULL,
+	AbilityTypeID INTEGER NOT NULL,
+	Usable BIT NOT NULL,
+	Description VARCHAR(2000) NULL,
+	CONSTRAINT pk_Skill PRIMARY KEY (ID),
+	CONSTRAINT fk_SkillAbilityTypeID FOREIGN KEY (AbilityTypeID) REFERENCES AbilityType(ID)
+)
+GO
+
+CREATE TABLE CharacterSkill
+(
+	CharacterID INTEGER NOT NULL,
+	SkillID INTEGER NOT NULL,
+	Ranks INTEGER NOT NULL,
+	Info VARCHAR(100) NULL,
+	MiscModifier INTEGER NOT NULL,
+	CONSTRAINT fk_CharacterSkillCharacterID FOREIGN KEY (CharacterID) REFERENCES Characters(ID),
+	CONSTRAINT fk_CharacterSkillSkillID FOREIGN KEY (SkillID) REFERENCES Skill(ID)
+)
+GO
+
+DELIMITER ;

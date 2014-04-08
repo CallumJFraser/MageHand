@@ -39,11 +39,33 @@ function query(command, callback){
 	});
 };
 
+function procedure(procedure, params, callback){
+	var procedureCall = 'CALL ' + procedure + ' (';
+	for(var i = 0; i < params.length; i++){
+		if(i > 0)
+			procedureCall += ',';
+		procedureCall += '"' + params[i] + '"';
+	}
+	procedureCall += ')';
+	connection.query(procedureCall, function(err, rows, fields){
+		if(err){
+			console.log('Database.query: ' + err);
+			callback(err);
+		}
+		else{
+			callback(rows[0]);
+		}
+	});
+};
+
 module.exports = {
 	Start: function(config){
 		start(config);
 	},
-	Query: function(command, success, error){
-		return query(command, success, error);
+	Query: function(command, success){
+		query(command, success);
+	},
+	Procedure: function(procedureCommand, params, success){
+		procedure(procedureCommand, params, success);
 	}
 };
