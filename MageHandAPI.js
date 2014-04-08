@@ -26,14 +26,14 @@ function login(username, password, callback){
 	loginManager.Login(username, password, callback);
 }
 
-function authorise(aID, sessionID, callback){
-	loginManager.Authorise(aID, sessionID, function(authorisation){
+function authorise(aID, sID, callback){
+	loginManager.Authorise(aID, sID, function(authorisation){
 		callback(authorisation);
 	});
 }
 
-function getAccount(aID, sessionID, username, callback){
-	authorise(aID, sessionID, function(authorised){
+function getAccount(aID, sID, username, callback){
+	authorise(aID, sID, function(authorised){
 		if(authorised.Success){
 			accountManager.GetByUsername(username, function(account){
 				callback(new DnDResponse(account, authorised));
@@ -45,8 +45,8 @@ function getAccount(aID, sessionID, username, callback){
 	});
 }
 
-function getCharacter(aID, sessionID, characterID, callback){
-	authorise(aID, sessionID, function(authorised){
+function getCharacter(aID, sID, characterID, callback){
+	authorise(aID, sID, function(authorised){
 		if(authorised.Success){
 			characterManager.GetCharacter(characterID, function(character){
 				callback(new DnDResponse(character, authorised));
@@ -58,8 +58,8 @@ function getCharacter(aID, sessionID, characterID, callback){
 	});
 }
 
-function getAccountCharacters(aID, sessionID, accountAID, callback){
-	authorise(aID, sessionID, function(authorised){
+function getAccountCharacters(aID, sID, accountAID, callback){
+	authorise(aID, sID, function(authorised){
 		if(authorised.Success){
 			characterManager.GetAccountCharacters(accountAID, function(character){
 				callback(new DnDResponse(character, authorised));
@@ -71,8 +71,8 @@ function getAccountCharacters(aID, sessionID, accountAID, callback){
 	});
 }
 
-function getSession(aID, sessionID, sessionID, callback){
-	authorise(aID, sessionID, function(authorised){
+function getSession(aID, sessionID, sID, callback){
+	authorise(aID, sID, function(authorised){
 		if(authorised.Success){
 			sessionManager.GetSession(sessionID, function(characters){
 				callback(new DnDResponse(characters, authorised));
@@ -84,8 +84,8 @@ function getSession(aID, sessionID, sessionID, callback){
 	});
 }
 
-function getAdminAccount(aID, sessionID, sessionID, callback){
-	authorise(aID, sessionID, function(authorised){
+function getAdminAccount(aID, sID, sessionID, callback){
+	authorise(aID, sID, function(authorised){
 		if(authorised.Success){
 			sessionManager.GetSession(sessionID, function(characters){
 				callback(new DnDResponse(characters, authorised));
@@ -104,16 +104,16 @@ module.exports = {
 	Login:function(username, password, callback) {
 		login(username, password, callback);
 	},
-	Authorise:function(aID, sessionID, callback){
-		authorise(aID, sessionID, callback);
+	Authorise:function(aID, sID, callback){
+		authorise(aID, sID, callback);
 	},
-	GetAccount:function(aID, sessionID, username, callback){
-		getAccount(aID, sessionID, username, callback);
+	GetAccount:function(aID, sID, username, callback){
+		getAccount(aID, sID, username, callback);
 	},
-	GetCharacter:function(aID, sessionID, characterID, callback){
-		getCharacter(aID, sessionID, characterID, callback);
+	GetCharacter:function(aID, sID, characterID, callback){
+		getCharacter(aID, sID, characterID, callback);
 	},
-	GetAccountCharacters:function(aID, sessionID, accountAID, callback){
-		getAccountCharacters(aID, sessionID, accountAID, callback);
+	GetAccountCharacters:function(aID, sID, accountAID, callback){
+		getAccountCharacters(aID, sID, accountAID, callback);
 	}
 };

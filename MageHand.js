@@ -2,7 +2,7 @@ var crypto = require('crypto');
 var express = require('express');
 var app = express();
 var database = require('./Database.js');
-var dndAPI = require('./MageHandAPI.js');
+var mageHandAPI = require('./MageHandAPI.js');
 
 app.get('/login/:Username/:Password', function(req, res){
 	Login(req, res);
@@ -24,7 +24,7 @@ var server = app.listen(1234, function() {
     console.log('Listening on port %d', server.address().port);
 });
 
-dndAPI.Start(function(){
+mageHandAPI.Start(function(){
 	console.log('Starting...');
 });
 
@@ -55,7 +55,7 @@ function GetData(request, response, callback){
 	//	Expect Username, Password. Return AID + sessionID
 	function Login(request, response){
 		if(request.params != undefined){
-			dndAPI.Login(request.params.Username, request.params.Password, function(loginResponse){
+			mageHandAPI.Login(request.params.Username, request.params.Password, function(loginResponse){
 				if(loginResponse.Error){
 					EndResponse(response, 500, loginResponse);
 				}
@@ -67,7 +67,7 @@ function GetData(request, response, callback){
 	}
 
 	function GetAccount(request, response){
-		dndAPI.GetAccount(request.params.AID, request.params.SID, request.params.Username, function(accountResponse){
+		mageHandAPI.GetAccount(request.params.AID, request.params.SID, request.params.Username, function(accountResponse){
 			if(accountResponse.Error){
 				EndResponse(response, 500, accountResponse);
 			}
@@ -78,7 +78,7 @@ function GetData(request, response, callback){
 	}
 
 	function GetCharacter(request, response){
-		dndAPI.GetCharacter(request.params.AID, request.params.SID, request.params.CharacterID, function(characterResponse){
+		mageHandAPI.GetCharacter(request.params.AID, request.params.SID, request.params.CharacterID, function(characterResponse){
 			if(characterResponse.Error){
 				EndResponse(response, 500, characterResponse);
 			}
@@ -89,7 +89,7 @@ function GetData(request, response, callback){
 	}
 
 	function GetAccountCharacters(request, response){
-		dndAPI.GetAccountCharacters(request.params.AID, request.params.SID, request.params.AccountAID, function(characterListResponse){
+		mageHandAPI.GetAccountCharacters(request.params.AID, request.params.SID, request.params.AccountAID, function(characterListResponse){
 			if(characterListResponse.Error){
 				EndResponse(response, 500, characterListResponse);
 			}
@@ -100,7 +100,7 @@ function GetData(request, response, callback){
 	}
 
 	function GetSession(request, response){
-		dndAPI.GetSession(request.params.AID, request.params.SID, request.params.SessionID, function(sessionCharacterListResponse){
+		mageHandAPI.GetSession(request.params.AID, request.params.SID, request.params.SessionID, function(sessionCharacterListResponse){
 			if(sessionCharacterListResponse.Error){
 				EndResponse(response, 500, sessionCharacterListResponse);
 			}
@@ -112,7 +112,7 @@ function GetData(request, response, callback){
 
 /*
 	function GetAdminAccount(request, response){
-		dndAPI.getAdminAccount(request.params.AID, request.params.SID, request.params.AccountAID, function(sessionCharacterListResponse){
+		mageHandAPI.getAdminAccount(request.params.AID, request.params.SID, request.params.AccountAID, function(sessionCharacterListResponse){
 			if(sessionCharacterListResponse.Error){
 				EndResponse(response, 500, sessionCharacterListResponse);
 			}
