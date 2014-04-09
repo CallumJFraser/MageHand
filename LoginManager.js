@@ -39,8 +39,7 @@ function authorise(aID, sID, callback){
 		callback(new Failed('Missing authentication parameters'));
 	}
 	else{
-		var query = "SELECT * FROM Account WHERE AID='" + aID + "'";
-		databaseObject.Query(query, function(rows){
+		databaseObject.Procedure('sp_Authorise', [aID], function(rows){
 			if(rows.length > 0 ){
 				var login = new Login(rows[0]);
 				if(login.Session() == sID){
