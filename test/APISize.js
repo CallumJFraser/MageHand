@@ -2,7 +2,7 @@ var assert = require('assert');
 /*
 	
 */
-var dndAPI = require('../DnDAPI.js');
+var dndAPI = require('../MageHandAPI.js');
 var validUsername = 'Test1';
 var validPassword = 'password';
 	
@@ -30,7 +30,6 @@ describe('GetSize -', function(){
 				});
 			});
 		})
-			//	45
 		it('Should return Result.ID: 1', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
 				dndAPI.GetSize(loginResponse.AID, loginResponse.SessionID, 1, function(result){
