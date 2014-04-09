@@ -4,6 +4,7 @@ var accountManager = require('./AccountManager.js');
 var loginManager = require('./LoginManager.js');
 var characterManager = require('./CharacterManager.js');
 var storyManager = require('./StoryManager.js');
+var skillManager = require('./SkillManager.js');
 
 function DnDResponse(result, auth){
 	this.Result = result;
@@ -36,8 +37,8 @@ function authorise(aID, sID, callback){
 function getAccount(aID, sID, username, callback){
 	authorise(aID, sID, function(authorised){
 		if(authorised.Success){
-			accountManager.GetByUsername(username, function(account){
-				callback(new DnDResponse(account, authorised));
+			accountManager.GetByUsername(username, function(data){
+				callback(new DnDResponse(data, authorised));
 			});
 		}
 		else{
@@ -49,8 +50,8 @@ function getAccount(aID, sID, username, callback){
 function getCharacter(aID, sID, characterID, callback){
 	authorise(aID, sID, function(authorised){
 		if(authorised.Success){
-			characterManager.GetCharacter(characterID, function(character){
-				callback(new DnDResponse(character, authorised));
+			characterManager.GetCharacter(characterID, function(data){
+				callback(new DnDResponse(data, authorised));
 			});
 		}
 		else{
@@ -62,8 +63,8 @@ function getCharacter(aID, sID, characterID, callback){
 function getAccountCharacters(aID, sID, accountAID, callback){
 	authorise(aID, sID, function(authorised){
 		if(authorised.Success){
-			characterManager.GetAccountCharacters(accountAID, function(character){
-				callback(new DnDResponse(character, authorised));
+			characterManager.GetAccountCharacters(accountAID, function(data){
+				callback(new DnDResponse(data, authorised));
 			});
 		}
 		else{
@@ -75,8 +76,8 @@ function getAccountCharacters(aID, sID, accountAID, callback){
 function getSession(aID, sID, sessionID, callback){
 	authorise(aID, sID, function(authorised){
 		if(authorised.Success){
-			sessionManager.GetSession(sessionID, function(characters){
-				callback(new DnDResponse(characters, authorised));
+			sessionManager.GetSession(sessionID, function(data){
+				callback(new DnDResponse(data, authorised));
 			});
 		}
 		else{
@@ -88,8 +89,8 @@ function getSession(aID, sID, sessionID, callback){
 function getStories(aID, sID, sessionID, callback){
 	authorise(aID, sID, function(authorised){
 		if(authorised.Success){
-			storyManager.GetStories(sessionID, function(characters){
-				callback(new DnDResponse(characters, authorised));
+			storyManager.GetStories(sessionID, function(data){
+				callback(new DnDResponse(data, authorised));
 			});
 		}
 		else{
@@ -101,8 +102,8 @@ function getStories(aID, sID, sessionID, callback){
 function getStory(aID, sID, storyID, callback){
 	authorise(aID, sID, function(authorised){
 		if(authorised.Success){
-			storyManager.GetStory(storyID, function(characters){
-				callback(new DnDResponse(characters, authorised));
+			storyManager.GetStory(storyID, function(data){
+				callback(new DnDResponse(data, authorised));
 			});
 		}
 		else{
@@ -114,8 +115,21 @@ function getStory(aID, sID, storyID, callback){
 function searchStories(aID, sID, storyText, callback){
 	authorise(aID, sID, function(authorised){
 		if(authorised.Success){
-			storyManager.SearchStories(storyText, function(characters){
-				callback(new DnDResponse(characters, authorised));
+			storyManager.SearchStories(storyText, function(data){
+				callback(new DnDResponse(data, authorised));
+			});
+		}
+		else{
+			callback(new DnDResponse({ Success:false, Reason: 'See authorisation' }, authorised));
+		}
+	});
+}
+
+function getSkillType(aID, sID, skillTypeID, callback){
+	authorise(aID, sID, function(authorised){
+		if(authorised.Success){
+			skillManager.GetSkillType(skillTypeID, function(data){
+				callback(new DnDResponse(data, authorised));
 			});
 		}
 		else{
@@ -128,8 +142,8 @@ function searchStories(aID, sID, storyText, callback){
 function getAdminAccount(aID, sID, sID, sessionID, callback){
 	authorise(aID, sID, function(authorised){
 		if(authorised.Success){
-			sessionManager.GetSession(sessionID, function(characters){
-				callback(new DnDResponse(characters, authorised));
+			sessionManager.GetSession(sessionID, function(data){
+				callback(new DnDResponse(data, authorised));
 			});
 		}
 		else{
@@ -162,6 +176,11 @@ module.exports = {
 	},
 	SearchStories: function(aID, sID, storyText, callback){
 		searchStories(aID, sID, storyText, callback);
+	},
+	GetAbillity:  function(aID, sID, abilityID, callback){
+		getAbility(aID, sID, abilityID, callback);
+	},
+	GetSkillType:  function(aID, sID, skillTypeID, callback){
+		getSkillType(aID, sID, skillTypeID, callback);
 	}
-	
 };

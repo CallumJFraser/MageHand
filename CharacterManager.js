@@ -56,7 +56,7 @@ function getAccountCharacters(accountAID, callback){
 		callback(new Failed('Missing parameter'));
 	}
 	else{
-		databaseObject.Procedure('sp_GetCharacterByAccount', accountAID, function(rows){
+		databaseObject.Procedure('sp_GetCharacterByAccount', [accountAID], function(rows){
 			if(rows.length > 0){
 				var rowArray = [];
 				for(var i = 0; i < rows.length; i++){

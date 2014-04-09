@@ -47,9 +47,9 @@ describe('Login -', function(){
 				done();
 			});
 		})
-		it('Should return SessionID', function(done){
+		it('Should return SID', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				assert.notEqual(loginResponse.SessionID, undefined);
+				assert.notEqual(loginResponse.SID, undefined);
 				done();
 			});
 		})
@@ -86,9 +86,9 @@ describe('Login -', function(){
 				done();
 			});
 		})
-		it('Should return SessionID:undefined', function(done){
+		it('Should return SID:undefined', function(done){
 			dndAPI.Login(validUsername, invalidPassword, function(loginResponse){
-				assert.equal(loginResponse.SessionID, undefined);
+				assert.equal(loginResponse.SID, undefined);
 				done();
 			});
 		})
@@ -125,9 +125,9 @@ describe('Login -', function(){
 				done();
 			});
 		})
-		it('Should return SessionID:undefined', function(done){
+		it('Should return SID:undefined', function(done){
 			dndAPI.Login(invalidUsername, validPassword, function(loginResponse){
-				assert.equal(loginResponse.SessionID, undefined);
+				assert.equal(loginResponse.SID, undefined);
 				done();
 			});
 		})
@@ -159,16 +159,16 @@ describe('Authorise -', function(){
 	describe('Valid call:', function(){
 		it('Should return Success:true', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				dndAPI.Authorise(loginResponse.AID, loginResponse.SessionID, function(result){
+				dndAPI.Authorise(loginResponse.AID, loginResponse.SID, function(result){
 					assert.equal(result.Success, true);
 					done();
 				});
 			});
 		})
-		it('Should return a SessionID', function(done){
+		it('Should return a SID', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				dndAPI.Authorise(loginResponse.AID, loginResponse.SessionID, function(result){
-					assert.equal(result.SessionID, loginResponse.SessionID);
+				dndAPI.Authorise(loginResponse.AID, loginResponse.SID, function(result){
+					assert.equal(result.SID, loginResponse.SID);
 					done();
 				});
 			});
@@ -178,23 +178,23 @@ describe('Authorise -', function(){
 	describe('Invalid call (missing param: "AID"):', function(){
 		it('Should return Success:false', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				dndAPI.Authorise('FAIL', loginResponse.SessionID, function(result){
+				dndAPI.Authorise('FAIL', loginResponse.SID, function(result){
 					assert.equal(result.Success, false);
 					done();
 				});
 			});
 		})
-		it('Should not return a SessionID', function(done){
+		it('Should not return a SID', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				dndAPI.Authorise('FAIL', loginResponse.SessionID, function(result){
-					assert.notEqual(result.SessionID, loginResponse.SessionID);
+				dndAPI.Authorise('FAIL', loginResponse.SID, function(result){
+					assert.notEqual(result.SID, loginResponse.SID);
 					done();
 				});
 			});
 		})
 	})
 
-	describe('Invalid call (missing param: "SessionID"):', function(){
+	describe('Invalid call (missing param: "SID"):', function(){
 		it('Should return Login:false', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
 				dndAPI.Authorise(loginResponse.AID, 'FAIL', function(result){
@@ -204,10 +204,10 @@ describe('Authorise -', function(){
 			});
 		})
 			//	20
-		it('Should not return a SessionID', function(done){
+		it('Should not return a SID', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
 				dndAPI.Authorise(loginResponse.AID, 'FAIL', function(result){
-					assert.notEqual(result.SessionID, loginResponse.SessionID);
+					assert.notEqual(result.SID, loginResponse.SID);
 					done();
 				});
 			});

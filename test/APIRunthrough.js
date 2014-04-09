@@ -15,7 +15,7 @@ describe('GetRunthrough -', function(){
 	describe('Valid call:', function(){
 		it('Should return Success:true', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				dndAPI.GetRunthrough(loginResponse.AID, loginResponse.SessionID, 1, function(result){
+				dndAPI.GetRunthrough(loginResponse.AID, loginResponse.SID, 1, function(result){
 					assert.equal(result.Auth.Success, true);
 					done();
 				});
@@ -23,7 +23,7 @@ describe('GetRunthrough -', function(){
 		})
 		it('Should return a Result', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				dndAPI.GetRunthrough(loginResponse.AID, loginResponse.SessionID, 1, function(result){
+				dndAPI.GetRunthrough(loginResponse.AID, loginResponse.SID, 1, function(result){
 					assert.notEqual(result.Result, undefined);
 					done();
 				});
@@ -31,7 +31,7 @@ describe('GetRunthrough -', function(){
 		})
 		it('Should return Result.ID: 1', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				dndAPI.GetRunthrough(loginResponse.AID, loginResponse.SessionID, 1, function(result){
+				dndAPI.GetRunthrough(loginResponse.AID, loginResponse.SID, 1, function(result){
 					assert.equal(result.Result.ID, 1);
 					assert.equal(result.Result.Name, 'Gnome');
 					assert.equal(result.Result.Description, 'They are, like, waay small.');
@@ -46,7 +46,7 @@ describe('GetRunthrough -', function(){
 	describe('Invalid call (missing param: "RunthroughID"):', function(){
 		it('Should return a Result', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				dndAPI.GetRunthrough(loginResponse.AID, loginResponse.SessionID, undefined, function(result){
+				dndAPI.GetRunthrough(loginResponse.AID, loginResponse.SID, undefined, function(result){
 					assert.notEqual(result.Result, undefined);
 					done();
 				});
@@ -54,7 +54,7 @@ describe('GetRunthrough -', function(){
 		})
 		it('Should return Success:false', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				dndAPI.GetRunthrough(loginResponse.AID, loginResponse.SessionID, undefined, function(result){
+				dndAPI.GetRunthrough(loginResponse.AID, loginResponse.SID, undefined, function(result){
 					assert.equal(result.Result.Success, false);
 					done();
 				});
@@ -62,7 +62,7 @@ describe('GetRunthrough -', function(){
 		})
 		it('Should return a result with error information', function(done){
 			dndAPI.Login(validUsername, validPassword, function(loginResponse){
-				dndAPI.GetRunthrough(loginResponse.AID, loginResponse.SessionID, undefined, function(result){
+				dndAPI.GetRunthrough(loginResponse.AID, loginResponse.SID, undefined, function(result){
 					assert.equal(result.Result.Success, false);
 					assert.notEqual(result.Result.Reason, undefined);
 					done();
