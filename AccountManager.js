@@ -35,7 +35,7 @@ function getBasicByID(id, callback){
 		callback(new Failed('Missing parameter'));
 	}
 	else{
-		databaseObject.Procedure('sp_GetAccountByAID', id, function(rows){
+		databaseObject.Procedure('sp_GetAccountByAID', [id], function(rows){
 			if(rows.length > 0){
 				var value = new BasicAccount(rows[0]);
 				callback(value);
@@ -84,7 +84,7 @@ function searchBasic(text, callback){
 		callback(new Failed('Missing parameter'));
 	}
 	else{
-		databaseObject.Query('sp_SearchAccounts', [text], function(rows){
+		databaseObject.Procedure('sp_SearchAccounts', [text], function(rows){
 			if(rows.length > 0){
 				callback(new BasicAccount(rows[0]));
 			}
@@ -96,7 +96,7 @@ function searchBasic(text, callback){
 }
 
 module.exports = {
-	GetByID: function(id, callback){
+	Get: function(id, callback){
 		getBasicByID(id, callback);
 	},
 	GetByUsername: function(username, callback){

@@ -1,12 +1,16 @@
 var databaseObject = require('./Database.js');
+var classManager = require('./ClassManager.js');
+var raceManager = require('./RaceManager.js');
 
 function Character(row){
+	if(row == undefined)
+		return new Failed('Missing parameter');
 	this.ID = row.ID;
 	this.Name = row.Name;
 	this.AccountID = row.AccountID;
-	this.ClassID = row.ClassID;
+	this.Class = classManager.FromObject(row);
 	this.Experiance = row.Experiance;
-	this.RaceID = row.RaceID;
+	this.Race = raceManager.FromObject(row);
 	this.Age = row.Age;
 	this.Height = row.Height;
 	this.Strength = row.Strength;
@@ -26,6 +30,7 @@ function Character(row){
 	this.SpellResistance = row.SpellResistance;
 	this.TouchAC = row.TouchAC;
 	this.FlatFootedAC = row.FlatFootedAC;
+	return this;
 }
 
 function Failed(reason){
@@ -33,12 +38,12 @@ function Failed(reason){
 	this.Reason = reason;
 }
 
-function getCharacter(characterID, callback){
-	if(characterID == undefined){
+function Get(id, callback){
+	if(id == undefined){
 		callback(new Failed('Missing parameter'));
 	}
 	else{
-		databaseObject.Procedure('sp_GetCharacterByID', [characterID], function(rows){
+		databaseObject.Procedure('sp_GetCharacterByID', [id], function(rows){
 			if(rows.length > 0){
 				var character = new Character(rows[0]);
 				character.Success = true;
@@ -51,12 +56,12 @@ function getCharacter(characterID, callback){
 	}
 }
 
-function getAccountCharacters(accountAID, callback){
-	if(accountAID == undefined){
+function GetByAccount(id, callback){
+	if(id == undefined){
 		callback(new Failed('Missing parameter'));
 	}
 	else{
-		databaseObject.Procedure('sp_GetCharacterByAccount', [accountAID], function(rows){
+		databaseObject.Procedure('sp_GetCharacterByAccount', [id], function(rows){
 			if(rows.length > 0){
 				var rowArray = [];
 				for(var i = 0; i < rows.length; i++){
@@ -72,10 +77,13 @@ function getAccountCharacters(accountAID, callback){
 }
 
 module.exports = {
-	GetCharacter: function(characterID, callback){
-		getCharacter(characterID, callback);
+	Get: function(id, callback){
+		Get(id, callback);
 	},
-	GetAccountCharacters: function(accountAID, callback){
-		getAccountCharacters(accountAID, callback);
+	GetByAccount: function(id, callback){
+		GetByAccount(id, callback);
+	},
+	FromObject: function(row){
+		return new Character(row);
 	}
 };

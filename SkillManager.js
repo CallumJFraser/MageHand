@@ -1,11 +1,8 @@
 var databaseObject = require('./Database.js');
 
 function SkillType(row){
-	this.Success = true;
-	this.AccountID = row.ID;
-	this.Username = row.Username;
-	this.AID = row.AID;
-	this.SID = row.Created + row.Hash + row.AID + row.LastLogin;
+	this.ID = row.ID;
+	this.Name = row.Name;
 }
 
 function Failed(reason){
@@ -13,12 +10,12 @@ function Failed(reason){
 	this.Reason = reason;
 }
 
-function getSkillType(skillTypeID, callback){
-	if(characterID == undefined){
+function Get(id, callback){
+	if(id == undefined){
 		callback(new Failed('Missing parameter'));
 	}
 	else{
-		databaseObject.Procedure('sp_GetSkillType', [skillTypeID], function(rows){
+		databaseObject.Procedure('sp_GetSkillType', [id], function(rows){
 			if(rows.length > 0){
 				var value = new SkillType(rows[0]);
 				value.Success = true;
@@ -32,7 +29,7 @@ function getSkillType(skillTypeID, callback){
 }
 
 module.exports = {
-	GetSkillType: function (skillTypeID, callback){
-		getSkillType(skillTypeID, callback);
+	Get: function (id, callback){
+		Get(id, callback);
 	}
 };
