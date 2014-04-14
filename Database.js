@@ -1,37 +1,42 @@
 var mysql = require('mysql');
 
-//	Constructor
 var connection = {};
 
-function start(config){
+var self = module.exports = {
+	Configuration: {
+		host	: 'localhost',
+		user	: 'root',
+		password: '',
+		database: 'DnDBackend'
+	},
+	Restart: function(config){
+		Restart(config);
+	},
+	Query: function(command, callback){
+		Query(command, callback);
+	},
+	Procedure: function(procedure, params, callback){
+		Procedure(procedure, params, callback);
+	}
+};
+
+function Restart(config){
 	if(config != undefined){
-		var configuration = {
+		Configuration = {
 			host     : config.host,
 			user     : config.user,
 			password : config.password,
 			database : config.database
 		};
-		connection = mysql.createConnection(configuration);
-		connection.connect(function(err){
-			if(err != undefined){
-				console.log('MySQL error... ' + JSON.stringify(err));
-				config.error(err);
-			}
-			else{
-				config.success();
-			}
-		});
 	}
-	else{
-		throw 'Database options have not been passed in...';
-	}
+	connection = mysql.createConnection(self.Configuration);
+	connection.connect();
 };
 	//
-function query(command, callback){	
+function Query(command, callback){
 	connection.query(command, function(err, rows, fields){
 		if(err){
 			console.log('Database.query: ' + err);
-			callback(err);
 		}
 		else{
 			callback(rows);
@@ -39,7 +44,7 @@ function query(command, callback){
 	});
 };
 
-function procedure(procedure, params, callback){
+function Procedure(procedure, params, callback){
 	var procedureCall = 'CALL ' + procedure + ' (';
 	for(var i = 0; i < params.length; i++){
 		if(i > 0)
@@ -47,25 +52,10 @@ function procedure(procedure, params, callback){
 		procedureCall += '"' + params[i] + '"';
 	}
 	procedureCall += ')';
-	connection.query(procedureCall, function(err, rows, fields){
-		if(err){
-			console.log('Database.query: ' + err);
-			callback(err);
-		}
-		else{
-			callback(rows[0]);
-		}
+	self.Query(procedureCall, function(rows){
+		callback(rows[0]);
 	});
 };
 
-module.exports = {
-	Start: function(config){
-		start(config);
-	},
-	Query: function(command, success){
-		query(command, success);
-	},
-	Procedure: function(procedureCommand, params, success){
-		procedure(procedureCommand, params, success);
-	}
-};
+//	Create initial connection
+Restart();

@@ -1,9 +1,10 @@
 var assert = require('assert');
-var manager = require('../StoryManager.js');
+var manager = require('../../StoryManager.js');
 
 var validRow = {};
 var validObject = {};
 
+function test(){
 describe('Story Manager -', function(){
 	
 	describe('Public functions:', function(){
@@ -39,3 +40,10 @@ describe('Story Manager -', function(){
 		it('')
 	})
 })
+};
+
+module.exports = {
+	Test: function(){
+		test();
+	}
+};

@@ -1,2 +1,2 @@
 cd Documents/Projects/DnDBackend/
-mocha
+mocha -R Spec

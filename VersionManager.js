@@ -1,10 +1,15 @@
 var databaseObject = require('./Database.js');
 
-function Story(row){
-	if(row == undefined)
-		return new Failed('Missing parameter');
-	this.ID = row.ID;
-	this.Name = row.Name;
+function Version(row){
+	//	In some cases the row will be a join of the class and contain the items prefixed with "Class"
+	if(row.VersionID == undefined){
+		this.ID = row.ID;
+		this.Name = row.Name;
+	}
+	else{
+		this.ID = row.VersionID;
+		this.Name = row.VersionName;
+	}
 }
 
 function Failed(reason){
@@ -17,9 +22,9 @@ function Get(id, callback){
 		callback(new Failed('Missing parameter'));
 	}
 	else{
-		databaseObject.Procedure('sp_GetStory', [id], function(rows){
+		databaseObject.Procedure('sp_GetVersion', [id], function(rows){
 			if(rows.length > 0){
-				var value = new Story(rows[0]);
+				var value = new Version(rows[0]);
 				value.Success = true;
 				callback(value);
 			}
@@ -35,6 +40,6 @@ module.exports = {
 		Get(id, callback);
 	},
 	FromObject: function(row){
-		return new Story(row);
+		return new Version(row);
 	}
 };

@@ -1,7 +1,7 @@
 var assert = require('assert');
 /*
 	
-*/
+
 var dndAPI = require('../MageHandAPI.js');
 var validUsername = 'Test1';
 var validPassword = 'password';
@@ -191,3 +191,4 @@ describe('ListCharacterAbilities -', function(){
 		})
 	})
 });
+*/

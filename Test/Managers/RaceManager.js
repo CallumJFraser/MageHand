@@ -1,6 +1,7 @@
 var assert = require('assert');
-var manager = require('../RaceManager.js');
+var manager = require('../../RaceManager.js');
 
+function test(){
 describe('Race Manager -', function(){
 	
 	describe('Public functions:', function(){
@@ -22,3 +23,10 @@ describe('Race Manager -', function(){
 		it('')
 	})
 })
+};
+
+module.exports = {
+	Test: function(){
+		test();
+	}
+};
