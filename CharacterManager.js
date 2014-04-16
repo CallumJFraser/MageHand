@@ -43,16 +43,22 @@ function Get(id, callback){
 		callback(new Failed('Missing parameter'));
 	}
 	else{
-		databaseObject.Procedure('sp_GetCharacterByID', [id], function(rows){
-			if(rows.length > 0){
-				var character = new Character(rows[0]);
-				character.Success = true;
-				callback(character);
-			}
-			else{
-				callback(new Failed('No matching results'));
-			}
-		});
+		var intID = parseInt(id);
+		if(intID > 0){
+			databaseObject.Procedure('sp_GetCharacterByID', [intID], function(rows){
+				if(rows.length > 0){
+					var character = new Character(rows[0]);
+					character.Success = true;
+					callback(character);
+				}
+				else{
+					callback(new Failed('No matching results'));
+				}
+			});
+		}
+		else{
+			callback(new Failed('Invalid parameter'));
+		}
 	}
 }
 
@@ -61,18 +67,24 @@ function GetByAccount(id, callback){
 		callback(new Failed('Missing parameter'));
 	}
 	else{
-		databaseObject.Procedure('sp_GetCharacterByAccount', [id], function(rows){
-			if(rows.length > 0){
-				var rowArray = [];
-				for(var i = 0; i < rows.length; i++){
-					rowArray.push(new Character(rows[i]));
+		var intID = parseInt(id);
+		if(intID > 0){
+			databaseObject.Procedure('sp_GetCharacterByAccount', [intID], function(rows){
+				if(rows.length > 0){
+					var rowArray = [];
+					for(var i = 0; i < rows.length; i++){
+						rowArray.push(new Character(rows[i]));
+					}
+					callback(rowArray);
 				}
-				callback(rowArray);
-			}
-			else{
-				callback(new Failed('No matching results'));
-			}
-		});
+				else{
+					callback(new Failed('No matching results'));
+				}
+			});
+		}
+		else{
+			callback(new Failed('Invalid parameter'));
+		}
 	}
 }
 

@@ -17,16 +17,22 @@ function Get(id, callback){
 		callback(new Failed('Missing parameter'));
 	}
 	else{
-		databaseObject.Procedure('sp_GetStory', [id], function(rows){
-			if(rows.length > 0){
-				var value = new Story(rows[0]);
-				value.Success = true;
-				callback(value);
-			}
-			else{
-				callback(new Failed('No matching results'));
-			}
-		});
+		var intID = parseInt(id);
+		if(intID > 0){
+			databaseObject.Procedure('sp_GetStory', [id], function(rows){
+				if(rows.length > 0){
+					var value = new Story(rows[0]);
+					value.Success = true;
+					callback(value);
+				}
+				else{
+					callback(new Failed('No matching results'));
+				}
+			});
+		}
+		else{
+			callback(new Failed('Invalid parameter'));
+		}
 	}
 }
 

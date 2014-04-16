@@ -21,6 +21,7 @@ module.exports = {
 		describe('Get:', function(){
 			var valid = 1;
 			var invalid = 10000;
+			var invalidFormat = 'invalid';
 			var blank = undefined;
 			
 			describe('Valid:', function(){
@@ -50,7 +51,7 @@ module.exports = {
 					});
 				})
 			})
-			describe('Invalid:', function(){
+			describe('Invalid "ID" Value:', function(){
 				it('Result != undefined', function(done){
 					manager.Get(invalid, function(result){
 						assert.notEqual(result, undefined);
@@ -66,6 +67,27 @@ module.exports = {
 				})
 				it('Result = Fail', function(done){
 					manager.Get(invalid, function(result){
+						assert.notEqual(result.Reason, undefined);
+						done();
+					});
+				})
+			})
+			describe('Invalid "ID" Format:', function(){
+				it('Result != undefined', function(done){
+					manager.Get(invalidFormat, function(result){
+						assert.notEqual(result, undefined);
+						done();
+					});
+				})
+				it('Success = false', function(done){
+					manager.Get(invalidFormat, function(result){
+						assert.equal(result.Success, false);
+						assert.notEqual(result.Reason, undefined);
+						done();
+					});
+				})
+				it('Result = Fail', function(done){
+					manager.Get(invalidFormat, function(result){
 						assert.notEqual(result.Reason, undefined);
 						done();
 					});

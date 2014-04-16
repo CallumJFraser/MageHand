@@ -1,6 +1,8 @@
 var databaseObject = require('./Database.js');
 
 function Login(row){
+	if(row == undefined)
+		return new Failed('Missing parameter');
 	this.Success = true;
 	this.AccountID = row.ID;
 	this.Username = row.Username;

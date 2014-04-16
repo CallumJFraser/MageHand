@@ -152,28 +152,24 @@ function test(){
 		describe('Invalid "ID" Value:', function(){
 			it('Value != undefined', function(done){
 				manager.Get(invalid, function(value){
-					console.log(JSON.stringify(value));
 					assert.notEqual(value, undefined);
 					done();
 				});
 			})
 			it('Reason != undefined', function(done){
 				manager.Get(invalid, function(value){
-					console.log(JSON.stringify(value));
 					assert.notEqual(value.Reason, undefined);
 					done();
 				});
 			})
 			it('Success == false', function(done){
-				manager.Get(invalidFormat, function(value){
-					console.log(JSON.stringify(value));
+				manager.Get(invalid, function(value){
 					assert.equal(value.Success, false);
 					done();
 				});
 			})
 			it('Return == Character', function(done){
 				manager.Get(invalid, function(value){
-					console.log(JSON.stringify(value));
 					MatchingObject(value, validObject);
 					done();
 				});
@@ -182,28 +178,24 @@ function test(){
 		describe('Invalid "ID" Format:', function(){
 			it('Value != undefined', function(done){
 				manager.Get(invalidFormat, function(value){
-					console.log(JSON.stringify(value));
 					assert.notEqual(value, undefined);
 					done();
 				});
 			})
 			it('Reason != undefined', function(done){
 				manager.Get(invalidFormat, function(value){
-					console.log(JSON.stringify(value));
 					assert.notEqual(value.Reason, undefined);
 					done();
 				});
 			})
 			it('Success == false', function(done){
 				manager.Get(invalidFormat, function(value){
-					console.log(JSON.stringify(value));
 					assert.equal(value.Success, false);
 					done();
 				});
 			})
 			it('Return == Character', function(done){
 				manager.Get(invalidFormat, function(value){
-					console.log(JSON.stringify(value));
 					MatchingObject(value, validObject);
 					done();
 				});
@@ -239,7 +231,7 @@ function test(){
 	
 	describe('GetByAccount:', function(){
 		var valid = 1;
-		var invalidValue = 0;
+		var invalid = 0;
 		var invalidFormat = 'invalid';
 
 		describe('Valid:', function(){
@@ -265,7 +257,6 @@ function test(){
 		describe('Invalid "ID" Value:', function(){
 			it('Value != undefined', function(done){
 				manager.GetByAccount(invalid, function(value){
-					console.log(JSON.stringify(value));
 					assert.notEqual(value, undefined);
 					done();
 				});
@@ -286,7 +277,6 @@ function test(){
 		describe('Invalid "ID" Format:', function(){
 			it('Value != undefined', function(done){
 				manager.GetByAccount(invalidFormat, function(value){
-					console.log(JSON.stringify(value));
 					assert.notEqual(value, undefined);
 					done();
 				});

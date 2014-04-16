@@ -1,6 +1,8 @@
 var databaseObject = require('./Database.js');
 
 function Version(row){
+	if(row == undefined)
+		return new Failed('Missing parameter');
 	//	In some cases the row will be a join of the class and contain the items prefixed with "Class"
 	if(row.VersionID == undefined){
 		this.ID = row.ID;
@@ -22,16 +24,22 @@ function Get(id, callback){
 		callback(new Failed('Missing parameter'));
 	}
 	else{
-		databaseObject.Procedure('sp_GetVersion', [id], function(rows){
-			if(rows.length > 0){
-				var value = new Version(rows[0]);
-				value.Success = true;
-				callback(value);
-			}
-			else{
-				callback(new Failed('No matching results'));
-			}
-		});
+		var intID = parseInt(id);
+		if(intID > 0){
+			databaseObject.Procedure('sp_GetVersion', [intID], function(rows){
+				if(rows.length > 0){
+					var value = new Version(rows[0]);
+					value.Success = true;
+					callback(value);
+				}
+				else{
+					callback(new Failed('No matching results'));
+				}
+			});
+		}
+		else{
+			callback(new Failed('Invalid parameter'));
+		}
 	}
 }
 

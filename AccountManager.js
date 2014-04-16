@@ -1,6 +1,8 @@
 var databaseObject = require('./Database.js');
 
 function BasicAccount(row){
+	if(row == undefined)
+		return new Failed('Missing parameter');
 	this.ID = row.ID;
 	this.AID = row.AID;
 	this.Username = row.Username;
@@ -14,6 +16,8 @@ function Failed(reason){
 }
 
 function Account(row){
+	if(row == undefined)
+		return new Failed('Missing parameter');
 	this.ID = row.ID;
 	this.AID = row.AID;
 	this.Username = row.Username;
@@ -35,15 +39,21 @@ function getBasicByID(id, callback){
 		callback(new Failed('Missing parameter'));
 	}
 	else{
-		databaseObject.Procedure('sp_GetAccountByAID', [id], function(rows){
-			if(rows.length > 0){
-				var value = new BasicAccount(rows[0]);
-				callback(value);
-			}
-			else{
-				callback(new Failed('No matching results'));
-			}
-		});
+		var intID = parseInt(id);
+		if(intID > 0){
+			databaseObject.Procedure('sp_GetAccountByAID', [intID], function(rows){
+				if(rows.length > 0){
+					var value = new BasicAccount(rows[0]);
+					callback(value);
+				}
+				else{
+					callback(new Failed('No matching results'));
+				}
+			});
+		}
+		else{
+			callback(new Failed('Invalid parameter'));
+		}
 	}
 }
 
