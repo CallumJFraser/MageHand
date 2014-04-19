@@ -13,19 +13,19 @@ describe('Database:', function(){
 
 // Test the managers
 describe('Account Manager -', function(){
-	accountManager.Test();
+	accountManager.Test();	// Done
 });
 
 describe('Character Manager -', function(){
-	characterManager.Test();
+	characterManager.Test();	//	Done, may need some tests for the account version (ensure there isnt multiple records)?
 });
 
 describe('Class Manager -', function(){
-	classManager.Test();
+	classManager.Test();	//	Done
 });
 
 describe('Login Manager -', function(){
-	loginManager.Test();
+	loginManager.Test();	//	Done
 });
 
 describe('Story Manager -', function(){

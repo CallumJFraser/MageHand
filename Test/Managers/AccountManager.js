@@ -1,8 +1,14 @@
 var assert = require('assert');
 var manager = require('../../AccountManager.js');
 
+var blank = undefined;
+
 module.exports = {
 	Test: function(){
+
+		var validRow = {"ID":1,"AID":"1","Username":"Test1","Email":"4500","Hash":"100","Created":"100","LastLogin":"10"};
+		var validObject = {"ID":1,"AID":"1","Username":"Test1","Email":"4500","Hash":"100","Created":"100","LastLogin":"10","Success":true};
+
 		describe('Public functions:', function(){
 			it('Get != undefined', function(){
 				assert.notEqual(manager.Get, undefined);
@@ -22,7 +28,6 @@ module.exports = {
 			var valid = 1;
 			var invalid = 10000;
 			var invalidFormat = 'invalid';
-			var blank = undefined;
 			
 			describe('Valid:', function(){
 				it('Result != undefined', function(done){
@@ -34,18 +39,53 @@ module.exports = {
 				it('Success = true', function(done){
 					manager.Get(valid, function(result){
 						assert.equal(result.Success, true);
+						done();
+					});
+				})
+				it('Reason == undefined', function(done){
+					manager.Get(valid, function(result){
 						assert.equal(result.Reason, undefined);
 						done();
 					});
 				})
-				it('Result = Account', function(done){
+				it('ID == ID', function(done){
 					manager.Get(valid, function(result){
-						assert.equal(result.ID, 1);
-						assert.equal(result.AID, '1');
-						assert.equal(result.Username, 'Test1');
+						assert.equal(result.ID, validObject.ID);
+						done();
+					});
+				})
+				it('AID == AID', function(done){
+					manager.Get(valid, function(result){
+						assert.equal(result.AID, validObject.AID);
+						done();
+					});
+				})
+				it('Username == Username', function(done){
+					manager.Get(valid, function(result){
+						assert.equal(result.Username, validObject.Username);
+						done();
+					});
+				})
+				it('Email == undefined', function(done){
+					manager.Get(valid, function(result){
 						assert.equal(result.Email, undefined);
+						done();
+					});
+				})
+				it('Hash == undefined', function(done){
+					manager.Get(valid, function(result){
 						assert.equal(result.Hash, undefined);
+						done();
+					});
+				})
+				it('Created == undefined', function(done){
+					manager.Get(valid, function(result){
 						assert.equal(result.Created, undefined);
+						done();
+					});
+				})
+				it('LastLogin == undefined', function(done){
+					manager.Get(valid, function(result){
 						assert.equal(result.LastLogin, undefined);
 						done();
 					});
@@ -61,13 +101,54 @@ module.exports = {
 				it('Success = false', function(done){
 					manager.Get(invalid, function(result){
 						assert.equal(result.Success, false);
+						done();
+					});
+				})
+				it('Reason != undefined', function(done){
+					manager.Get(invalid, function(result){
 						assert.notEqual(result.Reason, undefined);
 						done();
 					});
 				})
-				it('Result = Fail', function(done){
+				it('ID == undefined', function(done){
 					manager.Get(invalid, function(result){
-						assert.notEqual(result.Reason, undefined);
+						assert.equal(result.ID, undefined);
+						done();
+					});
+				})
+				it('AID == undefined', function(done){
+					manager.Get(invalid, function(result){
+						assert.equal(result.AID, undefined);
+						done();
+					});
+				})
+				it('Username == undefined', function(done){
+					manager.Get(invalid, function(result){
+						assert.equal(result.Username, undefined);
+						done();
+					});
+				})
+				it('Email == undefined', function(done){
+					manager.Get(invalid, function(result){
+						assert.equal(result.Email, undefined);
+						done();
+					});
+				})
+				it('Hash == undefined', function(done){
+					manager.Get(invalid, function(result){
+						assert.equal(result.Hash, undefined);
+						done();
+					});
+				})
+				it('Created == undefined', function(done){
+					manager.Get(invalid, function(result){
+						assert.equal(result.Created, undefined);
+						done();
+					});
+				})
+				it('LastLogin == undefined', function(done){
+					manager.Get(invalid, function(result){
+						assert.equal(result.LastLogin, undefined);
 						done();
 					});
 				})
@@ -82,13 +163,54 @@ module.exports = {
 				it('Success = false', function(done){
 					manager.Get(invalidFormat, function(result){
 						assert.equal(result.Success, false);
+						done();
+					});
+				})
+				it('Reason != undefined', function(done){
+					manager.Get(invalidFormat, function(result){
 						assert.notEqual(result.Reason, undefined);
 						done();
 					});
 				})
-				it('Result = Fail', function(done){
+				it('ID == undefined', function(done){
 					manager.Get(invalidFormat, function(result){
-						assert.notEqual(result.Reason, undefined);
+						assert.equal(result.ID, undefined);
+						done();
+					});
+				})
+				it('AID == undefined', function(done){
+					manager.Get(invalidFormat, function(result){
+						assert.equal(result.AID, undefined);
+						done();
+					});
+				})
+				it('Username == undefined', function(done){
+					manager.Get(invalidFormat, function(result){
+						assert.equal(result.Username, undefined);
+						done();
+					});
+				})
+				it('Email == undefined', function(done){
+					manager.Get(invalidFormat, function(result){
+						assert.equal(result.Email, undefined);
+						done();
+					});
+				})
+				it('Hash == undefined', function(done){
+					manager.Get(invalidFormat, function(result){
+						assert.equal(result.Hash, undefined);
+						done();
+					});
+				})
+				it('Created == undefined', function(done){
+					manager.Get(invalidFormat, function(result){
+						assert.equal(result.Created, undefined);
+						done();
+					});
+				})
+				it('LastLogin == undefined', function(done){
+					manager.Get(invalidFormat, function(result){
+						assert.equal(result.LastLogin, undefined);
 						done();
 					});
 				})
@@ -103,13 +225,54 @@ module.exports = {
 				it('Success = false', function(done){
 					manager.Get(blank, function(result){
 						assert.equal(result.Success, false);
+						done();
+					});
+				})
+				it('Reason != undefined', function(done){
+					manager.Get(blank, function(result){
 						assert.notEqual(result.Reason, undefined);
 						done();
 					});
 				})
-				it('Result = Fail', function(done){
+				it('ID == undefined', function(done){
 					manager.Get(blank, function(result){
-						assert.notEqual(result.Reason, undefined);
+						assert.equal(result.ID, undefined);
+						done();
+					});
+				})
+				it('AID == undefined', function(done){
+					manager.Get(blank, function(result){
+						assert.equal(result.AID, undefined);
+						done();
+					});
+				})
+				it('Username == undefined', function(done){
+					manager.Get(blank, function(result){
+						assert.equal(result.Username, undefined);
+						done();
+					});
+				})
+				it('Email == undefined', function(done){
+					manager.Get(blank, function(result){
+						assert.equal(result.Email, undefined);
+						done();
+					});
+				})
+				it('Hash == undefined', function(done){
+					manager.Get(blank, function(result){
+						assert.equal(result.Hash, undefined);
+						done();
+					});
+				})
+				it('Created == undefined', function(done){
+					manager.Get(blank, function(result){
+						assert.equal(result.Created, undefined);
+						done();
+					});
+				})
+				it('LastLogin == undefined', function(done){
+					manager.Get(blank, function(result){
+						assert.equal(result.LastLogin, undefined);
 						done();
 					});
 				})
@@ -117,231 +280,579 @@ module.exports = {
 		})
 		
 		describe('GetByUsername:', function(){
-				var valid = 'Test1';
-				var invalid = 'invalid';
-				var blank = undefined;
-				
-				describe('Valid:', function(){
-					it('Result != undefined', function(done){
-						manager.GetByUsername(valid, function(result){
-							assert.notEqual(result, undefined);
-							done();
-						});
-					})
-					it('Success = true', function(done){
-						manager.GetByUsername(valid, function(result){
-							assert.equal(result.Success, true);
-							assert.equal(result.Reason, undefined);
-							done();
-						});
-					})
-					it('Result = Account', function(done){
-						manager.GetByUsername(valid, function(result){
-							assert.equal(result.ID, 1);
-							assert.equal(result.AID, '1');
-							assert.equal(result.Username, 'Test1');
-							assert.equal(result.Email, undefined);
-							assert.equal(result.Hash, undefined);
-							assert.equal(result.Created, undefined);
-							assert.equal(result.LastLogin, undefined);
-							done();
-						});
-					})
-				})
-				describe('Invalid:', function(){
-					it('Result != undefined', function(done){
-						manager.GetByUsername(invalid, function(result){
-							assert.notEqual(result, undefined);
-							done();
-						});
-					})
-					it('Success = false', function(done){
-						manager.GetByUsername(invalid, function(result){
-							assert.equal(result.Success, false);
-							assert.notEqual(result.Reason, undefined);
-							done();
-						});
-					})
-					it('Result = Fail', function(done){
-						manager.GetByUsername(invalid, function(result){
-							assert.notEqual(result.Reason, undefined);
-							done();
-						});
-					})
-				})
-				describe('Missing "Username":', function(){
-					it('Result != undefined', function(done){
-						manager.GetByUsername(blank, function(result){
-							assert.notEqual(result, undefined);
-							done();
-						});
-					})
-					it('Success = false', function(done){
-						manager.GetByUsername(blank, function(result){
-							assert.equal(result.Success, false);
-							assert.notEqual(result.Reason, undefined);
-							done();
-						});
-					})
-					it('Result = Fail', function(done){
-						manager.GetByUsername(blank, function(result){
-							assert.notEqual(result.Reason, undefined);
-							done();
-						});
-					})
-				})
-			})
+			var valid = 'Test1';
+			var invalid = 'invalid';
 		
-		describe('GetByEmail:', function(){
-				var valid = 'test@test.com';
-				var invalid = 'invalid@mail.com';
-				var blank = undefined;
-				
-				describe('Valid:', function(){
-					it('Result != undefined', function(done){
-						manager.GetByEmail(valid, function(result){
-							assert.notEqual(result, undefined);
-							done();
-						});
-					})
-					it('Success = true', function(done){
-						manager.GetByEmail(valid, function(result){
-							assert.equal(result.Success, true);
-							assert.equal(result.Reason, undefined);
-							done();
-						});
-					})
-					it('Result = Login', function(done){
-						manager.GetByEmail(valid, function(result){
-							assert.equal(result.ID, 1);
-							assert.equal(result.AID, '1');
-							assert.equal(result.Username, 'Test1');
-							assert.equal(result.Email, undefined);
-							assert.equal(result.Hash, undefined);
-							assert.equal(result.Created, undefined);
-							assert.equal(result.LastLogin, undefined);
-							done();
-						});
-					})
+			describe('Valid:', function(){
+				it('Result != undefined', function(done){
+					manager.GetByUsername(valid, function(result){
+						assert.notEqual(result, undefined);
+						done();
+					});
 				})
-				describe('Invalid:', function(){
-					it('Result != undefined', function(done){
-						manager.GetByEmail(invalid, function(result){
-							assert.notEqual(result, undefined);
-							done();
-						});
-					})
-					it('Success = false', function(done){
-						manager.GetByEmail(invalid, function(result){
-							assert.equal(result.Success, false);
-							assert.notEqual(result.Reason, undefined);
-							done();
-						});
-					})
-					it('Result = Fail', function(done){
-						manager.GetByEmail(invalid, function(result){
-							assert.notEqual(result.Reason, undefined);
-							done();
-						});
-					})
+				it('Success = true', function(done){
+					manager.GetByUsername(valid, function(result){
+						assert.equal(result.Success, true);
+						done();
+					});
 				})
-				describe('Missing "Username":', function(){
-					it('Result != undefined', function(done){
-						manager.GetByEmail(blank, function(result){
-							assert.notEqual(result, undefined);
-							done();
-						});
-					})
-					it('Success = false', function(done){
-						manager.GetByEmail(blank, function(result){
-							assert.equal(result.Success, false);
-							assert.notEqual(result.Reason, undefined);
-							done();
-						});
-					})
-					it('Result = Fail', function(done){
-						manager.GetByEmail(blank, function(result){
-							assert.notEqual(result.Reason, undefined);
-							done();
-						});
-					})
+				it('Reason == undefined', function(done){
+					manager.GetByUsername(valid, function(result){
+						assert.equal(result.Reason, undefined);
+						done();
+					});
+				})
+				it('ID == ID', function(done){
+					manager.GetByUsername(valid, function(result){
+						assert.equal(result.ID, validObject.ID);
+						done();
+					});
+				})
+				it('AID == AID', function(done){
+					manager.GetByUsername(valid, function(result){
+						assert.equal(result.AID, validObject.AID);
+						done();
+					});
+				})
+				it('Username == Username', function(done){
+					manager.GetByUsername(valid, function(result){
+						assert.equal(result.Username, validObject.Username);
+						done();
+					});
+				})
+				it('Email == undefined', function(done){
+					manager.GetByUsername(valid, function(result){
+						assert.equal(result.Email, undefined);
+						done();
+					});
+				})
+				it('Hash == undefined', function(done){
+					manager.GetByUsername(valid, function(result){
+						assert.equal(result.Hash, undefined);
+						done();
+					});
+				})
+				it('Created == undefined', function(done){
+					manager.GetByUsername(valid, function(result){
+						assert.equal(result.Created, undefined);
+						done();
+					});
+				})
+				it('LastLogin == undefined', function(done){
+					manager.GetByUsername(valid, function(result){
+						assert.equal(result.LastLogin, undefined);
+						done();
+					});
 				})
 			})
+			describe('Invalid:', function(){
+				it('Result != undefined', function(done){
+					manager.GetByUsername(invalid, function(result){
+						assert.notEqual(result, undefined);
+						done();
+					});
+				})
+				it('Success = false', function(done){
+					manager.GetByUsername(invalid, function(result){
+						assert.equal(result.Success, false);
+						done();
+					});
+				})
+				it('Reason != undefined', function(done){
+					manager.GetByUsername(invalid, function(result){
+						assert.notEqual(result.Reason, undefined);
+						done();
+					});
+				})
+				it('ID == undefined', function(done){
+					manager.GetByUsername(invalid, function(result){
+						assert.equal(result.ID, undefined);
+						done();
+					});
+				})
+				it('AID == undefined', function(done){
+					manager.GetByUsername(invalid, function(result){
+						assert.equal(result.AID, undefined);
+						done();
+					});
+				})
+				it('Username == undefined', function(done){
+					manager.GetByUsername(invalid, function(result){
+						assert.equal(result.Username, undefined);
+						done();
+					});
+				})
+				it('Email == undefined', function(done){
+					manager.GetByUsername(invalid, function(result){
+						assert.equal(result.Email, undefined);
+						done();
+					});
+				})
+				it('Hash == undefined', function(done){
+					manager.GetByUsername(invalid, function(result){
+						assert.equal(result.Hash, undefined);
+						done();
+					});
+				})
+				it('Created == undefined', function(done){
+					manager.GetByUsername(invalid, function(result){
+						assert.equal(result.Created, undefined);
+						done();
+					});
+				})
+				it('LastLogin == undefined', function(done){
+					manager.GetByUsername(invalid, function(result){
+						assert.equal(result.LastLogin, undefined);
+						done();
+					});
+				})
+			})
+			describe('Missing "Username":', function(){
+				it('Result != undefined', function(done){
+					manager.GetByUsername(blank, function(result){
+						assert.notEqual(result, undefined);
+						done();
+					});
+				})
+				it('Success = false', function(done){
+					manager.GetByUsername(blank, function(result){
+						assert.equal(result.Success, false);
+						done();
+					});
+				})
+				it('Reason != undefined', function(done){
+					manager.GetByUsername(blank, function(result){
+						assert.notEqual(result.Reason, undefined);
+						done();
+					});
+				})
+				it('ID == undefined', function(done){
+					manager.GetByUsername(blank, function(result){
+						assert.equal(result.ID, undefined);
+						done();
+					});
+				})
+				it('AID == undefined', function(done){
+					manager.GetByUsername(blank, function(result){
+						assert.equal(result.AID, undefined);
+						done();
+					});
+				})
+				it('Username == undefined', function(done){
+					manager.GetByUsername(blank, function(result){
+						assert.equal(result.Username, undefined);
+						done();
+					});
+				})
+				it('Email == undefined', function(done){
+					manager.GetByUsername(blank, function(result){
+						assert.equal(result.Email, undefined);
+						done();
+					});
+				})
+				it('Hash == undefined', function(done){
+					manager.GetByUsername(blank, function(result){
+						assert.equal(result.Hash, undefined);
+						done();
+					});
+				})
+				it('Created == undefined', function(done){
+					manager.GetByUsername(blank, function(result){
+						assert.equal(result.Created, undefined);
+						done();
+					});
+				})
+				it('LastLogin == undefined', function(done){
+					manager.GetByUsername(blank, function(result){
+						assert.equal(result.LastLogin, undefined);
+						done();
+					});
+				})
+			})
+		})
+	
+		describe('GetByEmail:', function(){
+			var valid = 'test@test.com';
+			var invalid = 'invalid@mail.com';
+			
+			describe('Valid:', function(){
+				it('Result != undefined', function(done){
+					manager.GetByEmail(valid, function(result){
+						assert.notEqual(result, undefined);
+						done();
+					});
+				})
+				it('Success = true', function(done){
+					manager.GetByEmail(valid, function(result){
+						assert.equal(result.Success, true);
+						done();
+					});
+				})
+				it('Reason == undefined', function(done){
+					manager.GetByEmail(valid, function(result){
+						assert.equal(result.Reason, undefined);
+						done();
+					});
+				})
+				it('ID == ID', function(done){
+					manager.GetByEmail(valid, function(result){
+						assert.equal(result.ID, validObject.ID);
+						done();
+					});
+				})
+				it('AID == AID', function(done){
+					manager.GetByEmail(valid, function(result){
+						assert.equal(result.AID, validObject.AID);
+						done();
+					});
+				})
+				it('Username == Username', function(done){
+					manager.GetByEmail(valid, function(result){
+						assert.equal(result.Username, validObject.Username);
+						done();
+					});
+				})
+				it('Email == undefined', function(done){
+					manager.GetByEmail(valid, function(result){
+						assert.equal(result.Email, undefined);
+						done();
+					});
+				})
+				it('Hash == undefined', function(done){
+					manager.GetByEmail(valid, function(result){
+						assert.equal(result.Hash, undefined);
+						done();
+					});
+				})
+				it('Created == undefined', function(done){
+					manager.GetByEmail(valid, function(result){
+						assert.equal(result.Created, undefined);
+						done();
+					});
+				})
+				it('LastLogin == undefined', function(done){
+					manager.GetByEmail(valid, function(result){
+						assert.equal(result.LastLogin, undefined);
+						done();
+					});
+				})
+			})
+			describe('Invalid:', function(){
+				it('Result != undefined', function(done){
+					manager.GetByEmail(invalid, function(result){
+						assert.notEqual(result, undefined);
+						done();
+					});
+				})
+				it('Success = false', function(done){
+					manager.GetByEmail(invalid, function(result){
+						assert.equal(result.Success, false);
+						done();
+					});
+				})
+				it('Reason != undefined', function(done){
+					manager.GetByEmail(invalid, function(result){
+						assert.notEqual(result.Reason, undefined);
+						done();
+					});
+				})
+				it('ID == undefined', function(done){
+					manager.GetByEmail(invalid, function(result){
+						assert.equal(result.ID, undefined);
+						done();
+					});
+				})
+				it('AID == undefined', function(done){
+					manager.GetByEmail(invalid, function(result){
+						assert.equal(result.AID, undefined);
+						done();
+					});
+				})
+				it('Username == undefined', function(done){
+					manager.GetByEmail(invalid, function(result){
+						assert.equal(result.Username, undefined);
+						done();
+					});
+				})
+				it('Email == undefined', function(done){
+					manager.GetByEmail(invalid, function(result){
+						assert.equal(result.Email, undefined);
+						done();
+					});
+				})
+				it('Hash == undefined', function(done){
+					manager.GetByEmail(invalid, function(result){
+						assert.equal(result.Hash, undefined);
+						done();
+					});
+				})
+				it('Created == undefined', function(done){
+					manager.GetByEmail(invalid, function(result){
+						assert.equal(result.Created, undefined);
+						done();
+					});
+				})
+				it('LastLogin == undefined', function(done){
+					manager.GetByEmail(invalid, function(result){
+						assert.equal(result.LastLogin, undefined);
+						done();
+					});
+				})
+			})
+			describe('Missing "Username":', function(){
+				it('Result != undefined', function(done){
+					manager.GetByEmail(blank, function(result){
+						assert.notEqual(result, undefined);
+						done();
+					});
+				})
+				it('Success = false', function(done){
+					manager.GetByEmail(blank, function(result){
+						assert.equal(result.Success, false);
+						done();
+					});
+				})
+				it('Reason != undefined', function(done){
+					manager.GetByEmail(blank, function(result){
+						assert.notEqual(result.Reason, undefined);
+						done();
+					});
+				})
+				it('ID == undefined', function(done){
+					manager.GetByEmail(blank, function(result){
+						assert.equal(result.ID, undefined);
+						done();
+					});
+				})
+				it('AID == undefined', function(done){
+					manager.GetByEmail(blank, function(result){
+						assert.equal(result.AID, undefined);
+						done();
+					});
+				})
+				it('Username == undefined', function(done){
+					manager.GetByEmail(blank, function(result){
+						assert.equal(result.Username, undefined);
+						done();
+					});
+				})
+				it('Email == undefined', function(done){
+					manager.GetByEmail(blank, function(result){
+						assert.equal(result.Email, undefined);
+						done();
+					});
+				})
+				it('Hash == undefined', function(done){
+					manager.GetByEmail(blank, function(result){
+						assert.equal(result.Hash, undefined);
+						done();
+					});
+				})
+				it('Created == undefined', function(done){
+					manager.GetByEmail(blank, function(result){
+						assert.equal(result.Created, undefined);
+						done();
+					});
+				})
+				it('LastLogin == undefined', function(done){
+					manager.GetByEmail(blank, function(result){
+						assert.equal(result.LastLogin, undefined);
+						done();
+					});
+				})
+			})
+		})
 		
 		describe('Search:', function(){
-				var valid = 'Test1';
-				var invalid = 'invalid';
-				var blank = undefined;
+			var valid = 'Test1';
+			var invalid = 'invalid';
 				
-				describe('Valid:', function(){
-					it('Result != undefined', function(done){
-						manager.Search(valid, function(result){
-							assert.notEqual(result, undefined);
-							done();
-						});
-					})
-					it('Success = true', function(done){
-						manager.Search(valid, function(result){
-							assert.equal(result.Success, true);
-							assert.equal(result.Reason, undefined);
-							done();
-						});
-					})
-					it('Result = Login', function(done){
-						manager.Search(valid, function(result){
-							assert.equal(result.ID, 1);
-							assert.equal(result.AID, '1');
-							assert.equal(result.Username, 'Test1');
-							assert.equal(result.Email, undefined);
-							assert.equal(result.Hash, undefined);
-							assert.equal(result.Created, undefined);
-							assert.equal(result.LastLogin, undefined);
-							done();
-						});
-					})
+			describe('Valid:', function(){
+				it('Result != undefined', function(done){
+					manager.Search(valid, function(result){
+						assert.notEqual(result, undefined);
+						done();
+					});
 				})
-				describe('Invalid:', function(){
-					it('Result != undefined', function(done){
-						manager.Search(invalid, function(result){
-							assert.notEqual(result, undefined);
-							done();
-						});
-					})
-					it('Success = false', function(done){
-						manager.Search(invalid, function(result){
-							assert.equal(result.Success, false);
-							assert.notEqual(result.Reason, undefined);
-							done();
-						});
-					})
-					it('Result = Fail', function(done){
-						manager.Search(invalid, function(result){
-							assert.notEqual(result.Reason, undefined);
-							done();
-						});
-					})
+				it('Success = true', function(done){
+					manager.Search(valid, function(result){
+						assert.equal(result.Success, true);
+						done();
+					});
 				})
-				describe('Missing "Username":', function(){
-					it('Result != undefined', function(done){
-						manager.Search(blank, function(result){
-							assert.notEqual(result, undefined);
-							done();
-						});
-					})
-					it('Success = false', function(done){
-						manager.Search(blank, function(result){
-							assert.equal(result.Success, false);
-							assert.notEqual(result.Reason, undefined);
-							done();
-						});
-					})
-					it('Result = Fail', function(done){
-						manager.Search(blank, function(result){
-							assert.notEqual(result.Reason, undefined);
-							done();
-						});
-					})
+				it('Reason == undefined', function(done){
+					manager.Search(valid, function(result){
+						assert.equal(result.Reason, undefined);
+						done();
+					});
+				})
+				it('ID == ID', function(done){
+					manager.Search(valid, function(result){
+						assert.equal(result.ID, validObject.ID);
+						done();
+					});
+				})
+				it('AID == AID', function(done){
+					manager.Search(valid, function(result){
+						assert.equal(result.AID, validObject.AID);
+						done();
+					});
+				})
+				it('Username == Username', function(done){
+					manager.Search(valid, function(result){
+						assert.equal(result.Username, validObject.Username);
+						done();
+					});
+				})
+				it('Email == undefined', function(done){
+					manager.Search(valid, function(result){
+						assert.equal(result.Email, undefined);
+						done();
+					});
+				})
+				it('Hash == undefined', function(done){
+					manager.Search(valid, function(result){
+						assert.equal(result.Hash, undefined);
+						done();
+					});
+				})
+				it('Created == undefined', function(done){
+					manager.Search(valid, function(result){
+						assert.equal(result.Created, undefined);
+						done();
+					});
+				})
+				it('LastLogin == undefined', function(done){
+					manager.Search(valid, function(result){
+						assert.equal(result.LastLogin, undefined);
+						done();
+					});
 				})
 			})
+			describe('Invalid:', function(){
+				it('Result != undefined', function(done){
+					manager.Search(invalid, function(result){
+						assert.notEqual(result, undefined);
+						done();
+					});
+				})
+				it('Success = false', function(done){
+					manager.Search(invalid, function(result){
+						assert.equal(result.Success, false);
+						done();
+					});
+				})
+				it('Reason != undefined', function(done){
+					manager.Search(invalid, function(result){
+						assert.notEqual(result.Reason, undefined);
+						done();
+					});
+				})
+				it('ID == undefined', function(done){
+					manager.Search(invalid, function(result){
+						assert.equal(result.ID, undefined);
+						done();
+					});
+				})
+				it('AID == undefined', function(done){
+					manager.Search(invalid, function(result){
+						assert.equal(result.AID, undefined);
+						done();
+					});
+				})
+				it('Username == undefined', function(done){
+					manager.Search(invalid, function(result){
+						assert.equal(result.Username, undefined);
+						done();
+					});
+				})
+				it('Email == undefined', function(done){
+					manager.Search(invalid, function(result){
+						assert.equal(result.Email, undefined);
+						done();
+					});
+				})
+				it('Hash == undefined', function(done){
+					manager.Search(invalid, function(result){
+						assert.equal(result.Hash, undefined);
+						done();
+					});
+				})
+				it('Created == undefined', function(done){
+					manager.Search(invalid, function(result){
+						assert.equal(result.Created, undefined);
+						done();
+					});
+				})
+				it('LastLogin == undefined', function(done){
+					manager.Search(invalid, function(result){
+						assert.equal(result.LastLogin, undefined);
+						done();
+					});
+				})
+			})
+			describe('Missing "Username":', function(){
+				it('Result != undefined', function(done){
+					manager.Search(blank, function(result){
+						assert.notEqual(result, undefined);
+						done();
+					});
+				})
+				it('Success = false', function(done){
+					manager.Search(blank, function(result){
+						assert.equal(result.Success, false);
+						done();
+					});
+				})
+				it('Reason != undefined', function(done){
+					manager.Search(blank, function(result){
+						assert.notEqual(result.Reason, undefined);
+						done();
+					});
+				})
+				it('ID == undefined', function(done){
+					manager.Search(blank, function(result){
+						assert.equal(result.ID, undefined);
+						done();
+					});
+				})
+				it('AID == undefined', function(done){
+					manager.Search(blank, function(result){
+						assert.equal(result.AID, undefined);
+						done();
+					});
+				})
+				it('Username == undefined', function(done){
+					manager.Search(blank, function(result){
+						assert.equal(result.Username, undefined);
+						done();
+					});
+				})
+				it('Email == undefined', function(done){
+					manager.Search(blank, function(result){
+						assert.equal(result.Email, undefined);
+						done();
+					});
+				})
+				it('Hash == undefined', function(done){
+					manager.Search(blank, function(result){
+						assert.equal(result.Hash, undefined);
+						done();
+					});
+				})
+				it('Created == undefined', function(done){
+					manager.Search(blank, function(result){
+						assert.equal(result.Created, undefined);
+						done();
+					});
+				})
+				it('LastLogin == undefined', function(done){
+					manager.Search(blank, function(result){
+						assert.equal(result.LastLogin, undefined);
+						done();
+					});
+				})
+			})
+		})
 	}
 };
