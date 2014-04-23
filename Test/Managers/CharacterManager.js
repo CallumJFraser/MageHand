@@ -6,8 +6,8 @@ var blank = undefined;
 module.exports = {
 	Test: function(){
 	
-		var validRow = {"ID":1,"AccountAID":"1","Name":"Test","Experiance":4500,"Age":100,"Height":100,"Strength":10,"Dexterity":14,"Constitution":10,"Inteligence":10,"Wisdom":10,"Charisma":19,"HP":20,"AC":18,"Initiative":3,"Fortitude":3,"Reflex":3,"Will":3,"Grapple":2,"BaseAttack":3,"SpellResistance":10,"TouchAC":18,"FlatFootedAC":15,"ClassID":1,"ClassName":"Bard","ClassVersionID":1,"ClassDescription":"","RaceID":1,"RaceName":"Gnome","RaceDescription":"They are, like, waay small.","RaceSizeID":1,"RaceSpeed":20,"SizeID":1,"SizeName":"Small"};
-		var validObject = {"ID":1,"Name":"Test","Class":{"ID":1,"Name":"Bard","Description":"","Version":{"ID":1,"Name":"Test"}},"Experiance":4500,"Race":{"ID":1,"Name":"Gnome","Description":"They are, like, waay small.","Speed":20},"Age":100,"Height":100,"Strength":10,"Dexterity":14,"Constitution":10,"Inteligence":10,"Wisdom":10,"Charisma":19,"HP":20,"AC":18,"Fortitude":3,"Reflex":3,"Will":3,"Grapple":2,"BaseAttack":3,"SpellResistance":10,"TouchAC":18,"FlatFootedAC":15,"Success":true};
+		var validRow = {"ID":1,"AccountAID":"1","Name":"Test","Experiance":4500,"Age":100,"Height":100,"Strength":10,"Dexterity":14,"Constitution":10,"Inteligence":10,"Wisdom":10,"Charisma":19,"HP":20,"AC":18,"Initiative":3,"Fortitude":3,"Reflex":3,"Will":3,"Grapple":2,"BaseAttack":3,"SpellResistance":10,"TouchAC":18,"FlatFootedAC":15,"ClassID":1,"RaceID":1};
+		var validObject = {"ID":1,"Name":"Test","ClassID":1,"Experiance":4500,"RaceID":1,"Age":100,"Height":100,"Strength":10,"Dexterity":14,"Constitution":10,"Inteligence":10,"Wisdom":10,"Charisma":19,"HP":20,"AC":18,"Fortitude":3,"Reflex":3,"Will":3,"Grapple":2,"BaseAttack":3,"SpellResistance":10,"TouchAC":18,"FlatFootedAC":15,"Success":true};
 
 		describe('Public functions:', function(){
 			it('FromObject != undefined', function(){
@@ -36,14 +36,14 @@ module.exports = {
 				it('Name == Name', function(){
 					assert.equal(result.Name, validObject.Name);
 				})
-				it('Class != undefined', function(){
-					assert.notEqual(result.Class, undefined);
+				it('ClassID != undefined', function(){
+					assert.notEqual(result.ClassID, undefined);
 				})
 				it('Experiance == Experiance', function(){
 					assert.equal(result.Experiance, validObject.Experiance);
 				})
-				it('Race != undefined', function(){
-					assert.notEqual(result.Race, undefined);
+				it('RaceID != undefined', function(){
+					assert.notEqual(result.RaceID, undefined);
 				})
 				it('Age == Age', function(){
 					assert.equal(result.Age, validObject.Age);
@@ -99,7 +99,7 @@ module.exports = {
 				it('FlatFootedAC == FlatFootedAC', function(){
 					assert.equal(result.FlatFootedAC, validObject.FlatFootedAC);
 				})
-		})
+			})
 			describe('Missing "ID":', function(){
 				var missingID = validRow;
 				missingID.ID = undefined;
@@ -113,14 +113,14 @@ module.exports = {
 				it('Name == Name', function(){
 					assert.equal(result.Name, validObject.Name);
 				})
-				it('Class != undefined', function(){
-					assert.notEqual(result.Class, undefined);
+				it('ClassID != undefined', function(){
+					assert.notEqual(result.ClassID, undefined);
 				})
 				it('Experiance == Experiance', function(){
 					assert.equal(result.Experiance, validObject.Experiance);
 				})
-				it('Race != undefined', function(){
-					assert.notEqual(result.Race, undefined);
+				it('RaceID != undefined', function(){
+					assert.notEqual(result.RaceID, undefined);
 				})
 				it('Age == Age', function(){
 					assert.equal(result.Age, validObject.Age);
@@ -188,14 +188,14 @@ module.exports = {
 				it('Name == undefined', function(){
 					assert.equal(result.Name, undefined);
 				})
-				it('Class == undefined', function(){
-					assert.equal(result.Class, undefined);
+				it('ClassID == undefined', function(){
+					assert.equal(result.ClassID, undefined);
 				})
 				it('Experiance == undefined', function(){
 					assert.equal(result.Experiance, undefined);
 				})
-				it('Race == undefined', function(){
-					assert.equal(result.Race, undefined);
+				it('RaceID == undefined', function(){
+					assert.equal(result.RaceID, undefined);
 				})
 				it('Age == undefined', function(){
 					assert.equal(result.Age, undefined);
@@ -285,9 +285,9 @@ module.exports = {
 						done();
 					});
 				})
-				it('Class != undefined', function(done){
+				it('ClassID != undefined', function(done){
 					manager.Get(valid, function(result){
-						assert.notEqual(result.Class, undefined);
+						assert.notEqual(result.ClassID, undefined);
 						done();
 					});
 				})
@@ -297,9 +297,9 @@ module.exports = {
 							done();
 					});
 				})
-				it('Race != undefined', function(done){
+				it('RaceID != undefined', function(done){
 					manager.Get(valid, function(result){
-						assert.notEqual(result.Race, undefined);
+						assert.notEqual(result.RaceID, undefined);
 						done();
 					});
 				})
@@ -443,9 +443,9 @@ module.exports = {
 						done();
 					});
 				})
-				it('Class == undefined', function(done){
+				it('ClassID == undefined', function(done){
 					manager.Get(invalid, function(result){
-						assert.equal(result.Class, undefined);
+						assert.equal(result.ClassID, undefined);
 						done();
 					});
 				})
@@ -455,9 +455,9 @@ module.exports = {
 						done();
 					});
 				})
-				it('Race != undefined', function(done){
+				it('RaceID != undefined', function(done){
 					manager.Get(invalid, function(result){
-						assert.equal(result.Race, undefined);
+						assert.equal(result.RaceID, undefined);
 						done();
 					});
 				})
@@ -601,9 +601,9 @@ module.exports = {
 						done();
 					});
 				})
-				it('Class == undefined', function(done){
+				it('ClassID == undefined', function(done){
 					manager.Get(invalidFormat, function(result){
-						assert.equal(result.Class, undefined);
+						assert.equal(result.ClassID, undefined);
 						done();
 					});
 				})
@@ -613,9 +613,9 @@ module.exports = {
 						done();
 					});
 				})
-				it('Race != undefined', function(done){
+				it('RaceID != undefined', function(done){
 					manager.Get(invalidFormat, function(result){
-						assert.equal(result.Race, undefined);
+						assert.equal(result.RaceID, undefined);
 						done();
 					});
 				})
@@ -759,9 +759,9 @@ module.exports = {
 						done();
 					});
 				})
-				it('Class == undefined', function(done){
+				it('ClassID == undefined', function(done){
 					manager.Get(blank, function(result){
-						assert.equal(result.Class, undefined);
+						assert.equal(result.ClassID, undefined);
 						done();
 					});
 				})
@@ -771,9 +771,9 @@ module.exports = {
 						done();
 					});
 				})
-				it('Race != undefined', function(done){
+				it('RaceID != undefined', function(done){
 					manager.Get(blank, function(result){
-						assert.equal(result.Race, undefined);
+						assert.equal(result.RaceID, undefined);
 						done();
 					});
 				})
@@ -918,9 +918,9 @@ module.exports = {
 						done();
 					});
 				})
-				it('Class != undefined', function(done){
+				it('ClassID != undefined', function(done){
 					manager.GetByAccount(valid, function(result){
-						assert.notEqual(result[0].Class, undefined);
+						assert.notEqual(result[0].ClassID, undefined);
 						done();
 					});
 				})
@@ -930,9 +930,9 @@ module.exports = {
 						done();
 					});
 				})
-				it('Race != undefined', function(done){
+				it('RaceID != undefined', function(done){
 					manager.GetByAccount(valid, function(result){
-						assert.notEqual(result[0].Race, undefined);
+						assert.notEqual(result[0].RaceID, undefined);
 						done();
 					});
 				})

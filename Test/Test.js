@@ -1,10 +1,23 @@
-var database = require('../database.js');
-var accountManager = require('./Managers/AccountManager.js');
-var characterManager = require('./Managers/CharacterManager.js');
-var classManager = require('./Managers/ClassManager.js');
-var loginManager = require('./Managers/LoginManager.js');
-var storyManager = require('./Managers/StoryManager.js');
+var database = require('../database');
+var accountManager = require('./Managers/AccountManager');
+var characterManager = require('./Managers/CharacterManager');
+var classManager = require('./Managers/ClassManager');
+var loginManager = require('./Managers/LoginManager');
+var storyManager = require('./Managers/StoryManager');
 
+var apiAuth = require('./API/Auth');
+var apiAccount = require('./API/Account');
+var apiCharacter = require('./API/Character');
+var apiClass = require('./API/Class');
+var apiRace = require('./API/Race');
+var apiSize = require('./API/Size');
+var apiSession = require('./API/Session');
+var apiSkills = require('./API/Skills');
+/*
+var api = require('./API/');
+var api = require('./API/');
+var api = require('./API/');
+*/
 describe('Database:', function(){
 	it('Restart', function(){
 		database.Restart(undefined);
@@ -29,5 +42,38 @@ describe('Login Manager -', function(){
 });
 
 describe('Story Manager -', function(){
-	storyManager.Test();
+	storyManager.Test();	//	Done
 });
+
+describe('API Auth Manager -', function(){
+	apiAuth.Test();	//	Done
+});
+
+describe('API Account -', function(){
+	apiAccount.Test();	//	Done
+});
+
+describe('API Character -', function(){
+	apiCharacter.Test();	//	Done
+});
+/*	TODO:
+describe('API Class -', function(){
+	apiClass.Test();	//	
+});
+
+describe('API Race -', function(){
+	apiRace.Test();	//	
+});
+
+describe('API Size -', function(){
+	apiSize.Test();	//	
+});
+
+describe('API Session -', function(){
+	apiSession.Test();	//	
+});
+
+describe('API Skills -', function(){
+	apiSkills.Test();	//	
+});
+*/
