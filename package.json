@@ -1,9 +1,22 @@
 {
-  "name": “MageHandAPI”,
-  "description": "MageHand API for the Dungeons and Dragons (DnD) table top game”,
-  "version": "0.0.1",
-  "private": true,
-  "dependencies": {
-    "express": "3.x"
-  }
+	"name": "MageHandAPI",
+	"description": "MageHand API for the Dungeons and Dragons (DnD) table top game",
+	"version": "0.0.1",
+	"homepage": "http://github.com/CallumJFraser/MageHand",
+	"license": "GPL-2.0",
+	"author":{
+		"name" : "Callum Fraser",
+		"email" : "email@callumjfraser.com",
+		"url" : "http://www.callumjfraser.com/"
+	},
+	"repository" :
+	{
+		"type" : "git",
+		"url" : "http://github.com/CallumJFraser/MageHand.git"
+	},
+	"private": true,
+	"dependencies": {
+	"express": "3.x",
+	"async":">=0.7"
+	}
 }
