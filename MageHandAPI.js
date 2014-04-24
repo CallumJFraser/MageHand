@@ -3,6 +3,7 @@ var database = require('./Database.js');
 var accountManager = require('./AccountManager.js');
 var loginManager = require('./LoginManager.js');
 var characterManager = require('./CharacterManager.js');
+var classManager = require('./ClassManager.js');
 var storyManager = require('./StoryManager.js');
 var skillManager = require('./SkillManager.js');
 
@@ -50,7 +51,7 @@ function getAccount(aID, sID, username, callback){
 function getCharacter(aID, sID, characterID, callback){
 	authorise(aID, sID, function(authorised){
 		if(authorised.Success){
-			characterManager.GetCharacter(characterID, function(data){
+			characterManager.Get(characterID, function(data){
 				callback(new DnDResponse(data, authorised));
 			});
 		}
@@ -63,7 +64,20 @@ function getCharacter(aID, sID, characterID, callback){
 function getAccountCharacters(aID, sID, accountAID, callback){
 	authorise(aID, sID, function(authorised){
 		if(authorised.Success){
-			characterManager.GetAccountCharacters(accountAID, function(data){
+			characterManager.GetByAccount(accountAID, function(data){
+				callback(new DnDResponse(data, authorised));
+			});
+		}
+		else{
+			callback(new DnDResponse({ Success:false, Reason: 'See authorisation' }, authorised));
+		}
+	});
+}
+
+function getClass(aID, sID, ID, callback){
+	authorise(aID, sID, function(authorised){
+		if(authorised.Success){
+			classManager.Get(ID, function(data){
 				callback(new DnDResponse(data, authorised));
 			});
 		}
@@ -170,6 +184,9 @@ module.exports = {
 	},
 	GetAccountCharacters: function(aID, sID, accountAID, callback){
 		getAccountCharacters(aID, sID, accountAID, callback);
+	},
+	GetClass:function(aID, sID, ID, callback){
+		getClass(aID, sID, ID, callback);
 	},
 	GetStory: function(aID, sID, storyID, callback){
 		getStory(aID, sID, storyID, callback);

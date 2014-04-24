@@ -19,8 +19,9 @@ var api = require('./API/');
 var api = require('./API/');
 */
 describe('Database:', function(){
-	it('Restart', function(){
+	it('Restart', function(done){
 		database.Restart(undefined);
+		done();
 	})
 })
 
@@ -32,7 +33,7 @@ describe('Account Manager -', function(){
 describe('Character Manager -', function(){
 	characterManager.Test();	//	Done, may need some tests for the account version (ensure there isnt multiple records)?
 });
-
+/*
 describe('Class Manager -', function(){
 	classManager.Test();	//	Done
 });
@@ -56,7 +57,7 @@ describe('API Account -', function(){
 describe('API Character -', function(){
 	apiCharacter.Test();	//	Done
 });
-/*	TODO:
+*//*	TODO:
 describe('API Class -', function(){
 	apiClass.Test();	//	
 });

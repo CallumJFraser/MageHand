@@ -117,5 +117,8 @@ module.exports = {
 	},
 	Search: function(text, callback){
 		searchBasic(text, callback);
+	},
+	FromID: function(id, callback){
+		//
 	}
 };
