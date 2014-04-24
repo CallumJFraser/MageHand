@@ -4,18 +4,11 @@ var versionManager = require('./VersionManager.js');
 function Class(row){
 	if(row == undefined)
 		return new Failed('Missing parameter');
-	//	In some cases the row will be a join of the class and contain the items prefixed with "Class"
-	if(row.ClassID == undefined && row.ClassName == undefined && row.ClassDescription == undefined){
-		this.ID = row.ID;
-		this.Name = row.Name;
-		this.Description = row.Description;
-	}
-	else{
-		this.ID = row.ClassID;
-		this.Name = row.ClassName;
-		this.Description = row.ClassDescription;
-	}
-	this.Version = versionManager.FromObject(row);
+
+	this.ID = row.ID;
+	this.Name = row.Name;
+	this.Description = row.Description;
+	this.VersionID = row.VersionID;
 }
 
 function Failed(reason){
@@ -33,7 +26,6 @@ function getByID(id, callback){
 			databaseObject.Procedure('sp_GetClass', [id], function(rows){
 				if(rows.length > 0){
 					var value = new Class(rows[0]);
-					value.Success = true;
 					callback(value);
 				}
 				else{
@@ -53,5 +45,8 @@ module.exports = {
 	},
 	FromObject: function(row){
 		return new Class(row);
+	},
+	FromID: function(id, callback){
+		//
 	}
 };

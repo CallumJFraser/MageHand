@@ -7,7 +7,7 @@ module.exports = {
 	Test: function(){
 	
 		var validRow = {"ID":1,"AccountAID":"1","Name":"Test","Experiance":4500,"Age":100,"Height":100,"Strength":10,"Dexterity":14,"Constitution":10,"Inteligence":10,"Wisdom":10,"Charisma":19,"HP":20,"AC":18,"Initiative":3,"Fortitude":3,"Reflex":3,"Will":3,"Grapple":2,"BaseAttack":3,"SpellResistance":10,"TouchAC":18,"FlatFootedAC":15,"ClassID":1,"RaceID":1};
-		var validObject = {"ID":1,"Name":"Test","ClassID":1,"Experiance":4500,"RaceID":1,"Age":100,"Height":100,"Strength":10,"Dexterity":14,"Constitution":10,"Inteligence":10,"Wisdom":10,"Charisma":19,"HP":20,"AC":18,"Fortitude":3,"Reflex":3,"Will":3,"Grapple":2,"BaseAttack":3,"SpellResistance":10,"TouchAC":18,"FlatFootedAC":15,"Success":true};
+		var validObject = {"ID":1,"AccountAID":"1","Name":"Test","ClassID":1,"Experiance":4500,"RaceID":1,"Age":100,"Height":100,"Strength":10,"Dexterity":14,"Constitution":10,"Inteligence":10,"Wisdom":10,"Charisma":19,"HP":20,"AC":18,"Fortitude":3,"Reflex":3,"Will":3,"Grapple":2,"BaseAttack":3,"SpellResistance":10,"TouchAC":18,"FlatFootedAC":15,"Success":true};
 
 		describe('Public functions:', function(){
 			it('FromObject != undefined', function(){
@@ -23,237 +23,477 @@ module.exports = {
 	
 		describe('FromObject:', function(){
 			describe('Valid', function(){
-				var result = manager.FromObject(validRow);
-				it('Value != undefined', function(){
-					assert.notEqual(result, undefined);
-				})
-				it('Reason == undefined', function(){
-					assert.equal(result.Reason, undefined);
-				})
-				it('ID == ID', function(){
-					assert.equal(result.ID, validObject.ID);
-				})
-				it('Name == Name', function(){
-					assert.equal(result.Name, validObject.Name);
-				})
-				it('ClassID != undefined', function(){
-					assert.notEqual(result.ClassID, undefined);
-				})
-				it('Experiance == Experiance', function(){
-					assert.equal(result.Experiance, validObject.Experiance);
-				})
-				it('RaceID != undefined', function(){
-					assert.notEqual(result.RaceID, undefined);
-				})
-				it('Age == Age', function(){
-					assert.equal(result.Age, validObject.Age);
-				})
-				it('Height == Height', function(){
-					assert.equal(result.Height, validObject.Height);
-				})
-				it('Strength == Strength', function(){
-					assert.equal(result.Strength, validObject.Strength);
-				})
-				it('Dexterity == Dexterity', function(){
-					assert.equal(result.Dexterity, validObject.Dexterity);
-				})
-				it('Constitution == Constitution', function(){
-					assert.equal(result.Constitution, validObject.Constitution);
-				})
-				it('Inteligence == Inteligence', function(){
-					assert.equal(result.Inteligence, validObject.Inteligence);
-				})
-				it('Wisdom == Wisdom', function(){
-					assert.equal(result.Wisdom, validObject.Wisdom);
-				})
-				it('Charisma == Charisma', function(){
-					assert.equal(result.Charisma, validObject.Charisma);
-				})
-				it('HP == HP', function(){
-					assert.equal(result.HP, validObject.HP);
-				})
-				it('AC == AC', function(){
-					assert.equal(result.AC, validObject.AC);
-				})
-				it('Fortitude == Fortitude', function(){
-					assert.equal(result.Fortitude, validObject.Fortitude);
-				})
-				it('Reflex == Reflex', function(){
-					assert.equal(result.Reflex, validObject.Reflex);
-				})
-				it('Will == Will', function(){
-					assert.equal(result.Will, validObject.Will);
-				})
-				it('Grapple == Grapple', function(){
-					assert.equal(result.Grapple, validObject.Grapple);
-				})
-				it('BaseAttack == BaseAttack', function(){
-					assert.equal(result.BaseAttack, validObject.BaseAttack);
-				})
-				it('SpellResistance == SpellResistance', function(){
-					assert.equal(result.SpellResistance, validObject.SpellResistance);
-				})
-				it('TouchAC == TouchAC', function(){
-					assert.equal(result.TouchAC, validObject.TouchAC);
-				})
-				it('FlatFootedAC == FlatFootedAC', function(){
-					assert.equal(result.FlatFootedAC, validObject.FlatFootedAC);
-				})
+				it('Value != undefined', function(done){
+					manager.FromObject(validRow, function(result){
+						assert.notEqual(result, undefined);
+						done();
+					});
+				});
+				it('Reason == undefined', function(done){
+					manager.FromObject(validRow, function(result){
+						assert.equal(result.Reason, undefined);
+						done();
+					});
+				});
+				it('ID == ID', function(done){
+					manager.FromObject(validRow, function(result){
+						assert.equal(result.ID, validObject.ID);
+						done();
+					});
+				});
+				it('Name == Name', function(done){
+					manager.FromObject(validRow, function(result){
+						assert.equal(result.Name, validObject.Name);
+						done();
+					});
+				});
+				it('Class != undefined', function(done){
+					manager.FromObject(validRow, function(result){
+						assert.notEqual(result.Class, undefined);
+						done();
+					});
+				});
+				it('Experiance == Experiance', function(done){
+					manager.FromObject(validRow, function(result){
+						assert.equal(result.Experiance, validObject.Experiance);
+						done();
+					});
+				});
+				it('Race != undefined', function(done){
+					manager.FromObject(validRow, function(result){
+						assert.notEqual(result.Race, undefined);
+						done();
+					});
+				});
+				it('Age == Age', function(done){
+					manager.FromObject(validRow, function(result){
+						assert.equal(result.Age, validObject.Age);
+						done();
+					});
+				});
+				it('Height == Height', function(done){
+					manager.FromObject(validRow, function(result){
+						assert.equal(result.Height, validObject.Height);
+						done();
+					});
+				});
+				it('Strength == Strength', function(done){
+					manager.FromObject(validRow, function(result){
+						assert.equal(result.Strength, validObject.Strength);
+						done();
+					});
+				});
+				it('Dexterity == Dexterity', function(done){
+					manager.FromObject(validRow, function(result){
+						assert.equal(result.Dexterity, validObject.Dexterity);
+						done();
+					});
+				});
+				it('Constitution == Constitution', function(done){
+					manager.FromObject(validRow, function(result){
+						assert.equal(result.Constitution, validObject.Constitution);
+						done();
+					});
+				});
+				it('Inteligence == Inteligence', function(done){
+					manager.FromObject(validRow, function(result){
+						assert.equal(result.Inteligence, validObject.Inteligence);
+						done();
+					});
+				});
+				it('Wisdom == Wisdom', function(done){
+					manager.FromObject(validRow, function(result){
+						assert.equal(result.Wisdom, validObject.Wisdom);
+						done();
+					});
+				});
+				it('Charisma == Charisma', function(done){
+					manager.FromObject(validRow, function(result){
+						assert.equal(result.Charisma, validObject.Charisma);
+						done();
+					});
+				});
+				it('HP == HP', function(done){
+					manager.FromObject(validRow, function(result){
+						assert.equal(result.HP, validObject.HP);
+						done();
+					});
+				});
+				it('AC == AC', function(done){
+					manager.FromObject(validRow, function(result){
+						assert.equal(result.AC, validObject.AC);
+						done();
+					});
+				});
+				it('Fortitude == Fortitude', function(done){
+					manager.FromObject(validRow, function(result){
+						assert.equal(result.Fortitude, validObject.Fortitude);
+						done();
+					});
+				});
+				it('Reflex == Reflex', function(done){
+					manager.FromObject(validRow, function(result){
+						assert.equal(result.Reflex, validObject.Reflex);
+						done();
+					});
+				});
+				it('Will == Will', function(done){
+					manager.FromObject(validRow, function(result){
+						assert.equal(result.Will, validObject.Will);
+						done();
+					});
+				});
+				it('Grapple == Grapple', function(done){
+					manager.FromObject(validRow, function(result){
+						assert.equal(result.Grapple, validObject.Grapple);
+						done();
+					});
+				});
+				it('BaseAttack == BaseAttack', function(done){
+					manager.FromObject(validRow, function(result){
+						assert.equal(result.BaseAttack, validObject.BaseAttack);
+						done();
+					});
+				});
+				it('SpellResistance == SpellResistance', function(done){
+					manager.FromObject(validRow, function(result){
+						assert.equal(result.SpellResistance, validObject.SpellResistance);
+						done();
+					});
+				});
+				it('TouchAC == TouchAC', function(done){
+					manager.FromObject(validRow, function(result){
+						assert.equal(result.TouchAC, validObject.TouchAC);
+						done();
+					});
+				});
+				it('FlatFootedAC == FlatFootedAC', function(done){
+					manager.FromObject(validRow, function(result){
+						assert.equal(result.FlatFootedAC, validObject.FlatFootedAC);
+						done();
+					});
+				});
 			})
+
 			describe('Missing "ID":', function(){
-				var missingID = validRow;
-				missingID.ID = undefined;
-				var result = manager.FromObject(missingID);
-					it('Value != undefined', function(){
-					assert.notEqual(result, undefined);
+				it('Value != undefined', function(done){
+					var missingID = validRow;
+					missingID.ID = undefined;
+					manager.FromObject(missingID, function(result){
+						assert.notEqual(result, undefined);
+						done();
+					});
 				})
-				it('ID == undefined', function(){
-					assert.equal(result.ID, undefined);
+				it('ID == undefined', function(done){
+					var missingID = validRow;
+					missingID.ID = undefined;
+					manager.FromObject(missingID, function(result){
+						assert.equal(result.ID, undefined);
+						done();
+					});
 				})
-				it('Name == Name', function(){
-					assert.equal(result.Name, validObject.Name);
+				it('Name == Name', function(done){
+					var missingID = validRow;
+					missingID.ID = undefined;
+					manager.FromObject(missingID, function(result){
+						assert.equal(result.Name, validObject.Name);
+						done();
+					});
 				})
-				it('ClassID != undefined', function(){
-					assert.notEqual(result.ClassID, undefined);
+				it('Class != undefined', function(done){
+					var missingID = validRow;
+					missingID.ID = undefined;
+					manager.FromObject(missingID, function(result){
+						assert.notEqual(result.Class, undefined);
+						done();
+					});
 				})
-				it('Experiance == Experiance', function(){
-					assert.equal(result.Experiance, validObject.Experiance);
+				it('Experiance == Experiance', function(done){
+					var missingID = validRow;
+					missingID.ID = undefined;
+					manager.FromObject(missingID, function(result){
+						assert.equal(result.Experiance, validObject.Experiance);
+						done();
+					});
 				})
-				it('RaceID != undefined', function(){
-					assert.notEqual(result.RaceID, undefined);
+				it('Race != undefined', function(done){
+					var missingID = validRow;
+					missingID.ID = undefined;
+					manager.FromObject(missingID, function(result){
+						assert.notEqual(result.Race, undefined);
+						done();
+					});
 				})
-				it('Age == Age', function(){
-					assert.equal(result.Age, validObject.Age);
+				it('Age == Age', function(done){
+					var missingID = validRow;
+					missingID.ID = undefined;
+					manager.FromObject(missingID, function(result){
+						assert.equal(result.Age, validObject.Age);
+						done();
+					});
 				})
-				it('Height == Height', function(){
-					assert.equal(result.Height, validObject.Height);
+				it('Height == Height', function(done){
+					var missingID = validRow;
+					missingID.ID = undefined;
+					manager.FromObject(missingID, function(result){
+						assert.equal(result.Height, validObject.Height);
+						done();
+					});
 				})
-				it('Strength == Strength', function(){
-					assert.equal(result.Strength, validObject.Strength);
+				it('Strength == Strength', function(done){
+					var missingID = validRow;
+					missingID.ID = undefined;
+					manager.FromObject(missingID, function(result){
+						assert.equal(result.Strength, validObject.Strength);
+						done();
+					});
 				})
-				it('Dexterity == Dexterity', function(){
-					assert.equal(result.Dexterity, validObject.Dexterity);
+				it('Dexterity == Dexterity', function(done){
+					var missingID = validRow;
+					missingID.ID = undefined;
+					manager.FromObject(missingID, function(result){
+						assert.equal(result.Dexterity, validObject.Dexterity);
+						done();
+					});
 				})
-				it('Constitution == Constitution', function(){
-					assert.equal(result.Constitution, validObject.Constitution);
+				it('Constitution == Constitution', function(done){
+					var missingID = validRow;
+					missingID.ID = undefined;
+					manager.FromObject(missingID, function(result){
+						assert.equal(result.Constitution, validObject.Constitution);
+						done();
+					});
 				})
-				it('Inteligence == Inteligence', function(){
-					assert.equal(result.Inteligence, validObject.Inteligence);
+				it('Inteligence == Inteligence', function(done){
+					var missingID = validRow;
+					missingID.ID = undefined;
+					manager.FromObject(missingID, function(result){
+						assert.equal(result.Inteligence, validObject.Inteligence);
+						done();
+					});
 				})
-				it('Wisdom == Wisdom', function(){
-					assert.equal(result.Wisdom, validObject.Wisdom);
+				it('Wisdom == Wisdom', function(done){
+					var missingID = validRow;
+					missingID.ID = undefined;
+					manager.FromObject(missingID, function(result){
+						assert.equal(result.Wisdom, validObject.Wisdom);
+						done();
+					});
 				})
-				it('Charisma == Charisma', function(){
-					assert.equal(result.Charisma, validObject.Charisma);
+				it('Charisma == Charisma', function(done){
+					var missingID = validRow;
+					missingID.ID = undefined;
+					manager.FromObject(missingID, function(result){
+						assert.equal(result.Charisma, validObject.Charisma);
+						done();
+					});
 				})
-				it('HP == HP', function(){
-					assert.equal(result.HP, validObject.HP);
+				it('HP == HP', function(done){
+					var missingID = validRow;
+					missingID.ID = undefined;
+					manager.FromObject(missingID, function(result){
+						assert.equal(result.HP, validObject.HP);
+						done();
+					});
 				})
-				it('AC == AC', function(){
-					assert.equal(result.AC, validObject.AC);
+				it('AC == AC', function(done){
+					var missingID = validRow;
+					missingID.ID = undefined;
+					manager.FromObject(missingID, function(result){
+						assert.equal(result.AC, validObject.AC);
+						done();
+					});
 				})
-				it('Fortitude == Fortitude', function(){
-					assert.equal(result.Fortitude, validObject.Fortitude);
+				it('Fortitude == Fortitude', function(done){
+					var missingID = validRow;
+					missingID.ID = undefined;
+					manager.FromObject(missingID, function(result){
+						assert.equal(result.Fortitude, validObject.Fortitude);
+						done();
+					});
 				})
-				it('Reflex == Reflex', function(){
-					assert.equal(result.Reflex, validObject.Reflex);
+				it('Reflex == Reflex', function(done){
+					var missingID = validRow;
+					missingID.ID = undefined;
+					manager.FromObject(missingID, function(result){
+						assert.equal(result.Reflex, validObject.Reflex);
+						done();
+					});
 				})
-				it('Will == Will', function(){
-					assert.equal(result.Will, validObject.Will);
+				it('Will == Will', function(done){
+					var missingID = validRow;
+					missingID.ID = undefined;
+					manager.FromObject(missingID, function(result){
+						assert.equal(result.Will, validObject.Will);
+						done();
+					});
 				})
-				it('Grapple == Grapple', function(){
-					assert.equal(result.Grapple, validObject.Grapple);
+				it('Grapple == Grapple', function(done){
+					var missingID = validRow;
+					missingID.ID = undefined;
+					manager.FromObject(missingID, function(result){
+						assert.equal(result.Grapple, validObject.Grapple);
+						done();
+					});
 				})
-				it('BaseAttack == BaseAttack', function(){
-					assert.equal(result.BaseAttack, validObject.BaseAttack);
+				it('BaseAttack == BaseAttack', function(done){
+					var missingID = validRow;
+					missingID.ID = undefined;
+					manager.FromObject(missingID, function(result){
+						assert.equal(result.BaseAttack, validObject.BaseAttack);
+						done();
+					});
 				})
-				it('SpellResistance == SpellResistance', function(){
-					assert.equal(result.SpellResistance, validObject.SpellResistance);
+				it('SpellResistance == SpellResistance', function(done){
+					var missingID = validRow;
+					missingID.ID = undefined;
+					manager.FromObject(missingID, function(result){
+						assert.equal(result.SpellResistance, validObject.SpellResistance);
+						done();
+					});
 				})
-				it('TouchAC == TouchAC', function(){
-					assert.equal(result.TouchAC, validObject.TouchAC);
+				it('TouchAC == TouchAC', function(done){
+					var missingID = validRow;
+					missingID.ID = undefined;
+					manager.FromObject(missingID, function(result){
+						assert.equal(result.TouchAC, validObject.TouchAC);
+						done();
+					});
 				})
-				it('FlatFootedAC == FlatFootedAC', function(){
-					assert.equal(result.FlatFootedAC, validObject.FlatFootedAC);
+				it('FlatFootedAC == FlatFootedAC', function(done){
+					var missingID = validRow;
+					missingID.ID = undefined;
+					manager.FromObject(missingID, function(result){
+						assert.equal(result.FlatFootedAC, validObject.FlatFootedAC);
+						done();
+					});
 				})
 			})
+			
 			describe('Invalid:', function(){
-				var result = manager.FromObject(undefined);
 				it('Value != undefined', function(){
-					assert.notEqual(result, undefined);
+					manager.FromObject(undefined, function(result){
+						assert.notEqual(result, undefined);
+					});
 				})
 				it('Reason != undefined', function(){
-					assert.notEqual(result.Reason, undefined);
+					manager.FromObject(undefined, function(result){
+						assert.notEqual(result.Reason, undefined);
+					});
 				})
 				it('Name == undefined', function(){
-					assert.equal(result.Name, undefined);
+					manager.FromObject(undefined, function(result){
+						assert.equal(result.Name, undefined);
+					});
 				})
-				it('ClassID == undefined', function(){
-					assert.equal(result.ClassID, undefined);
+				it('Class == undefined', function(){
+					manager.FromObject(undefined, function(result){
+						assert.equal(result.Class, undefined);
+					});
 				})
 				it('Experiance == undefined', function(){
-					assert.equal(result.Experiance, undefined);
+					manager.FromObject(undefined, function(result){
+						assert.equal(result.Experiance, undefined);
+					});
 				})
-				it('RaceID == undefined', function(){
-					assert.equal(result.RaceID, undefined);
+				it('Race == undefined', function(){
+					manager.FromObject(undefined, function(result){
+						assert.equal(result.Race, undefined);
+					});
 				})
 				it('Age == undefined', function(){
-					assert.equal(result.Age, undefined);
+					manager.FromObject(undefined, function(result){
+						assert.equal(result.Age, undefined);
+					});
 				})
 				it('Height == undefined', function(){
-					assert.equal(result.Height, undefined);
+					manager.FromObject(undefined, function(result){
+						assert.equal(result.Height, undefined);
+					});
 				})
 				it('Strength == undefined', function(){
-					assert.equal(result.Strength, undefined);
+					manager.FromObject(undefined, function(result){
+						assert.equal(result.Strength, undefined);
+					});
 				})
 				it('Dexterity == undefined', function(){
-					assert.equal(result.Dexterity, undefined);
+					manager.FromObject(undefined, function(result){
+						assert.equal(result.Dexterity, undefined);
+					});
 				})
 				it('Constitution == undefined', function(){
-					assert.equal(result.Constitution, undefined);
+					manager.FromObject(undefined, function(result){
+						assert.equal(result.Constitution, undefined);
+					});
 				})
 				it('Inteligence == undefined', function(){
-					assert.equal(result.Inteligence, undefined);
+					manager.FromObject(undefined, function(result){
+						assert.equal(result.Inteligence, undefined);
+					});
 				})
 				it('Wisdom == undefined', function(){
-					assert.equal(result.Wisdom, undefined);
+					manager.FromObject(undefined, function(result){
+						assert.equal(result.Wisdom, undefined);
+					});
 				})
 				it('Charisma == undefined', function(){
-					assert.equal(result.Charisma, undefined);
+					manager.FromObject(undefined, function(result){
+						assert.equal(result.Charisma, undefined);
+					});
 				})
 				it('HP == undefined', function(){
-					assert.equal(result.HP, undefined);
+					manager.FromObject(undefined, function(result){
+						assert.equal(result.HP, undefined);
+					});
 				})
 				it('AC == undefined', function(){
-					assert.equal(result.AC, undefined);
+					manager.FromObject(undefined, function(result){
+						assert.equal(result.AC, undefined);
+					});
 				})
 				it('Fortitude == undefined', function(){
-					assert.equal(result.Fortitude, undefined);
+					manager.FromObject(undefined, function(result){
+						assert.equal(result.Fortitude, undefined);
+					});
 				})
 				it('Reflex == undefined', function(){
-					assert.equal(result.Reflex, undefined);
+					manager.FromObject(undefined, function(result){
+						assert.equal(result.Reflex, undefined);
+					});
 				})
 				it('Will == undefined', function(){
-					assert.equal(result.Will, undefined);
+					manager.FromObject(undefined, function(result){
+						assert.equal(result.Will, undefined);
+					});
 				})
 				it('Grapple == undefined', function(){
-					assert.equal(result.Grapple, undefined);
+					manager.FromObject(undefined, function(result){
+						assert.equal(result.Grapple, undefined);
+					});
 				})
 				it('BaseAttack == undefined', function(){
-					assert.equal(result.BaseAttack, undefined);
+					manager.FromObject(undefined, function(result){
+						assert.equal(result.BaseAttack, undefined);
+					});
 				})
 				it('SpellResistance == undefined', function(){
-					assert.equal(result.SpellResistance, undefined);
+					manager.FromObject(undefined, function(result){
+						assert.equal(result.SpellResistance, undefined);
+					});
 				})
 				it('TouchAC == undefined', function(){
-					assert.equal(result.TouchAC, undefined);
+					manager.FromObject(undefined, function(result){
+						assert.equal(result.TouchAC, undefined);
+					});
 				})
 				it('FlatFootedAC == undefined', function(){
-					assert.equal(result.FlatFootedAC, undefined);
+					manager.FromObject(undefined, function(result){
+						assert.equal(result.FlatFootedAC, undefined);
+					});
 				})
 			})
 		})
-	
+
 		describe('Get:', function(){
 
 			var valid = 1;
@@ -285,9 +525,9 @@ module.exports = {
 						done();
 					});
 				})
-				it('ClassID != undefined', function(done){
+				it('Class != undefined', function(done){
 					manager.Get(valid, function(result){
-						assert.notEqual(result.ClassID, undefined);
+						assert.notEqual(result.Class, undefined);
 						done();
 					});
 				})
@@ -297,9 +537,9 @@ module.exports = {
 							done();
 					});
 				})
-				it('RaceID != undefined', function(done){
+				it('Race != undefined', function(done){
 					manager.Get(valid, function(result){
-						assert.notEqual(result.RaceID, undefined);
+						assert.notEqual(result.Race, undefined);
 						done();
 					});
 				})
@@ -443,9 +683,9 @@ module.exports = {
 						done();
 					});
 				})
-				it('ClassID == undefined', function(done){
+				it('Class == undefined', function(done){
 					manager.Get(invalid, function(result){
-						assert.equal(result.ClassID, undefined);
+						assert.equal(result.Class, undefined);
 						done();
 					});
 				})
@@ -455,9 +695,9 @@ module.exports = {
 						done();
 					});
 				})
-				it('RaceID != undefined', function(done){
+				it('Race != undefined', function(done){
 					manager.Get(invalid, function(result){
-						assert.equal(result.RaceID, undefined);
+						assert.equal(result.Race, undefined);
 						done();
 					});
 				})
@@ -601,9 +841,9 @@ module.exports = {
 						done();
 					});
 				})
-				it('ClassID == undefined', function(done){
+				it('Class == undefined', function(done){
 					manager.Get(invalidFormat, function(result){
-						assert.equal(result.ClassID, undefined);
+						assert.equal(result.Class, undefined);
 						done();
 					});
 				})
@@ -613,9 +853,9 @@ module.exports = {
 						done();
 					});
 				})
-				it('RaceID != undefined', function(done){
+				it('Race != undefined', function(done){
 					manager.Get(invalidFormat, function(result){
-						assert.equal(result.RaceID, undefined);
+						assert.equal(result.Race, undefined);
 						done();
 					});
 				})
@@ -759,9 +999,9 @@ module.exports = {
 						done();
 					});
 				})
-				it('ClassID == undefined', function(done){
+				it('Class == undefined', function(done){
 					manager.Get(blank, function(result){
-						assert.equal(result.ClassID, undefined);
+						assert.equal(result.Class, undefined);
 						done();
 					});
 				})
@@ -771,9 +1011,9 @@ module.exports = {
 						done();
 					});
 				})
-				it('RaceID != undefined', function(done){
+				it('Race != undefined', function(done){
 					manager.Get(blank, function(result){
-						assert.equal(result.RaceID, undefined);
+						assert.equal(result.Race, undefined);
 						done();
 					});
 				})
@@ -918,9 +1158,9 @@ module.exports = {
 						done();
 					});
 				})
-				it('ClassID != undefined', function(done){
+				it('Class != undefined', function(done){
 					manager.GetByAccount(valid, function(result){
-						assert.notEqual(result[0].ClassID, undefined);
+						assert.notEqual(result[0].Class, undefined);
 						done();
 					});
 				})
@@ -930,9 +1170,9 @@ module.exports = {
 						done();
 					});
 				})
-				it('RaceID != undefined', function(done){
+				it('Race != undefined', function(done){
 					manager.GetByAccount(valid, function(result){
-						assert.notEqual(result[0].RaceID, undefined);
+						assert.notEqual(result[0].Race, undefined);
 						done();
 					});
 				})

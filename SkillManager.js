@@ -22,7 +22,6 @@ function Get(id, callback){
 			databaseObject.Procedure('sp_GetSkillType', [id], function(rows){
 				if(rows.length > 0){
 					var value = new SkillType(rows[0]);
-					value.Success = true;
 					callback(value);
 				}
 				else{

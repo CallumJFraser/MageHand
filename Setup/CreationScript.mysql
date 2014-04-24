@@ -8,16 +8,22 @@
 DELIMITER GO
 
 DROP PROCEDURE sp_Login GO
+DROP PROCEDURE sp_Authorise GO
 DROP PROCEDURE sp_GetAccountByAID GO
 DROP PROCEDURE sp_GetAccountByUsername GO
 DROP PROCEDURE sp_GetAccountByEmail GO
 DROP PROCEDURE sp_SearchAccounts GO
+DROP PROCEDURE sp_GetClass GO
+DROP PROCEDURE sp_GetStoryByID GO
+DROP PROCEDURE sp_GetSize GO
+DROP PROCEDURE sp_GetRace GO
 DROP PROCEDURE sp_GetCharacterByID GO
 DROP PROCEDURE sp_GetCharacterByAccount GO
+DROP PROCEDURE sp_GetSkillType GO
 
 DROP TABLE CharacterSkill GO
 DROP TABLE Skill GO
-DROP TABLE AbilityType GO
+DROP TABLE SkillType GO
 DROP TABLE SessionCharacters GO
 DROP TABLE Session GO
 DROP TABLE Runthrough GO
@@ -48,32 +54,52 @@ GO
 
 CREATE PROCEDURE sp_Login (UsernameParam VARCHAR(100), PasswordParam VARCHAR(200), TimeParam DOUBLE)
 BEGIN
-	UPDATE Account SET LastLogin = TimeParam WHERE Username = UsernameParam AND Password = PasswordParam;
-	SELECT ID, AID, Username, Email, Created, Hash, LastLogin FROM Account WHERE Username = UsernameParam AND Password = PasswordParam;
+	UPDATE Account SET LastLogin = TimeParam
+	WHERE Username = UsernameParam AND Password = PasswordParam;
+
+	SELECT ID, AID, Username, Email, Created, Hash, LastLogin
+	FROM Account
+	WHERE Username = UsernameParam AND Password = PasswordParam;
+END
+GO
+
+CREATE PROCEDURE sp_Authorise (AccountAIDParam VARCHAR(100))
+BEGIN
+	SELECT ID, AID, Username, Email, Created, Hash, LastLogin
+	FROM Account
+	WHERE AID = AccountAIDParam;
 END
 GO
 
 CREATE PROCEDURE sp_GetAccountByAID (AccountAIDParam INTEGER)
 BEGIN
-	SELECT ID, AID, Username, Email FROM Account WHERE AID = AccountAIDParam;
+	SELECT ID, AID, Username, Email
+	FROM Account
+	WHERE AID = AccountAIDParam;
 END
 GO
 
 CREATE PROCEDURE sp_GetAccountByUsername (UsernameParam VARCHAR(100))
 BEGIN
-	SELECT ID, AID, Username, Email FROM Account WHERE Username = UsernameParam;
+	SELECT ID, AID, Username, Email
+	FROM Account
+	WHERE Username = UsernameParam;
 END
 GO
 
 CREATE PROCEDURE sp_GetAccountByEmail (EmailParam VARCHAR(100))
 BEGIN
-	SELECT ID, AID, Username, Email FROM Account WHERE Email = EmailParam;
+	SELECT ID, AID, Username, Email
+	FROM Account
+	WHERE Email = EmailParam;
 END
 GO
 
 CREATE PROCEDURE sp_SearchAccounts (TextParam VARCHAR(100))
 BEGIN
-	SELECT ID, AID, Username, Email FROM Account WHERE Username LIKE TextParam OR Email LIKE TextParam;
+	SELECT ID, AID, Username, Email
+	FROM Account
+	WHERE Username LIKE TextParam OR Email LIKE TextParam;
 END
 GO
 
@@ -107,6 +133,15 @@ CREATE TABLE Class
 )
 GO
 
+CREATE PROCEDURE sp_GetClass (ClassIDParam INTEGER)
+BEGIN
+	SELECT
+		ID, Name, Description, VersionID
+	FROM Class
+	WHERE ID = ClassIDParam;
+END
+GO
+
 INSERT INTO Class (Name, VersionID, Description)
 VALUES ('Bard', 1, '')
 GO
@@ -117,6 +152,14 @@ CREATE TABLE Size
 	Name VARCHAR(100) NOT NULL,
 	CONSTRAINT pk_Size PRIMARY KEY (ID)
 )
+GO
+
+CREATE PROCEDURE sp_GetSize (SizeIDParam INTEGER)
+BEGIN
+	SELECT ID, Name
+	FROM Size
+	WHERE ID = SizeIDParam;
+END
 GO
 
 INSERT INTO Size (Name)
@@ -132,6 +175,14 @@ CREATE TABLE Race
 	Speed INTEGER NOT NULL,
 	CONSTRAINT pk_Race PRIMARY KEY (ID)
 )
+GO
+
+CREATE PROCEDURE sp_GetRace (RaceIDParam INTEGER)
+BEGIN
+	SELECT ID, Name, Description, SizeID, Speed
+	FROM Race
+	WHERE ID = RaceIDParam;
+END
 GO
 
 INSERT INTO Race (Name, Description, SizeID, Speed)
@@ -174,13 +225,19 @@ GO
 
 CREATE PROCEDURE sp_GetCharacterByID (CharacterIDParam INTEGER)
 BEGIN
-	SELECT ID, AccountAID, Name, ClassID, Experiance, RaceID, Age, Height, Strength, Dexterity, Constitution, Inteligence, Wisdom, Charisma, HP, AC, Initiative, Fortitude, Reflex, Will, Grapple, BaseAttack, SpellResistance, TouchAC, FlatFootedAC FROM Characters WHERE ID = CharacterIDParam;
+	SELECT
+		ID, AccountAID, Name, ClassID, Experiance, RaceID, Age, Height, Strength, Dexterity, Constitution, Inteligence, Wisdom, Charisma, HP, AC, Initiative, Fortitude, Reflex, Will, Grapple, BaseAttack, SpellResistance, TouchAC, FlatFootedAC
+	FROM Characters
+	WHERE ID = CharacterIDParam;
 END
 GO
 
-CREATE PROCEDURE sp_GetCharacterByAccount (AccountIDParam INTEGER)
+CREATE PROCEDURE sp_GetCharacterByAccount (AccountAIDParam INTEGER)
 BEGIN
-	SELECT ID, AccountAID, Name, ClassID, Experiance, RaceID, Age, Height, Strength, Dexterity, Constitution, Inteligence, Wisdom, Charisma, HP, AC, Initiative, Fortitude, Reflex, Will, Grapple, BaseAttack, SpellResistance, TouchAC, FlatFootedAC FROM Characters WHERE AccountAID = AccountIDParam;
+	SELECT
+		ID, AccountAID, Name, ClassID, Experiance, RaceID, Age, Height, Strength, Dexterity, Constitution, Inteligence, Wisdom, Charisma, HP, AC, Initiative, Fortitude, Reflex, Will, Grapple, BaseAttack, SpellResistance, TouchAC, FlatFootedAC
+	FROM Characters
+	WHERE AccountAID = AccountAIDParam;
 END
 GO
 
@@ -197,12 +254,23 @@ CREATE TABLE Story
 	Title VARCHAR(100) NOT NULL,
 	Description VARCHAR(3000) NOT NULL,
 	ParentID INTEGER NULL,
+	VersionID INTEGER NOT NULL,
 	CONSTRAINT pk_Story PRIMARY KEY (ID),
-	CONSTRAINT fk_StoryParentID FOREIGN KEY (ParentID) REFERENCES Story(ID)
+	CONSTRAINT fk_StoryParentID FOREIGN KEY (ParentID) REFERENCES Story(ID),
+	CONSTRAINT fk_StoryVersionID FOREIGN KEY (VersionID) REFERENCES Version(ID)
 )GO
 
-INSERT INTO Story (Title, Description)
-VALUES ('Three little pigs', 'blown by wolf')GO
+CREATE PROCEDURE sp_GetStoryByID (StoryIDParam INTEGER)
+BEGIN
+	SELECT
+		ID, Title, Description, ParentID, VersionID
+	FROM Story
+	WHERE ID = StoryIDParam;
+END
+GO
+
+INSERT INTO Story (Title, Description, VersionID)
+VALUES ('Three little pigs', 'blown by wolf', 1)GO
 
 CREATE TABLE Runthrough
 (
@@ -247,22 +315,28 @@ INSERT INTO SessionCharacters (SessionID, CharacterID, Experiance)
 VALUES (1, 1, 1000)
 GO
 
-CREATE TABLE AbilityType
+CREATE TABLE SkillType
 (
 	ID INTEGER NOT NULL AUTO_INCREMENT,
 	Name VARCHAR(100) NOT NULL,
 	CONSTRAINT fk_AbilityType PRIMARY KEY (ID)
 )GO
 
+CREATE PROCEDURE sp_GetSkillType (SkillTypeIDParam INTEGER)
+BEGIN
+	SELECT ID, Name FROM SkillType WHERE ID = SkillTypeIDParam;
+END
+GO
+
 CREATE TABLE Skill
 (
 	ID INTEGER NOT NULL AUTO_INCREMENT,
 	Name VARCHAR(100) NOT NULL,
-	AbilityTypeID INTEGER NOT NULL,
+	SkillTypeID INTEGER NOT NULL,
 	Usable BIT NOT NULL,
 	Description VARCHAR(2000) NULL,
 	CONSTRAINT pk_Skill PRIMARY KEY (ID),
-	CONSTRAINT fk_SkillAbilityTypeID FOREIGN KEY (AbilityTypeID) REFERENCES AbilityType(ID)
+	CONSTRAINT fk_SkillAbilityID FOREIGN KEY (SkillTypeID) REFERENCES SkillType(ID)
 )
 GO
 

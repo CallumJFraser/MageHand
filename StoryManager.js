@@ -1,20 +1,15 @@
 var databaseObject = require('./Database.js');
+var versionManager = require('./VersionManager');
 
 function Story(row){
 	if(row == undefined)
 		return new Failed('Missing parameter');
-	if(row.StoryID == undefined && row.StoryName == undefined && row.StoryTitle == undefined && row.StoryDescription == undefined){
-		this.ID = row.ID;
-		this.Name = row.Name;
-		this.Title = row.Title;
-		this.Description = row.Description;
-	}
-	else{
-		this.ID = row.StoryID;
-		this.Name = row.StoryName;
-		this.Title = row.StoryTitle;
-		this.Description = row.StoryDescription;
-	}
+
+	this.ID = row.ID;
+	this.Name = row.Name;
+	this.Title = row.Title;
+	this.Description = row.Description;
+	this.VersionID = row.VersionID;
 }
 
 function Failed(reason){
@@ -32,7 +27,6 @@ function Get(id, callback){
 			databaseObject.Procedure('sp_GetStoryByID', [id], function(rows){
 				if(rows.length > 0){
 					var value = new Story(rows[0]);
-					value.Success = true;
 					callback(value);
 				}
 				else{
