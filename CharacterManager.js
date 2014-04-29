@@ -1,20 +1,20 @@
 var async = require('async');
-var databaseObject = require('./Database.js');
-var classManager = require('./ClassManager.js');
-var raceManager = require('./RaceManager.js');
+var databaseObject = require('./Database');
+var classManager = require('./ClassManager');
+var raceManager = require('./RaceManager');
 
 function Character(data, callback){
 	if(data == undefined)
 		return new Failed('Missing parameter');
 	async.parallel([
 			function(parallelCallback){
-				classManager.Get(data.ClassID, function(classResult){
-					parallelCallback(null, classResult)
+				classManager.Get(data.ClassID, function(result){
+					parallelCallback(null, result)
 				});
 			},
 			function(parallelCallback){
-				raceManager.Get(data.RaceID, function(raceResult){
-					parallelCallback(null, raceResult)
+				raceManager.Get(data.RaceID, function(result){
+					parallelCallback(null, result)
 				});
 			}
 		],
@@ -66,8 +66,8 @@ function Get(id, callback){
 		if(intID > 0){
 			databaseObject.Procedure('sp_GetCharacterByID', [intID], function(data){
 				if(data.length > 0){
-					Character(data[0], function(character){
-						callback(character);
+					Character(data[0], function(value){
+						callback(value);
 					});
 				}
 				else{
@@ -80,7 +80,7 @@ function Get(id, callback){
 		}
 	}
 }
-
+//	TODO:	Update to only pull in the ID values fo the matching characters.
 function GetByAccount(id, callback){
 	if(id == undefined){
 		callback(new Failed('Missing parameter'));
@@ -92,8 +92,8 @@ function GetByAccount(id, callback){
 				if(data.length > 0){
 					//	TODO:	This needs to be recoded using a parallel statement of some sort... whats the overhead of doing something like this?
 					async.map(data, function(item, eachCallback){
-						Character(item, function(character){
-							eachCallback(null, character);
+						Character(item, function(value){
+							eachCallback(null, value);
 						});
 					},
 					function(err, results){
@@ -122,11 +122,5 @@ module.exports = {
 	},
 	GetByAccount: function(id, callback){
 		GetByAccount(id, callback);
-	},
-	FromObject: function(data, callback){
-		Character(data, callback);
-	},
-	FromID: function(id, callback){
-		//
 	}
 };

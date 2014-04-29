@@ -1,11 +1,11 @@
-var database = require('./Database.js');
+var database = require('./Database');
 
-var accountManager = require('./AccountManager.js');
-var loginManager = require('./LoginManager.js');
-var characterManager = require('./CharacterManager.js');
-var classManager = require('./ClassManager.js');
-var storyManager = require('./StoryManager.js');
-var skillManager = require('./SkillManager.js');
+var accountManager = require('./AccountManager');
+var loginManager = require('./LoginManager');
+var characterManager = require('./CharacterManager');
+var classManager = require('./ClassManager');
+var storyManager = require('./StoryManager');
+var skillManager = require('./SkillManager');
 
 function DnDResponse(result, auth){
 	this.Result = result;

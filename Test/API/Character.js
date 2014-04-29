@@ -29,7 +29,7 @@ module.exports = {
 						});
 					});
 				});
-				it('Should not return Success:false', function(done){
+				it('Success = false', function(done){
 					dndAPI.Login(validUsername, validPassword, function(loginResponse){
 						dndAPI.GetCharacter(loginResponse.AID, loginResponse.SID, 1, function(result){
 							assert.notEqual(result.Result.Success, false);
@@ -37,33 +37,200 @@ module.exports = {
 						});
 					});
 				});
-				it('Should return a valid Result', function(done){
+				it('ID != undefined', function(done){
 					dndAPI.Login(validUsername, validPassword, function(loginResponse){
 						dndAPI.GetCharacter(loginResponse.AID, loginResponse.SID, 1, function(result){
 							var resultObject = result.Result;
-							assert.equal(resultObject.ID, 1);
-							assert.equal(resultObject.Name, 'Test');
-							assert.notEqual(resultObject.ClassID, undefined);
-							assert.equal(resultObject.Experiance, 4500);
-							assert.notEqual(resultObject.RaceID, undefined);
-							assert.equal(resultObject.Age, 100);
-							assert.equal(resultObject.Height, 100);
-							assert.equal(resultObject.Strength, 10);
-							assert.equal(resultObject.Dexterity, 14);
-							assert.equal(resultObject.Constitution, 10);
-							assert.equal(resultObject.Inteligence, 10);
-							assert.equal(resultObject.Wisdom, 10);
-							assert.equal(resultObject.Charisma, 19);
-							assert.equal(resultObject.HP, 20);
-							assert.equal(resultObject.AC, 18);
-							assert.equal(resultObject.Fortitude, 3);
-							assert.equal(resultObject.Reflex, 3);
-							assert.equal(resultObject.Will, 3);
-							assert.equal(resultObject.Grapple, 2);
-							assert.equal(resultObject.BaseAttack, 3);
-							assert.equal(resultObject.SpellResistance, 10);
-							assert.equal(resultObject.TouchAC, 18);
-							assert.equal(resultObject.FlatFootedAC, 15);
+							assert.notEqual(resultObject.ID, undefined);
+							done();
+						});
+					});
+				});
+				it('Name != undefined', function(done){
+					dndAPI.Login(validUsername, validPassword, function(loginResponse){
+						dndAPI.GetCharacter(loginResponse.AID, loginResponse.SID, 1, function(result){
+							var resultObject = result.Result;
+							assert.notEqual(resultObject.Name, undefined);
+							done();
+						});
+					});
+				});
+				it('Class != undefined', function(done){
+					dndAPI.Login(validUsername, validPassword, function(loginResponse){
+						dndAPI.GetCharacter(loginResponse.AID, loginResponse.SID, 1, function(result){
+							var resultObject = result.Result;
+							assert.notEqual(resultObject.Class, undefined);
+							done();
+						});
+					});
+				});
+				it('Experiance != undefined', function(done){
+					dndAPI.Login(validUsername, validPassword, function(loginResponse){
+						dndAPI.GetCharacter(loginResponse.AID, loginResponse.SID, 1, function(result){
+							var resultObject = result.Result;
+							assert.notEqual(resultObject.Experiance, undefined);
+							done();
+						});
+					});
+				});
+				it('Race != undefined', function(done){
+					dndAPI.Login(validUsername, validPassword, function(loginResponse){
+						dndAPI.GetCharacter(loginResponse.AID, loginResponse.SID, 1, function(result){
+							var resultObject = result.Result;
+							assert.notEqual(resultObject.Race, undefined);
+							done();
+						});
+					});
+				});
+				it('Age != undefined', function(done){
+					dndAPI.Login(validUsername, validPassword, function(loginResponse){
+						dndAPI.GetCharacter(loginResponse.AID, loginResponse.SID, 1, function(result){
+							var resultObject = result.Result;
+							assert.notEqual(resultObject.Age, undefined);
+							done();
+						});
+					});
+				});
+				it('Height != undefined', function(done){
+					dndAPI.Login(validUsername, validPassword, function(loginResponse){
+						dndAPI.GetCharacter(loginResponse.AID, loginResponse.SID, 1, function(result){
+							var resultObject = result.Result;
+							assert.notEqual(resultObject.Height, undefined);
+							done();
+						});
+					});
+				});
+				it('Strength != undefined', function(done){
+					dndAPI.Login(validUsername, validPassword, function(loginResponse){
+						dndAPI.GetCharacter(loginResponse.AID, loginResponse.SID, 1, function(result){
+							var resultObject = result.Result;
+							assert.notEqual(resultObject.Strength, undefined);
+							done();
+						});
+					});
+				});
+				it('Dexterity != undefined', function(done){
+					dndAPI.Login(validUsername, validPassword, function(loginResponse){
+						dndAPI.GetCharacter(loginResponse.AID, loginResponse.SID, 1, function(result){
+							var resultObject = result.Result;
+							assert.notEqual(resultObject.Dexterity, undefined);
+							done();
+						});
+					});
+				});
+				it('Constitution != undefined', function(done){
+					dndAPI.Login(validUsername, validPassword, function(loginResponse){
+						dndAPI.GetCharacter(loginResponse.AID, loginResponse.SID, 1, function(result){
+							var resultObject = result.Result;
+							assert.notEqual(resultObject.Constitution, undefined);
+							done();
+						});
+					});
+				});
+				it('Inteligence != undefined', function(done){
+					dndAPI.Login(validUsername, validPassword, function(loginResponse){
+						dndAPI.GetCharacter(loginResponse.AID, loginResponse.SID, 1, function(result){
+							var resultObject = result.Result;
+							assert.notEqual(resultObject.Inteligence, undefined);
+							done();
+						});
+					});
+				});
+				it('Wisdom != undefined', function(done){
+					dndAPI.Login(validUsername, validPassword, function(loginResponse){
+						dndAPI.GetCharacter(loginResponse.AID, loginResponse.SID, 1, function(result){
+							var resultObject = result.Result;
+							assert.notEqual(resultObject.Wisdom, undefined);
+							done();
+						});
+					});
+				});
+				it('Charisma != undefined', function(done){
+					dndAPI.Login(validUsername, validPassword, function(loginResponse){
+						dndAPI.GetCharacter(loginResponse.AID, loginResponse.SID, 1, function(result){
+							var resultObject = result.Result;
+							assert.notEqual(resultObject.Charisma, undefined);
+							done();
+						});
+					});
+				});
+				it('HP != undefined', function(done){
+					dndAPI.Login(validUsername, validPassword, function(loginResponse){
+						dndAPI.GetCharacter(loginResponse.AID, loginResponse.SID, 1, function(result){
+							var resultObject = result.Result;
+							assert.notEqual(resultObject.HP, undefined);
+							done();
+						});
+					});
+				});
+				it('AC != undefined', function(done){
+					dndAPI.Login(validUsername, validPassword, function(loginResponse){
+						dndAPI.GetCharacter(loginResponse.AID, loginResponse.SID, 1, function(result){
+							var resultObject = result.Result;
+							assert.notEqual(resultObject.AC, undefined);
+							done();
+						});
+					});
+				});
+				it('Fortitude != undefined', function(done){
+					dndAPI.Login(validUsername, validPassword, function(loginResponse){
+						dndAPI.GetCharacter(loginResponse.AID, loginResponse.SID, 1, function(result){
+							var resultObject = result.Result;
+							assert.notEqual(resultObject.Fortitude, undefined);
+							done();
+						});
+					});
+				});
+				it('Reflex != undefined', function(done){
+					dndAPI.Login(validUsername, validPassword, function(loginResponse){
+						dndAPI.GetCharacter(loginResponse.AID, loginResponse.SID, 1, function(result){
+							var resultObject = result.Result;
+							assert.notEqual(resultObject.Reflex, undefined);
+							done();
+						});
+					});
+				});
+				it('Will != undefined', function(done){
+					dndAPI.Login(validUsername, validPassword, function(loginResponse){
+						dndAPI.GetCharacter(loginResponse.AID, loginResponse.SID, 1, function(result){
+							var resultObject = result.Result;
+							assert.notEqual(resultObject.Will, undefined);
+							done();
+						});
+					});
+				});
+				it('Grapple != undefined', function(done){
+					dndAPI.Login(validUsername, validPassword, function(loginResponse){
+						dndAPI.GetCharacter(loginResponse.AID, loginResponse.SID, 1, function(result){
+							var resultObject = result.Result;
+							assert.notEqual(resultObject.Grapple, undefined);
+							done();
+						});
+					});
+				});
+				it('BaseAttack != undefined', function(done){
+					dndAPI.Login(validUsername, validPassword, function(loginResponse){
+						dndAPI.GetCharacter(loginResponse.AID, loginResponse.SID, 1, function(result){
+							var resultObject = result.Result;
+							assert.notEqual(resultObject.BaseAttack, undefined);
+							done();
+						});
+					});
+				});
+				it('SpellResistance != undefined', function(done){
+					dndAPI.Login(validUsername, validPassword, function(loginResponse){
+						dndAPI.GetCharacter(loginResponse.AID, loginResponse.SID, 1, function(result){
+							var resultObject = result.Result;
+							assert.notEqual(resultObject.SpellResistance, undefined);
+							done();
+						});
+					});
+				});
+				it('TouchAC != undefined', function(done){
+					dndAPI.Login(validUsername, validPassword, function(loginResponse){
+						dndAPI.GetCharacter(loginResponse.AID, loginResponse.SID, 1, function(result){
+							var resultObject = result.Result;
+							assert.notEqual(resultObject.TouchAC, undefined);
 							done();
 						});
 					});
@@ -116,9 +283,9 @@ module.exports = {
 							var resultObject = result.Result[0];
 							assert.equal(resultObject.ID, 1);
 							assert.equal(resultObject.Name, 'Test');
-							assert.notEqual(resultObject.ClassID, undefined);
+							assert.notEqual(resultObject.Class, undefined);
 							assert.equal(resultObject.Experiance, 4500);
-							assert.notEqual(resultObject.RaceID, undefined);
+							assert.notEqual(resultObject.Race, undefined);
 							assert.equal(resultObject.Age, 100);
 							assert.equal(resultObject.Height, 100);
 							assert.equal(resultObject.Strength, 10);

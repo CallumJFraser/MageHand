@@ -1,14 +1,13 @@
 var databaseObject = require('./Database');
 var versionManager = require('./VersionManager');
 
-function Class(row, callback){
+function Size(row, callback){
+	console.log('size - call');
 	if(row == undefined)
 		return new Failed('Missing parameter');
 	var object = {};
 	object.ID = row.ID;
 	object.Name = row.Name;
-	object.Description = row.Description;
-	object.VersionID = row.VersionID;
 	callback(object);
 }
 
@@ -24,7 +23,7 @@ function getByID(id, callback){
 	else{
 		var intID = parseInt(id);
 		if(intID > 0){
-			databaseObject.Procedure('sp_GetClass', [id], function(rows){
+			databaseObject.Procedure('sp_GetSize', [id], function(rows){
 				if(rows.length > 0){
 					Class(rows[0], function(value){
 						callback(value);
