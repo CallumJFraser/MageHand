@@ -1,11 +1,12 @@
-var databaseObject = require('./Database.js');
+var databaseObject = require('./Database');
 
-function Version(row){
+function Version(row, callback){
 	if(row == undefined)
 		return new Failed('Missing parameter');
-
-	this.ID = row.ID;
-	this.Name = row.Name;
+	var object = {};
+	object.ID = row.ID;
+	object.Name = row.Name;
+	callback(object);
 }
 
 function Failed(reason){
@@ -20,10 +21,11 @@ function Get(id, callback){
 	else{
 		var intID = parseInt(id);
 		if(intID > 0){
-			databaseObject.Procedure('sp_GetVersion', [intID], function(rows){
-				if(rows.length > 0){
-					var value = new Version(rows[0]);
-					callback(value);
+			databaseObject.Procedure('sp_GetVersion', [intID], function(data){
+				if(data.length > 0){
+					Version(data[0],function(value){
+						callback(value);
+					});
 				}
 				else{
 					callback(new Failed('No matching results'));
@@ -39,11 +41,5 @@ function Get(id, callback){
 module.exports = {
 	Get: function (id, callback){
 		Get(id, callback);
-	},
-	FromObject: function(row){
-		return new Version(row);
-	},
-	FromID: function(id, callback){
-		//
 	}
 };

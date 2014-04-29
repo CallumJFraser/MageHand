@@ -1,4 +1,4 @@
-var databaseObject = require('./Database.js');
+var databaseObject = require('./Database');
 
 function BasicAccount(row){
 	if(row == undefined)
@@ -117,8 +117,5 @@ module.exports = {
 	},
 	Search: function(text, callback){
 		searchBasic(text, callback);
-	},
-	FromID: function(id, callback){
-		//
 	}
 };

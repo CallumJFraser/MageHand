@@ -67,6 +67,7 @@ module.exports = {
 						});
 					})
 				})
+				
 				describe('Invalid "Username":', function(){
 					it('Result != undefined', function(done){
 						manager.Login(invalid, validPwd, function(result){
@@ -111,6 +112,7 @@ module.exports = {
 						});
 					})
 				})
+				
 				describe('Invalid "Password":', function(){
 					it('Result != undefined', function(done){
 						manager.Login(valid, invalidPwd, function(result){
@@ -155,6 +157,7 @@ module.exports = {
 						});
 					})
 				})
+				
 				describe('Missing "Username":', function(){
 					it('Result != undefined', function(done){
 						manager.Login(blank, validPwd, function(result){
@@ -199,6 +202,7 @@ module.exports = {
 						});
 					})
 				})
+				
 				describe('Missing "Password":', function(){
 					it('Result != undefined', function(done){
 						manager.Login(valid, blank, function(result){
@@ -243,6 +247,7 @@ module.exports = {
 						});
 					})
 				})
+				
 				describe('Missing "Username", "Password":', function(){
 					it('Result != undefined', function(done){
 						manager.Login(blank, blank, function(result){
@@ -324,6 +329,7 @@ module.exports = {
 						});
 					})
 				})
+				
 				describe('Invalid "AID":', function(){
 					it('Result != undefined', function(done){
 						manager.Login(validUsername, validPwd, function(loginResult){
@@ -351,6 +357,7 @@ module.exports = {
 						});
 					})
 				})
+				
 				describe('Invalid "SID":', function(){
 					it('Result != undefined', function(done){
 						manager.Login(validUsername, validPwd, function(loginResult){
@@ -378,6 +385,7 @@ module.exports = {
 						});
 					})
 				})
+				
 				describe('Missing "AID":', function(){
 					it('Result != undefined', function(done){
 						manager.Login(validUsername, validPwd, function(loginResult){
@@ -405,6 +413,7 @@ module.exports = {
 						});
 					})
 				})
+				
 				describe('Missing "SID":', function(){
 					it('Result != undefined', function(done){
 						manager.Login(validUsername, validPwd, function(loginResult){
@@ -432,6 +441,7 @@ module.exports = {
 						});
 					})
 				})
+				
 				describe('Missing "AID", "SID":', function(){
 					it('Result != undefined', function(done){
 						manager.Login(validUsername, validPwd, function(loginResult){

@@ -1,10 +1,12 @@
-var databaseObject = require('./Database.js');
+var databaseObject = require('./Database');
 
-function SkillType(row){
+function SkillType(row, callback){
 	if(row == undefined)
 		return new Failed('Missing parameter');
-	this.ID = row.ID;
-	this.Name = row.Name;
+	var object = {};
+	object.ID = row.ID;
+	object.Name = row.Name;
+	callback(object);
 }
 
 function Failed(reason){

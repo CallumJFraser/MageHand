@@ -1,15 +1,29 @@
-var databaseObject = require('./Database.js');
+var async = require('async');
+var databaseObject = require('./Database');
 var versionManager = require('./VersionManager');
 
-function Story(row){
+function Story(row, callback){
 	if(row == undefined)
 		return new Failed('Missing parameter');
-
-	this.ID = row.ID;
-	this.Name = row.Name;
-	this.Title = row.Title;
-	this.Description = row.Description;
-	this.VersionID = row.VersionID;
+	async.each([
+			function(parallelCallback){
+				sizeManager.Get(row.VersionID, function(result){
+					parallelCallback(null, result)
+				});
+			}
+		],
+		function(err, results){
+			if(results.length > 0){
+				var object = {};
+				object.ID = row.ID;
+				object.Name = row.Name;
+				object.Title = row.Title;
+				object.Description = row.Description;
+				object.VersionID = results[0];
+				callback(object);
+			}
+		}
+	);
 }
 
 function Failed(reason){
@@ -26,8 +40,9 @@ function Get(id, callback){
 		if(intID > 0){
 			databaseObject.Procedure('sp_GetStoryByID', [id], function(rows){
 				if(rows.length > 0){
-					var value = new Story(rows[0]);
-					callback(value);
+					Story(rows[0], function(value){
+						callback(value);
+					});
 				}
 				else{
 					callback(new Failed('No matching results'));
@@ -43,8 +58,5 @@ function Get(id, callback){
 module.exports = {
 	Get: function (id, callback){
 		Get(id, callback);
-	},
-	FromObject: function(row){
-		return new Story(row);
 	}
 };

@@ -1,4 +1,4 @@
-var databaseObject = require('./Database.js');
+var databaseObject = require('./Database');
 
 function Login(row){
 	if(row == undefined)
