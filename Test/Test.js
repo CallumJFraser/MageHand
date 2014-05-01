@@ -4,6 +4,9 @@ var characterManager = require('./Managers/CharacterManager');
 var classManager = require('./Managers/ClassManager');
 var loginManager = require('./Managers/LoginManager');
 var storyManager = require('./Managers/StoryManager');
+var sizeManager = require('./Managers/SizeManager');
+var skillManager = require('./Managers/SkillManager');
+var raceManager = require('./Managers/RaceManager');
 
 var apiAuth = require('./API/Auth');
 var apiAccount = require('./API/Account');
@@ -45,6 +48,19 @@ describe('Login Manager -', function(){
 describe('Story Manager -', function(){
 	storyManager.Test();	//	Done
 });
+
+describe('Size Manager -', function(){
+	sizeManager.Test();	//	Done
+});
+
+describe('Skill Manager -', function(){
+	skillManager.Test();	//	Done
+});
+
+describe('Race Manager -', function(){
+	raceManager.Test();	//	Done
+});
+
 
 describe('API Auth Manager -', function(){
 	apiAuth.Test();	//	Done

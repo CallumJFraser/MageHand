@@ -5,23 +5,25 @@ var versionManager = require('./VersionManager');
 function Story(row, callback){
 	if(row == undefined)
 		return new Failed('Missing parameter');
-	async.each([
-			function(parallelCallback){
-				sizeManager.Get(row.VersionID, function(result){
-					parallelCallback(null, result)
-				});
-			}
-		],
+	async.map(
+		[row.VersionID],
+		function(item, parallelCallback){
+			versionManager.Get(item, function(result){
+				parallelCallback(undefined, result)
+			});
+		},
 		function(err, results){
-			if(results.length > 0){
-				var object = {};
-				object.ID = row.ID;
-				object.Name = row.Name;
-				object.Title = row.Title;
-				object.Description = row.Description;
-				object.VersionID = results[0];
-				callback(object);
-			}
+			if(err != undefined)
+				callback(undefined);
+				
+			var object = {};
+			object.ID = row.ID;
+			object.Name = row.Name;
+			object.Title = row.Title;
+			object.Description = row.Description;
+			object.ParentID = row.ParentID;
+			object.Version = results[0];
+			callback(object);
 		}
 	);
 }
