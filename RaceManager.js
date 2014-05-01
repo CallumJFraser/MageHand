@@ -6,7 +6,8 @@ var versionManager = require('./VersionManager');
 function Race(row, callback){
 	if(row == undefined)
 		return new Failed('Missing parameter');
-	async.parallel([
+	async.parallel(
+		[
 			function(parallelCallback){
 				sizeManager.Get(row.SizeID, function(result){
 					parallelCallback(null, result)
@@ -19,16 +20,16 @@ function Race(row, callback){
 			}
 		],
 		function(err, results){
-			if(results.length > 1){
-				var object = {};
-				object.ID = row.ID;
-				object.Name = row.Name;
-				object.Description = row.Description;
-				object.Speed = row.Speed;
-				object.Size = results[0];
-				object.Version = results[1];
-				callback(object);
-			}
+			if(err != undefined)
+				callback(undefined);
+			var object = {};
+			object.ID = row.ID;
+			object.Name = row.Name;
+			object.Description = row.Description;
+			object.Speed = row.Speed;
+			object.Size = results[0];
+			object.Version = results[1];
+			callback(object);
 		}
 	);
 }
@@ -45,7 +46,7 @@ function Get(id, callback){
 	else{
 		var intID = parseInt(id);
 		if(intID > 0){
-			databaseObject.Procedure('sp_GetClass', [id], function(rows){
+			databaseObject.Procedure('sp_GetRace', [id], function(rows){
 				if(rows.length > 0){
 					Race(rows[0], function(value){
 						callback(value);
