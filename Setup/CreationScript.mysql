@@ -5,6 +5,7 @@
 	
 	...Work in progress...
 */
+
 DELIMITER GO
 
 DROP PROCEDURE sp_Login GO
@@ -14,16 +15,19 @@ DROP PROCEDURE sp_GetAccountByUsername GO
 DROP PROCEDURE sp_GetAccountByEmail GO
 DROP PROCEDURE sp_SearchAccounts GO
 DROP PROCEDURE sp_GetClass GO
+DROP PROCEDURE sp_GetVersion GO
 DROP PROCEDURE sp_GetStoryByID GO
 DROP PROCEDURE sp_GetSize GO
 DROP PROCEDURE sp_GetRace GO
 DROP PROCEDURE sp_GetCharacterByID GO
 DROP PROCEDURE sp_GetCharacterByAccount GO
-DROP PROCEDURE sp_GetSkillType GO
+DROP PROCEDURE sp_GetStatType GO
+DROP PROCEDURE sp_GetSkill GO
+DROP PROCEDURE sp_GetCharactersSkill GO
 
 DROP TABLE CharacterSkill GO
 DROP TABLE Skill GO
-DROP TABLE SkillType GO
+DROP TABLE StatType GO
 DROP TABLE SessionCharacters GO
 DROP TABLE Session GO
 DROP TABLE Runthrough GO
@@ -115,11 +119,22 @@ CREATE TABLE Version
 (
 	ID INTEGER NOT NULL AUTO_INCREMENT,
 	Name VARCHAR(100) NOT NULL,
+	Description VARCHAR(2000) NOT NULL,
+	Number DECIMAL NOT NULL,
 	CONSTRAINT pk_Version PRIMARY KEY (ID)
 )
 GO
 
-INSERT INTO Version (Name) VALUES ('3.5')
+CREATE PROCEDURE sp_GetVersion (IDParam INTEGER)
+BEGIN
+	SELECT
+		ID, Name, Description, Number
+	FROM Version
+	WHERE ID = IDParam;
+END
+GO
+
+INSERT INTO Version (Name, Description, Number) VALUES ('DND 3.5', 'base version', 3.5)
 GO
 
 CREATE TABLE Class
@@ -173,20 +188,22 @@ CREATE TABLE Race
 	Description VARCHAR(4000) NULL,
 	SizeID INTEGER NOT NULL,
 	Speed INTEGER NOT NULL,
-	CONSTRAINT pk_Race PRIMARY KEY (ID)
+	VersionID INTEGER NOT NULL,
+	CONSTRAINT pk_Race PRIMARY KEY (ID),
+	CONSTRAINT fk_RaceVersionID FOREIGN KEY (VersionID) REFERENCES Version(ID)
 )
 GO
 
 CREATE PROCEDURE sp_GetRace (RaceIDParam INTEGER)
 BEGIN
-	SELECT ID, Name, Description, SizeID, Speed
+	SELECT ID, Name, Description, SizeID, Speed, VersionID
 	FROM Race
 	WHERE ID = RaceIDParam;
 END
 GO
 
-INSERT INTO Race (Name, Description, SizeID, Speed)
-VALUES ('Gnome', 'They are, like, waay small.', 1, 20)
+INSERT INTO Race (Name, Description, SizeID, Speed, VersionID)
+VALUES ('Gnome', 'They are, like, waay small.', 1, 20, 1)
 GO
 
 CREATE TABLE Characters
@@ -260,17 +277,17 @@ CREATE TABLE Story
 	CONSTRAINT fk_StoryVersionID FOREIGN KEY (VersionID) REFERENCES Version(ID)
 )GO
 
-CREATE PROCEDURE sp_GetStoryByID (StoryIDParam INTEGER)
+CREATE PROCEDURE sp_GetStoryByID (IDParam INTEGER)
 BEGIN
 	SELECT
 		ID, Title, Description, ParentID, VersionID
 	FROM Story
-	WHERE ID = StoryIDParam;
+	WHERE ID = IDParam;
 END
 GO
 
-INSERT INTO Story (Title, Description, VersionID)
-VALUES ('Three little pigs', 'blown by wolf', 1)GO
+INSERT INTO Story (Title, Description, ParentID, VersionID)
+VALUES ('Three little pigs', 'blown by wolf', 1, 1)GO
 
 CREATE TABLE Runthrough
 (
@@ -315,29 +332,52 @@ INSERT INTO SessionCharacters (SessionID, CharacterID, Experiance)
 VALUES (1, 1, 1000)
 GO
 
-CREATE TABLE SkillType
+CREATE TABLE StatType
 (
 	ID INTEGER NOT NULL AUTO_INCREMENT,
 	Name VARCHAR(100) NOT NULL,
-	CONSTRAINT fk_AbilityType PRIMARY KEY (ID)
+	VersionID INTEGER NULL,
+	CONSTRAINT pk_StatType PRIMARY KEY (ID),
+	CONSTRAINT fk_StatTypeVersionID FOREIGN KEY (VersionID) REFERENCES Version(ID)
 )GO
 
-CREATE PROCEDURE sp_GetSkillType (SkillTypeIDParam INTEGER)
+CREATE PROCEDURE sp_GetStatType (IDParam INTEGER)
 BEGIN
-	SELECT ID, Name FROM SkillType WHERE ID = SkillTypeIDParam;
+	SELECT ID, Name, VersionID FROM SkillType WHERE ID = IDParam;
 END
+GO
+
+INSERT INTO StatType (Name) VALUES ('Strength')
+GO
+
+INSERT INTO StatType (Name) VALUES ('Dexterity')
+GO
+
+INSERT INTO StatType (Name) VALUES ('Charisma')
 GO
 
 CREATE TABLE Skill
 (
 	ID INTEGER NOT NULL AUTO_INCREMENT,
 	Name VARCHAR(100) NOT NULL,
-	SkillTypeID INTEGER NOT NULL,
+	BaseStatID INTEGER NOT NULL,
 	Usable BIT NOT NULL,
 	Description VARCHAR(2000) NULL,
+	VersionID INTEGER NOT NULL,
 	CONSTRAINT pk_Skill PRIMARY KEY (ID),
-	CONSTRAINT fk_SkillAbilityID FOREIGN KEY (SkillTypeID) REFERENCES SkillType(ID)
+	CONSTRAINT fk_SkillAbilityID FOREIGN KEY (BaseStatID) REFERENCES StatType(ID),
+	CONSTRAINT fk_SkillVersionID FOREIGN KEY (VersionID) REFERENCES Version(ID)
 )
+GO
+
+CREATE PROCEDURE sp_GetSkill(IDParam INTEGER)
+BEGIN
+	SELECT ID, Name, BaseStatID, Usable, Description, VersionID FROM Skill WHERE ID = IDParam;
+END
+GO
+
+INSERT INTO Skill (Name, BaseStatID, Usable, Description, VersionID)
+VALUES ('Climb', 1, 1, 'The ability to climb walls and ropes.', 1)
 GO
 
 CREATE TABLE CharacterSkill
@@ -347,9 +387,20 @@ CREATE TABLE CharacterSkill
 	Ranks INTEGER NOT NULL,
 	Info VARCHAR(100) NULL,
 	MiscModifier INTEGER NOT NULL,
+	CONSTRAINT pk_CharacterSkill PRIMARY KEY (CharacterID, SkillID),
 	CONSTRAINT fk_CharacterSkillCharacterID FOREIGN KEY (CharacterID) REFERENCES Characters(ID),
 	CONSTRAINT fk_CharacterSkillSkillID FOREIGN KEY (SkillID) REFERENCES Skill(ID)
 )
+GO
+
+CREATE PROCEDURE sp_GetCharactersSkill (IDParam INTEGER)
+BEGIN
+	SELECT CharacterID, SkillID, Ranks, Info, MiscModifier FROM Skill WHERE CharacterID = IDParam;
+END
+GO
+
+INSERT INTO CharacterSkill (CharacterID, SkillID, Ranks, Info, MiscModifier)
+VALUES (1, 1, 1, 'bad', 0)
 GO
 
 DELIMITER ;
