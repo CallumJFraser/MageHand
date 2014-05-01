@@ -2,7 +2,6 @@ var databaseObject = require('./Database');
 var versionManager = require('./VersionManager');
 
 function Size(row, callback){
-	console.log('size - call');
 	if(row == undefined)
 		return new Failed('Missing parameter');
 	var object = {};
@@ -25,7 +24,7 @@ function getByID(id, callback){
 		if(intID > 0){
 			databaseObject.Procedure('sp_GetSize', [id], function(rows){
 				if(rows.length > 0){
-					Class(rows[0], function(value){
+					Size(rows[0], function(value){
 						callback(value);
 					});
 				}

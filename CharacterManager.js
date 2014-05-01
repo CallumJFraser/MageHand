@@ -90,7 +90,6 @@ function GetByAccount(id, callback){
 		if(intID > 0){
 			databaseObject.Procedure('sp_GetCharacterByAccount', [intID], function(data){
 				if(data.length > 0){
-					//	TODO:	This needs to be recoded using a parallel statement of some sort... whats the overhead of doing something like this?
 					async.map(data, function(item, eachCallback){
 						Character(item, function(value){
 							eachCallback(null, value);
