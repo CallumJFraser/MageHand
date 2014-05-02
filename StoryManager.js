@@ -1,6 +1,13 @@
 var async = require('async');
 var databaseObject = require('./Database');
 var versionManager = require('./VersionManager');
+var Failed = require('./Failed');
+
+module.exports = {
+	Get: function (id, callback){
+		Get(id, callback);
+	}
+};
 
 function Story(row, callback){
 	if(row == undefined)
@@ -28,11 +35,6 @@ function Story(row, callback){
 	);
 }
 
-function Failed(reason){
-	this.Success = false;
-	this.Reason = reason;
-}
-
 function Get(id, callback){
 	if(id == undefined){
 		callback(new Failed('Missing parameter'));
@@ -56,9 +58,3 @@ function Get(id, callback){
 		}
 	}
 }
-
-module.exports = {
-	Get: function (id, callback){
-		Get(id, callback);
-	}
-};

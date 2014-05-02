@@ -1,6 +1,16 @@
 var databaseObject = require('./Database');
+var Failed = require('./Failed');
 
-function Login(row){
+module.exports = {
+	Login: function(username, password, callback){
+		Login(username, password, callback);
+	},
+	Authorise: function (aID, sID, callback){
+		Authorise(aID, sID, callback);
+	}
+};
+
+function LoginResponse(row){
 	if(row == undefined)
 		return new Failed('Missing parameter');
 	this.Success = true;
@@ -10,16 +20,18 @@ function Login(row){
 	this.SID = row.Created + row.Hash + row.AID + row.LastLogin;
 }
 
-Login.prototype.Session = function(){
+LoginResponse.prototype.Session = function(){
 	return this.SID;
 }
 
-function Failed(reason){
-	this.Success = false;
-	this.Reason = reason;
+function AuthorisationResponse(sID){
+	var object = {};
+	object.Success = true;
+	object.SID = sID;
+	return object;
 }
 
-function login(username, password, callback){
+function Login(username, password, callback){
 	if(username == undefined || password == undefined){
 		callback(new Failed('Incorrect sign-in details'));
 	}
@@ -27,7 +39,7 @@ function login(username, password, callback){
 		var date = new Date();
 		databaseObject.Procedure('sp_Login', [username, password, date.getTime()], function(rows){
 			if(rows.length > 0){
-				callback(new Login(rows[0]));
+				callback(new LoginResponse(rows[0]));
 			}
 			else{
 				callback(new Failed('Incorrect sign-in details'));
@@ -36,16 +48,16 @@ function login(username, password, callback){
 	}
 }
 
-function authorise(aID, sID, callback){
+function Authorise(aID, sID, callback){
 	if(aID == undefined || sID == undefined){
 		callback(new Failed('Missing authentication parameters'));
 	}
 	else{
 		databaseObject.Procedure('sp_Authorise', [aID], function(rows){
 			if(rows.length > 0 ){
-				var login = new Login(rows[0]);
+				var login = new LoginResponse(rows[0]);
 				if(login.Session() == sID){
-					callback({ Success: true, SID: sID });
+					callback(AuthorisationResponse(sID));
 				}
 				else{
 					callback(new Failed('Incorrect authentication details'));
@@ -57,12 +69,3 @@ function authorise(aID, sID, callback){
 		});
 	}
 }
-
-module.exports = {
-	Login: function(username, password, callback){
-		login(username, password, callback);
-	},
-	Authorise: function (aID, sID, callback){
-		authorise(aID, sID, callback);
-	}
-};

@@ -1,5 +1,12 @@
 var databaseObject = require('./Database');
 var versionManager = require('./VersionManager');
+var Failed = require('./Failed');
+
+module.exports = {
+	Get: function (id, callback){
+		Get(id, callback);
+	}
+};
 
 function Size(row, callback){
 	if(row == undefined)
@@ -10,12 +17,7 @@ function Size(row, callback){
 	callback(object);
 }
 
-function Failed(reason){
-	this.Success = false;
-	this.Reason = reason;
-}
-
-function getByID(id, callback){
+function Get(id, callback){
 	if(id == undefined){
 		callback(new Failed('Missing parameter'));
 	}
@@ -38,9 +40,3 @@ function getByID(id, callback){
 		}
 	}
 }
-
-module.exports = {
-	Get: function (id, callback){
-		getByID(id, callback);
-	}
-};

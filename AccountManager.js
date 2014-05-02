@@ -1,4 +1,20 @@
 var databaseObject = require('./Database');
+var Failed = require('./Failed');
+
+module.exports = {
+	Get: function(id, callback){
+		GetBasicByID(id, callback);
+	},
+	GetByUsername: function(username, callback){
+		GetBasicByUsername(username, callback);
+	},
+	GetByEmail: function(email, callback){
+		GetBasicByEmail(email, callback);
+	},
+	Search: function(text, callback){
+		SearchBasic(text, callback);
+	}
+};
 
 function BasicAccount(row){
 	if(row == undefined)
@@ -8,11 +24,6 @@ function BasicAccount(row){
 	this.Username = row.Username;
 	this.Created = row.Created;
 	this.Success = true;
-}
-
-function Failed(reason){
-	this.Success = false;
-	this.Reason = reason;
 }
 
 function Account(row){
@@ -27,14 +38,14 @@ function Account(row){
 	this.LastLogin = row.LastLogin;
 }
 
-function create(username, password, callback){
+function Create(username, password, callback){
 	if(username == undefined || password == undefined){
 		callback(new Failed('Missing parameter'));
 	}
 	var query = "INSERT INTO Account (ID, AID, Username, Email, Hash, Created, Password) VALUES (1, '1', 'CallumJFraser', 'email@callumjfraser.com', 'hash', 1395788542978, 'password')"
 }
 
-function getBasicByID(id, callback){
+function GetBasicByID(id, callback){
 	if(id == undefined){
 		callback(new Failed('Missing parameter'));
 	}
@@ -57,7 +68,7 @@ function getBasicByID(id, callback){
 	}
 }
 
-function getBasicByUsername(username, callback){
+function GetBasicByUsername(username, callback){
 	if(username == undefined){
 		callback(new Failed('Missing parameter'));
 	}
@@ -73,7 +84,7 @@ function getBasicByUsername(username, callback){
 	}
 }
 
-function getBasicByEmail(email, callback){
+function GetBasicByEmail(email, callback){
 	if(email == undefined){
 		callback(new Failed('Missing parameter'));
 	}
@@ -89,7 +100,7 @@ function getBasicByEmail(email, callback){
 	}
 }
 
-function searchBasic(text, callback){
+function SearchBasic(text, callback){
 	if(text == undefined){
 		callback(new Failed('Missing parameter'));
 	}
@@ -104,18 +115,3 @@ function searchBasic(text, callback){
 		});
 	}
 }
-
-module.exports = {
-	Get: function(id, callback){
-		getBasicByID(id, callback);
-	},
-	GetByUsername: function(username, callback){
-		getBasicByUsername(username, callback);
-	},
-	GetByEmail: function(email, callback){
-		getBasicByEmail(email, callback);
-	},
-	Search: function(text, callback){
-		searchBasic(text, callback);
-	}
-};

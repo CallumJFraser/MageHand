@@ -1,4 +1,11 @@
 var databaseObject = require('./Database');
+var Failed = require('./Failed');
+
+module.exports = {
+	Get: function (id, callback){
+		Get(id, callback);
+	}
+};
 
 function Version(row, callback){
 	if(row == undefined)
@@ -7,11 +14,6 @@ function Version(row, callback){
 	object.ID = row.ID;
 	object.Name = row.Name;
 	callback(object);
-}
-
-function Failed(reason){
-	this.Success = false;
-	this.Reason = reason;
 }
 
 function Get(id, callback){
@@ -37,9 +39,3 @@ function Get(id, callback){
 		}
 	}
 }
-
-module.exports = {
-	Get: function (id, callback){
-		Get(id, callback);
-	}
-};
