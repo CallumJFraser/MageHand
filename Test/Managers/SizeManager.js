@@ -1,5 +1,5 @@
 var assert = require('assert');
-var manager = require('../../SizeManager.js');
+var manager = require('../../Managers/SizeManager.js');
 
 var blank = undefined;
 

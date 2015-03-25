@@ -1,8 +1,8 @@
 var async = require('async');
-var databaseObject = require('./Database');
-var classManager = require('./ClassManager');
-var raceManager = require('./RaceManager');
-var Failed = require('./Failed');
+var databaseObject = require('../Database');
+var classManager = require('../Managers/ClassManager');
+var raceManager = require('../Managers/RaceManager');
+var Failed = require('../Failed');
 
 module.exports = {
 	Get: function(id, callback){

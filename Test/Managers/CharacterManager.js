@@ -1,5 +1,5 @@
 var assert = require('assert');
-var manager = require('../../CharacterManager.js');
+var manager = require('../../Managers/CharacterManager.js');
 
 var blank = undefined;
 

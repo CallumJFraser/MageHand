@@ -1,5 +1,5 @@
-var databaseObject = require('./Database');
-var Failed = require('./Failed');
+var databaseObject = require('../Database');
+var Failed = require('../Failed');
 
 module.exports = {
 	Get: function (id, callback){

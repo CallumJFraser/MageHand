@@ -1,5 +1,5 @@
 var assert = require('assert');
-var manager = require('../../ClassManager.js');
+var manager = require('../../Managers/ClassManager.js');
 
 var blank = undefined;
 

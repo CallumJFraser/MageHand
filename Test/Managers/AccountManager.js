@@ -1,5 +1,5 @@
 var assert = require('assert');
-var manager = require('../../AccountManager.js');
+var manager = require('../../Managers/AccountManager.js');
 
 var blank = undefined;
 

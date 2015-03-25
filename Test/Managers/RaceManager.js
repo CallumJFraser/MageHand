@@ -1,5 +1,5 @@
 var assert = require('assert');
-var manager = require('../../RaceManager.js');
+var manager = require('../../Managers/RaceManager.js');
 
 var blank = undefined;
 

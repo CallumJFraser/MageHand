@@ -1,7 +1,7 @@
 var async = require('async');
-var databaseObject = require('./Database');
-var versionManager = require('./VersionManager');
-var Failed = require('./Failed');
+var databaseObject = require('../Database');
+var versionManager = require('../Managers/VersionManager');
+var Failed = require('../Failed');
 
 module.exports = {
 	Get: function (id, callback){

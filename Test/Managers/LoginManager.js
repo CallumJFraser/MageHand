@@ -1,5 +1,5 @@
 var assert = require('assert');
-var manager = require('../../LoginManager.js');
+var manager = require('../../Managers/LoginManager.js');
 
 var blank = undefined;
 

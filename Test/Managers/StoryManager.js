@@ -1,5 +1,5 @@
 var assert = require('assert');
-var manager = require('../../StoryManager.js');
+var manager = require('../../Managers/StoryManager.js');
 
 var blank = undefined;
 

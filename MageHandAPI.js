@@ -1,11 +1,11 @@
 var database = require('./Database');
 
-var accountManager = require('./AccountManager');
-var loginManager = require('./LoginManager');
-var characterManager = require('./CharacterManager');
-var classManager = require('./ClassManager');
-var storyManager = require('./StoryManager');
-var skillManager = require('./SkillManager');
+var accountManager = require('./Managers/AccountManager');
+var loginManager = require('./Managers/LoginManager');
+var characterManager = require('./Managers/CharacterManager');
+var classManager = require('./Managers/ClassManager');
+var storyManager = require('./Managers/StoryManager');
+var skillManager = require('./Managers/SkillManager');
 	
 module.exports = {
 	Start: function(success){

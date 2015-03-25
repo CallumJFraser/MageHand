@@ -1,5 +1,5 @@
 var assert = require('assert');
-var manager = require('../../SkillManager.js');
+var manager = require('../../Managers/SkillManager.js');
 
 var blank = undefined;
 
