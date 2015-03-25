@@ -8,5 +8,6 @@ This project was a reason to help me learn JavaScript better and to see what all
 Please note that I am still learning: I welcome constructive criticism and any advice anyone is willing to give on ways to improve this codebase.
 I am not afraid to make mistakes, as there is no better way to learn. For this reason there will be many checkins of files, mostly small, and mistakes will be made.
 
-The development of this API was done on a mac and this is why the Test.command and Startup.command files are in the project.
-These are almost useless unless you have a mac and create/place the project in the Documents/Projects/MageHandAPI/ folder.
+The development of this API was done on a mac and this is why the Test.command and Startup.command files are in the project. They where created to appease my lazyness for typing out the exact commands needed.
+
+Credit to [felixge](https://github.com/felixge) for the [MySQL package](https://github.com/felixge/node-mysql) now included in the project.
