@@ -32,6 +32,11 @@ Tests
 * Version Manager
 	* Object creation validation
 
+Bugs
+------
+
+* Running Magehand throws exception - (TypeError: Object #<Object> has no method 'Start' at Start (/Users/callumjfraser/Projects/MageHandAPI/MageHandAPI.js:52:11))
+
 Features
 ------
 
