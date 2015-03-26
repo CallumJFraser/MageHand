@@ -42,26 +42,11 @@ module.exports = {
 							done();
 						});
 					})
-					it('AccountID == AccountID', function(done){
+					it('Valid', function(done){
 						manager.Login(valid, validPwd, function(result){
 							assert.equal(result.AccountID, 1);
-							done();
-						});
-					})
-					it('Username == Username', function(done){
-						manager.Login(valid, validPwd, function(result){
 							assert.equal(result.Username, valid);
-							done();
-						});
-					})
-					it('AID == AID', function(done){
-						manager.Login(valid, validPwd, function(result){
 							assert.equal(result.AID, '1');
-							done();
-						});
-					})
-					it('SID == SID', function(done){
-						manager.Login(valid, validPwd, function(result){
 							assert.notEqual(result.SID, undefined);
 							done();
 						});
@@ -87,26 +72,11 @@ module.exports = {
 							done();
 						});
 					})
-					it('AccountID == undefined', function(done){
+					it('Valid', function(done){
 						manager.Login(invalid, validPwd, function(result){
 							assert.equal(result.AccountID, undefined);
-							done();
-						});
-					})
-					it('Username == undefined', function(done){
-						manager.Login(invalid, validPwd, function(result){
 							assert.equal(result.Username, undefined);
-							done();
-						});
-					})
-					it('AID == undefined', function(done){
-						manager.Login(invalid, validPwd, function(result){
 							assert.equal(result.AID, undefined);
-							done();
-						});
-					})
-					it('SID == undefined', function(done){
-						manager.Login(invalid, validPwd, function(result){
 							assert.equal(result.SID, undefined);
 							done();
 						});
@@ -132,26 +102,11 @@ module.exports = {
 							done();
 						});
 					})
-					it('AccountID == undefined', function(done){
+					it('Valid', function(done){
 						manager.Login(valid, invalidPwd, function(result){
 							assert.equal(result.AccountID, undefined);
-							done();
-						});
-					})
-					it('Username == undefined', function(done){
-						manager.Login(valid, invalidPwd, function(result){
 							assert.equal(result.Username, undefined);
-							done();
-						});
-					})
-					it('AID == undefined', function(done){
-						manager.Login(valid, invalidPwd, function(result){
 							assert.equal(result.AID, undefined);
-							done();
-						});
-					})
-					it('SID == undefined', function(done){
-						manager.Login(valid, invalidPwd, function(result){
 							assert.equal(result.SID, undefined);
 							done();
 						});
@@ -177,26 +132,11 @@ module.exports = {
 							done();
 						});
 					})
-					it('AccountID == undefined', function(done){
+					it('Valid', function(done){
 						manager.Login(blank, validPwd, function(result){
 							assert.equal(result.AccountID, undefined);
-							done();
-						});
-					})
-					it('Username == undefined', function(done){
-						manager.Login(blank, validPwd, function(result){
 							assert.equal(result.Username, undefined);
-							done();
-						});
-					})
-					it('AID == undefined', function(done){
-						manager.Login(blank, validPwd, function(result){
 							assert.equal(result.AID, undefined);
-							done();
-						});
-					})
-					it('SID == undefined', function(done){
-						manager.Login(blank, validPwd, function(result){
 							assert.equal(result.SID, undefined);
 							done();
 						});
@@ -222,26 +162,11 @@ module.exports = {
 							done();
 						});
 					})
-					it('AccountID == undefined', function(done){
+					it('Valid', function(done){
 						manager.Login(valid, blank, function(result){
 							assert.equal(result.AccountID, undefined);
-							done();
-						});
-					})
-					it('Username == undefined', function(done){
-						manager.Login(valid, blank, function(result){
 							assert.equal(result.Username, undefined);
-							done();
-						});
-					})
-					it('AID == undefined', function(done){
-						manager.Login(valid, blank, function(result){
 							assert.equal(result.AID, undefined);
-							done();
-						});
-					})
-					it('SID == undefined', function(done){
-						manager.Login(valid, blank, function(result){
 							assert.equal(result.SID, undefined);
 							done();
 						});
@@ -268,26 +193,11 @@ module.exports = {
 							done();
 						});
 					})
-					it('AccountID == undefined', function(done){
+					it('Valid', function(done){
 						manager.Login(blank, blank, function(result){
 							assert.equal(result.AccountID, undefined);
-							done();
-						});
-					})
-					it('Username == undefined', function(done){
-						manager.Login(blank, blank, function(result){
 							assert.equal(result.Username, undefined);
-							done();
-						});
-					})
-					it('AID == undefined', function(done){
-						manager.Login(blank, blank, function(result){
 							assert.equal(result.AID, undefined);
-							done();
-						});
-					})
-					it('SID == undefined', function(done){
-						manager.Login(blank, blank, function(result){
 							assert.equal(result.SID, undefined);
 							done();
 						});
@@ -311,18 +221,11 @@ module.exports = {
 							});
 						});
 					})
-					it('Success = true', function(done){
+					it('Success', function(done){
 						manager.Login(validUsername, validPwd, function(loginResult){
 							manager.Authorise(loginResult.AID, loginResult.SID, function(result){
 								assert.equal(result.Success, true);
 								assert.equal(result.Reason, undefined);
-								done();
-							});
-						});
-					})
-					it('Result = Authorisation', function(done){
-						manager.Login(validUsername, validPwd, function(loginResult){
-							manager.Authorise(loginResult.AID, loginResult.SID, function(result){
 								assert.notEqual(result.SID, undefined);
 								done();
 							});

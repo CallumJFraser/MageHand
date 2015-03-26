@@ -31,7 +31,7 @@ module.exports = {
 						});
 					});
 				});
-				it('Result = Account', function(done){
+				it('Valid', function(done){
 					dndAPI.Login(validUsername, validPassword, function(loginResponse){
 						dndAPI.GetAccount(loginResponse.AID, loginResponse.SID, 'Test1', function(result){
 							assert.equal(result.Result.ID, 1);
@@ -67,7 +67,7 @@ module.exports = {
 						});
 					});
 				});
-				it('Result != Account', function(done){
+				it('Valid', function(done){
 					dndAPI.Login(validUsername, validPassword, function(loginResponse){
 						dndAPI.GetAccount(loginResponse.AID, loginResponse.SID, 'Test1', function(result){
 							assert.equal(result.Result.ID, 1);

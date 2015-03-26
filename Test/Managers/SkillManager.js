@@ -33,14 +33,9 @@ module.exports = {
 						done();
 					});
 				})
-				it('ID != undefined', function(done){
+				it('Valid', function(done){
 					manager.Get(valid, function(result){	
-						assert.notEqual(result.ID, undefined);
-						done();
-					});
-				})
-				it('Name != undefined', function(done){
-					manager.Get(valid, function(result){	
+						assert.notEqual(result.ID, undefined);	
 						assert.notEqual(result.Name, undefined);
 						done();
 					});
@@ -60,14 +55,9 @@ module.exports = {
 						done();
 					});
 				})
-				it('ID != undefined', function(done){
+				it('Valid', function(done){
 					manager.Get(invalid, function(result){	
 						assert.equal(result.ID, undefined);
-						done();
-					});
-				})
-				it('Name != undefined', function(done){
-					manager.Get(invalid, function(result){	
 						assert.equal(result.Name, undefined);
 						done();
 					});
@@ -87,14 +77,9 @@ module.exports = {
 						done();
 					});
 				})
-				it('ID != undefined', function(done){
+				it('Valid', function(done){
 					manager.Get(invalidFormat, function(result){	
 						assert.equal(result.ID, undefined);
-						done();
-					});
-				})
-				it('Name != undefined', function(done){
-					manager.Get(invalidFormat, function(result){	
 						assert.equal(result.Name, undefined);
 						done();
 					});
@@ -114,14 +99,9 @@ module.exports = {
 						done();
 					});
 				})
-				it('ID != undefined', function(done){
+				it('Valid', function(done){
 					manager.Get(blank, function(result){	
 						assert.equal(result.ID, undefined);
-						done();
-					});
-				})
-				it('Name != undefined', function(done){
-					manager.Get(blank, function(result){	
 						assert.equal(result.Name, undefined);
 						done();
 					});
@@ -147,32 +127,12 @@ module.exports = {
 						done();
 					});
 				})
-				it('CharacterID != undefined', function(done){
+				it('Valid', function(done){
 					manager.GetByCharacter(valid, function(result){
 						assert.notEqual(result[0].CharacterID, undefined);
-						done();
-					});
-				})
-				it('Skill != undefined', function(done){
-					manager.GetByCharacter(valid, function(result){
 						assert.notEqual(result[0].Skill, undefined);
-						done();
-					});
-				})
-				it('Ranks != undefined', function(done){
-					manager.GetByCharacter(valid, function(result){
 						assert.notEqual(result[0].Ranks, undefined);
-						done();
-					});
-				})
-				it('Info != undefined', function(done){
-					manager.GetByCharacter(valid, function(result){
 						assert.notEqual(result[0].Info, undefined);
-						done();
-					});
-				})
-				it('MiscModifier != undefined', function(done){
-					manager.GetByCharacter(valid, function(result){
 						assert.notEqual(result[0].MiscModifier, undefined);
 						done();
 					});

@@ -48,39 +48,14 @@ module.exports = {
 						done();
 					});
 				})
-				it('ID == ID', function(done){
+				it('Valid', function(done){
 					manager.Get(valid, function(result){
 						assert.equal(result.ID, validObject.ID);
 						assert.equal(result.AID, validObject.AID);
-						done();
-					});
-				})
-				it('Username == Username', function(done){
-					manager.Get(valid, function(result){
 						assert.equal(result.Username, validObject.Username);
-						done();
-					});
-				})
-				it('Email == undefined', function(done){
-					manager.Get(valid, function(result){
 						assert.equal(result.Email, undefined);
-						done();
-					});
-				})
-				it('Hash == undefined', function(done){
-					manager.Get(valid, function(result){
 						assert.equal(result.Hash, undefined);
-						done();
-					});
-				})
-				it('Created == undefined', function(done){
-					manager.Get(valid, function(result){
 						assert.equal(result.Created, undefined);
-						done();
-					});
-				})
-				it('LastLogin == undefined', function(done){
-					manager.Get(valid, function(result){
 						assert.equal(result.LastLogin, undefined);
 						done();
 					});
@@ -105,44 +80,14 @@ module.exports = {
 						done();
 					});
 				})
-				it('ID == undefined', function(done){
+				it('Valid', function(done){
 					manager.Get(invalid, function(result){
 						assert.equal(result.ID, undefined);
-						done();
-					});
-				})
-				it('AID == undefined', function(done){
-					manager.Get(invalid, function(result){
 						assert.equal(result.AID, undefined);
-						done();
-					});
-				})
-				it('Username == undefined', function(done){
-					manager.Get(invalid, function(result){
 						assert.equal(result.Username, undefined);
-						done();
-					});
-				})
-				it('Email == undefined', function(done){
-					manager.Get(invalid, function(result){
 						assert.equal(result.Email, undefined);
-						done();
-					});
-				})
-				it('Hash == undefined', function(done){
-					manager.Get(invalid, function(result){
 						assert.equal(result.Hash, undefined);
-						done();
-					});
-				})
-				it('Created == undefined', function(done){
-					manager.Get(invalid, function(result){
 						assert.equal(result.Created, undefined);
-						done();
-					});
-				})
-				it('LastLogin == undefined', function(done){
-					manager.Get(invalid, function(result){
 						assert.equal(result.LastLogin, undefined);
 						done();
 					});
@@ -167,44 +112,14 @@ module.exports = {
 						done();
 					});
 				})
-				it('ID == undefined', function(done){
+				it('Valid', function(done){
 					manager.Get(invalidFormat, function(result){
 						assert.equal(result.ID, undefined);
-						done();
-					});
-				})
-				it('AID == undefined', function(done){
-					manager.Get(invalidFormat, function(result){
 						assert.equal(result.AID, undefined);
-						done();
-					});
-				})
-				it('Username == undefined', function(done){
-					manager.Get(invalidFormat, function(result){
 						assert.equal(result.Username, undefined);
-						done();
-					});
-				})
-				it('Email == undefined', function(done){
-					manager.Get(invalidFormat, function(result){
 						assert.equal(result.Email, undefined);
-						done();
-					});
-				})
-				it('Hash == undefined', function(done){
-					manager.Get(invalidFormat, function(result){
 						assert.equal(result.Hash, undefined);
-						done();
-					});
-				})
-				it('Created == undefined', function(done){
-					manager.Get(invalidFormat, function(result){
 						assert.equal(result.Created, undefined);
-						done();
-					});
-				})
-				it('LastLogin == undefined', function(done){
-					manager.Get(invalidFormat, function(result){
 						assert.equal(result.LastLogin, undefined);
 						done();
 					});
@@ -229,44 +144,14 @@ module.exports = {
 						done();
 					});
 				})
-				it('ID == undefined', function(done){
+				it('Valid', function(done){
 					manager.Get(blank, function(result){
 						assert.equal(result.ID, undefined);
-						done();
-					});
-				})
-				it('AID == undefined', function(done){
-					manager.Get(blank, function(result){
 						assert.equal(result.AID, undefined);
-						done();
-					});
-				})
-				it('Username == undefined', function(done){
-					manager.Get(blank, function(result){
 						assert.equal(result.Username, undefined);
-						done();
-					});
-				})
-				it('Email == undefined', function(done){
-					manager.Get(blank, function(result){
 						assert.equal(result.Email, undefined);
-						done();
-					});
-				})
-				it('Hash == undefined', function(done){
-					manager.Get(blank, function(result){
 						assert.equal(result.Hash, undefined);
-						done();
-					});
-				})
-				it('Created == undefined', function(done){
-					manager.Get(blank, function(result){
 						assert.equal(result.Created, undefined);
-						done();
-					});
-				})
-				it('LastLogin == undefined', function(done){
-					manager.Get(blank, function(result){
 						assert.equal(result.LastLogin, undefined);
 						done();
 					});
@@ -297,44 +182,14 @@ module.exports = {
 						done();
 					});
 				})
-				it('ID == ID', function(done){
+				it('Valid', function(done){
 					manager.GetByUsername(valid, function(result){
 						assert.equal(result.ID, validObject.ID);
-						done();
-					});
-				})
-				it('AID == AID', function(done){
-					manager.GetByUsername(valid, function(result){
 						assert.equal(result.AID, validObject.AID);
-						done();
-					});
-				})
-				it('Username == Username', function(done){
-					manager.GetByUsername(valid, function(result){
 						assert.equal(result.Username, validObject.Username);
-						done();
-					});
-				})
-				it('Email == undefined', function(done){
-					manager.GetByUsername(valid, function(result){
 						assert.equal(result.Email, undefined);
-						done();
-					});
-				})
-				it('Hash == undefined', function(done){
-					manager.GetByUsername(valid, function(result){
 						assert.equal(result.Hash, undefined);
-						done();
-					});
-				})
-				it('Created == undefined', function(done){
-					manager.GetByUsername(valid, function(result){
 						assert.equal(result.Created, undefined);
-						done();
-					});
-				})
-				it('LastLogin == undefined', function(done){
-					manager.GetByUsername(valid, function(result){
 						assert.equal(result.LastLogin, undefined);
 						done();
 					});
@@ -359,44 +214,14 @@ module.exports = {
 						done();
 					});
 				})
-				it('ID == undefined', function(done){
+				it('Valid', function(done){
 					manager.GetByUsername(invalid, function(result){
 						assert.equal(result.ID, undefined);
-						done();
-					});
-				})
-				it('AID == undefined', function(done){
-					manager.GetByUsername(invalid, function(result){
 						assert.equal(result.AID, undefined);
-						done();
-					});
-				})
-				it('Username == undefined', function(done){
-					manager.GetByUsername(invalid, function(result){
 						assert.equal(result.Username, undefined);
-						done();
-					});
-				})
-				it('Email == undefined', function(done){
-					manager.GetByUsername(invalid, function(result){
 						assert.equal(result.Email, undefined);
-						done();
-					});
-				})
-				it('Hash == undefined', function(done){
-					manager.GetByUsername(invalid, function(result){
 						assert.equal(result.Hash, undefined);
-						done();
-					});
-				})
-				it('Created == undefined', function(done){
-					manager.GetByUsername(invalid, function(result){
 						assert.equal(result.Created, undefined);
-						done();
-					});
-				})
-				it('LastLogin == undefined', function(done){
-					manager.GetByUsername(invalid, function(result){
 						assert.equal(result.LastLogin, undefined);
 						done();
 					});
@@ -421,44 +246,14 @@ module.exports = {
 						done();
 					});
 				})
-				it('ID == undefined', function(done){
+				it('Valid', function(done){
 					manager.GetByUsername(blank, function(result){
 						assert.equal(result.ID, undefined);
-						done();
-					});
-				})
-				it('AID == undefined', function(done){
-					manager.GetByUsername(blank, function(result){
 						assert.equal(result.AID, undefined);
-						done();
-					});
-				})
-				it('Username == undefined', function(done){
-					manager.GetByUsername(blank, function(result){
 						assert.equal(result.Username, undefined);
-						done();
-					});
-				})
-				it('Email == undefined', function(done){
-					manager.GetByUsername(blank, function(result){
 						assert.equal(result.Email, undefined);
-						done();
-					});
-				})
-				it('Hash == undefined', function(done){
-					manager.GetByUsername(blank, function(result){
 						assert.equal(result.Hash, undefined);
-						done();
-					});
-				})
-				it('Created == undefined', function(done){
-					manager.GetByUsername(blank, function(result){
 						assert.equal(result.Created, undefined);
-						done();
-					});
-				})
-				it('LastLogin == undefined', function(done){
-					manager.GetByUsername(blank, function(result){
 						assert.equal(result.LastLogin, undefined);
 						done();
 					});
@@ -489,44 +284,14 @@ module.exports = {
 						done();
 					});
 				})
-				it('ID == ID', function(done){
+				it('Valid', function(done){
 					manager.GetByEmail(valid, function(result){
 						assert.equal(result.ID, validObject.ID);
-						done();
-					});
-				})
-				it('AID == AID', function(done){
-					manager.GetByEmail(valid, function(result){
 						assert.equal(result.AID, validObject.AID);
-						done();
-					});
-				})
-				it('Username == Username', function(done){
-					manager.GetByEmail(valid, function(result){
 						assert.equal(result.Username, validObject.Username);
-						done();
-					});
-				})
-				it('Email == undefined', function(done){
-					manager.GetByEmail(valid, function(result){
 						assert.equal(result.Email, undefined);
-						done();
-					});
-				})
-				it('Hash == undefined', function(done){
-					manager.GetByEmail(valid, function(result){
 						assert.equal(result.Hash, undefined);
-						done();
-					});
-				})
-				it('Created == undefined', function(done){
-					manager.GetByEmail(valid, function(result){
 						assert.equal(result.Created, undefined);
-						done();
-					});
-				})
-				it('LastLogin == undefined', function(done){
-					manager.GetByEmail(valid, function(result){
 						assert.equal(result.LastLogin, undefined);
 						done();
 					});
@@ -551,44 +316,14 @@ module.exports = {
 						done();
 					});
 				})
-				it('ID == undefined', function(done){
+				it('Valid', function(done){
 					manager.GetByEmail(invalid, function(result){
 						assert.equal(result.ID, undefined);
-						done();
-					});
-				})
-				it('AID == undefined', function(done){
-					manager.GetByEmail(invalid, function(result){
 						assert.equal(result.AID, undefined);
-						done();
-					});
-				})
-				it('Username == undefined', function(done){
-					manager.GetByEmail(invalid, function(result){
 						assert.equal(result.Username, undefined);
-						done();
-					});
-				})
-				it('Email == undefined', function(done){
-					manager.GetByEmail(invalid, function(result){
 						assert.equal(result.Email, undefined);
-						done();
-					});
-				})
-				it('Hash == undefined', function(done){
-					manager.GetByEmail(invalid, function(result){
 						assert.equal(result.Hash, undefined);
-						done();
-					});
-				})
-				it('Created == undefined', function(done){
-					manager.GetByEmail(invalid, function(result){
 						assert.equal(result.Created, undefined);
-						done();
-					});
-				})
-				it('LastLogin == undefined', function(done){
-					manager.GetByEmail(invalid, function(result){
 						assert.equal(result.LastLogin, undefined);
 						done();
 					});
@@ -613,44 +348,14 @@ module.exports = {
 						done();
 					});
 				})
-				it('ID == undefined', function(done){
+				it('Valid', function(done){
 					manager.GetByEmail(blank, function(result){
 						assert.equal(result.ID, undefined);
-						done();
-					});
-				})
-				it('AID == undefined', function(done){
-					manager.GetByEmail(blank, function(result){
 						assert.equal(result.AID, undefined);
-						done();
-					});
-				})
-				it('Username == undefined', function(done){
-					manager.GetByEmail(blank, function(result){
 						assert.equal(result.Username, undefined);
-						done();
-					});
-				})
-				it('Email == undefined', function(done){
-					manager.GetByEmail(blank, function(result){
 						assert.equal(result.Email, undefined);
-						done();
-					});
-				})
-				it('Hash == undefined', function(done){
-					manager.GetByEmail(blank, function(result){
 						assert.equal(result.Hash, undefined);
-						done();
-					});
-				})
-				it('Created == undefined', function(done){
-					manager.GetByEmail(blank, function(result){
 						assert.equal(result.Created, undefined);
-						done();
-					});
-				})
-				it('LastLogin == undefined', function(done){
-					manager.GetByEmail(blank, function(result){
 						assert.equal(result.LastLogin, undefined);
 						done();
 					});
@@ -681,44 +386,14 @@ module.exports = {
 						done();
 					});
 				})
-				it('ID == ID', function(done){
+				it('Valid', function(done){
 					manager.Search(valid, function(result){
 						assert.equal(result.ID, validObject.ID);
-						done();
-					});
-				})
-				it('AID == AID', function(done){
-					manager.Search(valid, function(result){
 						assert.equal(result.AID, validObject.AID);
-						done();
-					});
-				})
-				it('Username == Username', function(done){
-					manager.Search(valid, function(result){
 						assert.equal(result.Username, validObject.Username);
-						done();
-					});
-				})
-				it('Email == undefined', function(done){
-					manager.Search(valid, function(result){
 						assert.equal(result.Email, undefined);
-						done();
-					});
-				})
-				it('Hash == undefined', function(done){
-					manager.Search(valid, function(result){
 						assert.equal(result.Hash, undefined);
-						done();
-					});
-				})
-				it('Created == undefined', function(done){
-					manager.Search(valid, function(result){
 						assert.equal(result.Created, undefined);
-						done();
-					});
-				})
-				it('LastLogin == undefined', function(done){
-					manager.Search(valid, function(result){
 						assert.equal(result.LastLogin, undefined);
 						done();
 					});
@@ -743,44 +418,14 @@ module.exports = {
 						done();
 					});
 				})
-				it('ID == undefined', function(done){
+				it('Valid', function(done){
 					manager.Search(invalid, function(result){
 						assert.equal(result.ID, undefined);
-						done();
-					});
-				})
-				it('AID == undefined', function(done){
-					manager.Search(invalid, function(result){
 						assert.equal(result.AID, undefined);
-						done();
-					});
-				})
-				it('Username == undefined', function(done){
-					manager.Search(invalid, function(result){
 						assert.equal(result.Username, undefined);
-						done();
-					});
-				})
-				it('Email == undefined', function(done){
-					manager.Search(invalid, function(result){
 						assert.equal(result.Email, undefined);
-						done();
-					});
-				})
-				it('Hash == undefined', function(done){
-					manager.Search(invalid, function(result){
 						assert.equal(result.Hash, undefined);
-						done();
-					});
-				})
-				it('Created == undefined', function(done){
-					manager.Search(invalid, function(result){
 						assert.equal(result.Created, undefined);
-						done();
-					});
-				})
-				it('LastLogin == undefined', function(done){
-					manager.Search(invalid, function(result){
 						assert.equal(result.LastLogin, undefined);
 						done();
 					});
@@ -805,44 +450,14 @@ module.exports = {
 						done();
 					});
 				})
-				it('ID == undefined', function(done){
+				it('Valid', function(done){
 					manager.Search(blank, function(result){
 						assert.equal(result.ID, undefined);
-						done();
-					});
-				})
-				it('AID == undefined', function(done){
-					manager.Search(blank, function(result){
 						assert.equal(result.AID, undefined);
-						done();
-					});
-				})
-				it('Username == undefined', function(done){
-					manager.Search(blank, function(result){
 						assert.equal(result.Username, undefined);
-						done();
-					});
-				})
-				it('Email == undefined', function(done){
-					manager.Search(blank, function(result){
 						assert.equal(result.Email, undefined);
-						done();
-					});
-				})
-				it('Hash == undefined', function(done){
-					manager.Search(blank, function(result){
 						assert.equal(result.Hash, undefined);
-						done();
-					});
-				})
-				it('Created == undefined', function(done){
-					manager.Search(blank, function(result){
 						assert.equal(result.Created, undefined);
-						done();
-					});
-				})
-				it('LastLogin == undefined', function(done){
-					manager.Search(blank, function(result){
 						assert.equal(result.LastLogin, undefined);
 						done();
 					});

@@ -30,32 +30,12 @@ module.exports = {
 						done();
 					});
 				})
-				it('ID != undefined', function(done){
+				it('Valid', function(done){
 					manager.Get(valid, function(result){	
 						assert.notEqual(result.ID, undefined);
-						done();
-					});
-				})
-				it('Title != undefined', function(done){
-					manager.Get(valid, function(result){	
 						assert.notEqual(result.Title, undefined);
-						done();
-					});
-				})
-				it('Description != undefined', function(done){
-					manager.Get(valid, function(result){	
 						assert.notEqual(result.Description, undefined);
-						done();
-					});
-				})
-				it('ParentID != undefined', function(done){
-					manager.Get(valid, function(result){	
 						assert.notEqual(result.ParentID, undefined);
-						done();
-					});
-				})
-				it('Version != undefined', function(done){
-					manager.Get(valid, function(result){	
 						assert.notEqual(result.Version, undefined);
 						done();
 					});
@@ -75,32 +55,12 @@ module.exports = {
 						done();
 					});
 				})
-				it('ID != undefined', function(done){
+				it('Valid', function(done){
 					manager.Get(invalid, function(result){	
 						assert.equal(result.ID, undefined);
-						done();
-					});
-				})
-				it('Title != undefined', function(done){
-					manager.Get(invalid, function(result){	
 						assert.equal(result.Title, undefined);
-						done();
-					});
-				})
-				it('Description != undefined', function(done){
-					manager.Get(invalid, function(result){	
 						assert.equal(result.Description, undefined);
-						done();
-					});
-				})
-				it('ParentID != undefined', function(done){
-					manager.Get(invalid, function(result){	
 						assert.equal(result.ParentID, undefined);
-						done();
-					});
-				})
-				it('Version != undefined', function(done){
-					manager.Get(invalid, function(result){	
 						assert.equal(result.Version, undefined);
 						done();
 					});
@@ -120,32 +80,12 @@ module.exports = {
 						done();
 					});
 				})
-				it('ID != undefined', function(done){
+				it('Valid', function(done){
 					manager.Get(invalidFormat, function(result){	
 						assert.equal(result.ID, undefined);
-						done();
-					});
-				})
-				it('Title != undefined', function(done){
-					manager.Get(invalidFormat, function(result){	
-						assert.equal(result.Title, undefined);
-						done();
-					});
-				})
-				it('Description != undefined', function(done){
-					manager.Get(invalidFormat, function(result){	
+						assert.equal(result.Title, undefined);	
 						assert.equal(result.Description, undefined);
-						done();
-					});
-				})
-				it('ParentID != undefined', function(done){
-					manager.Get(invalidFormat, function(result){	
 						assert.equal(result.ParentID, undefined);
-						done();
-					});
-				})
-				it('Version != undefined', function(done){
-					manager.Get(invalidFormat, function(result){	
 						assert.equal(result.Version, undefined);
 						done();
 					});
@@ -165,32 +105,12 @@ module.exports = {
 						done();
 					});
 				})
-				it('ID != undefined', function(done){
+				it('Valid', function(done){
 					manager.Get(blank, function(result){	
 						assert.equal(result.ID, undefined);
-						done();
-					});
-				})
-				it('Title != undefined', function(done){
-					manager.Get(blank, function(result){	
 						assert.equal(result.Title, undefined);
-						done();
-					});
-				})
-				it('Description != undefined', function(done){
-					manager.Get(blank, function(result){	
 						assert.equal(result.Description, undefined);
-						done();
-					});
-				})
-				it('ParentID != undefined', function(done){
-					manager.Get(blank, function(result){	
 						assert.equal(result.ParentID, undefined);
-						done();
-					});
-				})
-				it('Version != undefined', function(done){
-					manager.Get(blank, function(result){	
 						assert.equal(result.Version, undefined);
 						done();
 					});

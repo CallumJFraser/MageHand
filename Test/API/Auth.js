@@ -33,26 +33,11 @@ module.exports = {
 						done();
 					});
 				});
-				it('Should return AID: 1', function(done){
+				it('Valid', function(done){
 					dndAPI.Login(validUsername, validPassword, function(loginResponse){
 						assert.equal(loginResponse.AID, 1);
-						done();
-					});
-				});
-				it('Should return Username: CallumJFraser', function(done){
-					dndAPI.Login(validUsername, validPassword, function(loginResponse){
 						assert.equal(loginResponse.Username, validUsername);
-						done();
-					});
-				});
-				it('Should return Reason: undefined', function(done){
-					dndAPI.Login(validUsername, validPassword, function(loginResponse){
 						assert.equal(loginResponse.Reason, undefined);
-						done();
-					});
-				});
-				it('Should return SID', function(done){
-					dndAPI.Login(validUsername, validPassword, function(loginResponse){
 						assert.notEqual(loginResponse.SID, undefined);
 						done();
 					});
@@ -72,26 +57,11 @@ module.exports = {
 						done();
 					});
 				});
-				it('Should return AID: undefined', function(done){
+				it('Valid', function(done){
 					dndAPI.Login(validUsername, invalidPassword, function(loginResponse){
 						assert.equal(loginResponse.AID, undefined);
-						done();
-					});
-				});
-				it('Should return Username: undefined', function(done){
-					dndAPI.Login(validUsername, invalidPassword, function(loginResponse){
 						assert.equal(loginResponse.Username, undefined);
-						done();
-					});
-				});
-				it('Should return a Reason', function(done){
-					dndAPI.Login(validUsername, invalidPassword, function(loginResponse){
 						assert.notEqual(loginResponse.Reason, undefined);
-						done();
-					});
-				});
-				it('Should return SID: undefined', function(done){
-					dndAPI.Login(validUsername, invalidPassword, function(loginResponse){
 						assert.equal(loginResponse.SID, undefined);
 						done();
 					});
@@ -110,40 +80,13 @@ module.exports = {
 						done();
 					});
 				});
-				it('Should return AID: undefined', function(done){
+				it('Valid', function(done){
 					dndAPI.Login(invalidUsername, validPassword, function(loginResponse){
 						assert.equal(loginResponse.AID, undefined);
-						done();
-					});
-				});
-				it('Should return Username: undefined', function(done){
-					dndAPI.Login(invalidUsername, validPassword, function(loginResponse){
 						assert.equal(loginResponse.Username, undefined);
-						done();
-					});
-				});
-				it('Should return a Reason', function(done){
-					dndAPI.Login(invalidUsername, validPassword, function(loginResponse){
 						assert.notEqual(loginResponse.Reason, undefined);
-						done();
-					});
-				});
-				it('Should return SID: undefined', function(done){
-					dndAPI.Login(invalidUsername, validPassword, function(loginResponse){
 						assert.equal(loginResponse.SID, undefined);
-						done();
-					});
-				});
-			})
-			describe('Missing "Username" and "Password":', function(){
-				it('Should return Success: false', function(done){
-					dndAPI.Login(undefined, undefined, function(loginResponse){
 						assert.equal(loginResponse.Success, false);
-						done();
-					});
-				});
-				it('Should return a Reason', function(done){
-					dndAPI.Login(undefined, undefined, function(loginResponse){
 						assert.notEqual(loginResponse.Reason, undefined);
 						done();
 					});

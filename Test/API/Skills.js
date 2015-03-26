@@ -35,7 +35,7 @@ module.exports = {
 					});
 				});
 			})
-			it('Should return Result.ID: 1', function(done){
+			it('Valid', function(done){
 				dndAPI.Login(validUsername, validPassword, function(loginResponse){
 					dndAPI.GetSkillType(loginResponse.AID, loginResponse.SID, 1, function(result){
 						assert.equal(result.Result.ID, 1);
@@ -96,7 +96,7 @@ module.exports = {
 						});
 					});
 				})
-				it('Should return Result.ID: 1', function(done){
+				it('Valid', function(done){
 					dndAPI.Login(validUsername, validPassword, function(loginResponse){
 						dndAPI.ListCharacterAbilities(loginResponse.AID, loginResponse.SID, validSearchFullTitle, function(result){
 							assert.equal(result.Result.ID, 1);
@@ -126,7 +126,7 @@ module.exports = {
 						});
 					});
 				})
-				it('Should return Result.ID: 1', function(done){
+				it('Valid', function(done){
 					dndAPI.Login(validUsername, validPassword, function(loginResponse){
 						dndAPI.ListCharacterAbilities(loginResponse.AID, loginResponse.SID, validSearchPartialTitle, function(result){
 							assert.equal(result.Result.ID, 1);
@@ -156,7 +156,7 @@ module.exports = {
 						});
 					});
 				})
-				it('Should return Result.ID: 1', function(done){
+				it('Valid', function(done){
 					dndAPI.Login(validUsername, validPassword, function(loginResponse){
 						dndAPI.ListCharacterAbilities(loginResponse.AID, loginResponse.SID, validSearchDescription, function(result){
 							assert.equal(result.Result.ID, 1);

@@ -30,26 +30,11 @@ module.exports = {
 						done();
 					});
 				})
-				it('ID != undefined', function(done){
+				it('Valid', function(done){
 					manager.Get(valid, function(result){	
 						assert.notEqual(result.ID, undefined);
-						done();
-					});
-				})
-				it('Name != undefined', function(done){
-					manager.Get(valid, function(result){	
 						assert.notEqual(result.Name, undefined);
-						done();
-					});
-				})
-				it('Description != undefined', function(done){
-					manager.Get(valid, function(result){	
 						assert.notEqual(result.Description, undefined);
-						done();
-					});
-				})
-				it('VersionID != undefined', function(done){
-					manager.Get(valid, function(result){	
 						assert.notEqual(result.VersionID, undefined);
 						done();
 					});
@@ -75,26 +60,11 @@ module.exports = {
 						done();
 					});
 				})
-				it('ID == undefined', function(done){
+				it('Valid', function(done){
 					manager.Get(invalid, function(result){	
 						assert.equal(result.ID, undefined);
-						done();
-					});
-				})
-				it('Name == undefined', function(done){
-					manager.Get(invalid, function(result){	
 						assert.equal(result.Name, undefined);
-						done();
-					});
-				})
-				it('Description == undefined', function(done){
-					manager.Get(invalid, function(result){	
 						assert.equal(result.Description, undefined);
-						done();
-					});
-				})
-				it('VersionID != undefined', function(done){
-					manager.Get(invalid, function(result){	
 						assert.equal(result.VersionID, undefined);
 						done();
 					});
@@ -120,26 +90,11 @@ module.exports = {
 						done();
 					});
 				})
-				it('ID == undefined', function(done){
+				it('Valid', function(done){
 					manager.Get(invalidFormat, function(result){	
 						assert.equal(result.ID, undefined);
-						done();
-					});
-				})
-				it('Name == undefined', function(done){
-					manager.Get(invalidFormat, function(result){	
 						assert.equal(result.Name, undefined);
-						done();
-					});
-				})
-				it('Description == undefined', function(done){
-					manager.Get(invalidFormat, function(result){	
 						assert.equal(result.Description, undefined);
-						done();
-					});
-				})
-				it('VersionID != undefined', function(done){
-					manager.Get(invalidFormat, function(result){	
 						assert.equal(result.VersionID, undefined);
 						done();
 					});
@@ -165,26 +120,11 @@ module.exports = {
 						done();
 					});
 				})
-				it('ID == undefined', function(done){
+				it('Valid', function(done){
 					manager.Get(blank, function(result){	
 						assert.equal(result.ID, undefined);
-						done();
-					});
-				})
-				it('Name == undefined', function(done){
-					manager.Get(blank, function(result){	
 						assert.equal(result.Name, undefined);
-						done();
-					});
-				})
-				it('Description == undefined', function(done){
-					manager.Get(blank, function(result){	
 						assert.equal(result.Description, undefined);
-						done();
-					});
-				})
-				it('VersionID == undefined', function(done){
-					manager.Get(blank, function(result){	
 						assert.equal(result.VersionID, undefined);
 						done();
 					});

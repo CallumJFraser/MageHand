@@ -36,7 +36,7 @@ module.exports = {
 						});
 					});
 				})
-				it('Should return Result.ID: 1', function(done){
+				it('Valid', function(done){
 					dndAPI.Login(validUsername, validPassword, function(loginResponse){
 						dndAPI.GetStory(loginResponse.AID, loginResponse.SID, 1, function(result){
 							assert.equal(result.Result.ID, 1);
@@ -100,7 +100,7 @@ module.exports = {
 						});
 					});
 				})
-				it('Should return Result.ID: 1', function(done){
+				it('Valid', function(done){
 					dndAPI.Login(validUsername, validPassword, function(loginResponse){
 						dndAPI.ListStory(loginResponse.AID, loginResponse.SID, validSearchFullTitle, function(result){
 							assert.equal(result.Result.ID, 1);
@@ -130,7 +130,7 @@ module.exports = {
 						});
 					});
 				})
-				it('Should return Result.ID: 1', function(done){
+				it('Valid', function(done){
 					dndAPI.Login(validUsername, validPassword, function(loginResponse){
 						dndAPI.ListStory(loginResponse.AID, loginResponse.SID, validSearchPartialTitle, function(result){
 							assert.equal(result.Result.ID, 1);
@@ -160,7 +160,7 @@ module.exports = {
 						});
 					});
 				})
-				it('Should return Result.ID: 1', function(done){
+				it('Valid', function(done){
 					dndAPI.Login(validUsername, validPassword, function(loginResponse){
 						dndAPI.ListStory(loginResponse.AID, loginResponse.SID, validSearchDescription, function(result){
 							assert.equal(result.Result.ID, 1);
