@@ -51,11 +51,6 @@ module.exports = {
 				it('ID == ID', function(done){
 					manager.Get(valid, function(result){
 						assert.equal(result.ID, validObject.ID);
-						done();
-					});
-				})
-				it('AID == AID', function(done){
-					manager.Get(valid, function(result){
 						assert.equal(result.AID, validObject.AID);
 						done();
 					});
