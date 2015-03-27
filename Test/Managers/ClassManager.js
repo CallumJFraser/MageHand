@@ -35,7 +35,7 @@ module.exports = {
 						assert.notEqual(result.ID, undefined);
 						assert.notEqual(result.Name, undefined);
 						assert.notEqual(result.Description, undefined);
-						assert.notEqual(result.VersionID, undefined);
+						assert.notEqual(result.Version, undefined);
 						done();
 					});
 				})

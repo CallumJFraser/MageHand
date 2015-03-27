@@ -37,7 +37,7 @@ module.exports = {
 						dndAPI.GetClass(loginResponse.AID, loginResponse.SID, 1, function(result){
 							assert.equal(result.Result.ID, 1);
 							assert.equal(result.Result.Name, 'Bard');
-							assert.notEqual(result.Result.VersionID, undefined);
+							assert.notEqual(result.Result.Version, undefined);
 							assert.equal(result.Result.Description, '');
 							done();
 						});

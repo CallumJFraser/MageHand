@@ -1,3 +1,4 @@
+var async = require('async');
 var databaseObject = require('../Database');
 var versionManager = require('../Managers/VersionManager');
 var Failed = require('../Failed');
@@ -9,14 +10,26 @@ module.exports = {
 };
 
 function Class(row, callback){
-	if(row == undefined)
-		return new Failed('Missing parameter');
-	var object = {};
-	object.ID = row.ID;
-	object.Name = row.Name;
-	object.Description = row.Description;
-	object.VersionID = row.VersionID;
-	callback(object);
+	async.map(
+		[row.VersionID],
+		function(item, parallelCallback){
+			versionManager.Get(item, function(result){
+				parallelCallback(null, result)
+			});
+		},
+		function(err, results){
+			if(row == undefined)
+				return new Failed('Missing parameter');
+			var object = {};
+			object.ID = row.ID;
+			object.Name = row.Name;
+			object.Description = row.Description;
+			object.Version = results[0];
+
+//			console.log(results[0]);
+			callback(object);
+		}
+		);
 }
 
 function GetByID(id, callback){
