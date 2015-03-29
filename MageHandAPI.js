@@ -6,6 +6,7 @@ var characterManager = require('./Managers/CharacterManager');
 var classManager = require('./Managers/ClassManager');
 var storyManager = require('./Managers/StoryManager');
 var skillManager = require('./Managers/SkillManager');
+var raceManager = require('./Managers/RaceManager');
 	
 module.exports = {
 	Start: function(success){
@@ -40,6 +41,9 @@ module.exports = {
 	},
 	GetSkillType:  function(aID, sID, skillTypeID, callback){
 		GetSkillType(aID, sID, skillTypeID, callback);
+	},
+	GetRace: function(aID, sID, raceID, callback){
+		GetRace(aID, sID, raceID, callback);
 	}
 };
 
@@ -179,6 +183,19 @@ function GetSkillType(aID, sID, skillTypeID, callback){
 	Authorise(aID, sID, function(authorised){
 		if(authorised.Success){
 			skillManager.GetSkillType(skillTypeID, function(data){
+				callback(new DnDResponse(data, authorised));
+			});
+		}
+		else{
+			callback(new DnDResponse({ Success:false, Reason: 'See authorisation' }, authorised));
+		}
+	});
+}
+
+function GetRace(aID, sID, raceID, callback){
+	Authorise(aID, sID, function(authorised){
+		if(authorised.Success){
+			raceManager.Get(raceID, function(data){
 				callback(new DnDResponse(data, authorised));
 			});
 		}
