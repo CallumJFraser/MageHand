@@ -77,11 +77,11 @@ describe('API Character -', function(){
 describe('API Class -', function(){
 	apiClass.Test();	//	
 });
-/*	TODO:
 
 describe('API Race -', function(){
 	apiRace.Test();	//	
 });
+/*	TODO:
 
 describe('API Size -', function(){
 	apiSize.Test();	//	

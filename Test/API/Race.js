@@ -8,7 +8,7 @@ module.exports = {
 	Test: function(){
 	
 		describe('Public functions:', function(){
-			if('GetRace != undefined', function(done){
+			it('GetRace != undefined', function(done){
 				assert.notEqual(dndAPI.GetRace, undefined);
 				done();
 			});
@@ -38,7 +38,8 @@ module.exports = {
 							assert.equal(result.Result.ID, 1);
 							assert.equal(result.Result.Name, 'Gnome');
 							assert.equal(result.Result.Description, 'They are, like, waay small.');
-							assert.equal(result.Result.SizeID, 1);
+							assert.notEqual(result.Result.Size, undefined);
+							assert.notEqual(result.Result.Version, undefined);
 							assert.equal(result.Result.Speed, 20);
 							done();
 						});
