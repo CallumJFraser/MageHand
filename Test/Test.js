@@ -73,10 +73,11 @@ describe('API Account -', function(){
 describe('API Character -', function(){
 	apiCharacter.Test();	//	Done
 });
-/*	TODO:
+
 describe('API Class -', function(){
 	apiClass.Test();	//	
 });
+/*	TODO:
 
 describe('API Race -', function(){
 	apiRace.Test();	//	
