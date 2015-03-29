@@ -81,11 +81,11 @@ describe('API Class -', function(){
 describe('API Race -', function(){
 	apiRace.Test();	//	
 });
-/*	TODO:
 
 describe('API Size -', function(){
 	apiSize.Test();	//	
 });
+/*	TODO:
 
 describe('API Session -', function(){
 	apiSession.Test();	//	
