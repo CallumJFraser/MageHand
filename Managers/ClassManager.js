@@ -25,8 +25,6 @@ function Class(row, callback){
 			object.Name = row.Name;
 			object.Description = row.Description;
 			object.Version = results[0];
-
-//			console.log(results[0]);
 			callback(object);
 		}
 		);
