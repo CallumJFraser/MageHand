@@ -7,6 +7,7 @@ var classManager = require('./Managers/ClassManager');
 var storyManager = require('./Managers/StoryManager');
 var skillManager = require('./Managers/SkillManager');
 var raceManager = require('./Managers/RaceManager');
+var sizeManager = require('./Managers/SizeManager');
 	
 module.exports = {
 	Start: function(success){
@@ -44,6 +45,9 @@ module.exports = {
 	},
 	GetRace: function(aID, sID, raceID, callback){
 		GetRace(aID, sID, raceID, callback);
+	},
+	GetSize: function(aID, sID, sizeID, callback){
+		GetSize(aID, sID, sizeID, callback);
 	}
 };
 
@@ -196,6 +200,19 @@ function GetRace(aID, sID, raceID, callback){
 	Authorise(aID, sID, function(authorised){
 		if(authorised.Success){
 			raceManager.Get(raceID, function(data){
+				callback(new DnDResponse(data, authorised));
+			});
+		}
+		else{
+			callback(new DnDResponse({ Success:false, Reason: 'See authorisation' }, authorised));
+		}
+	});
+}
+
+function GetSize(aID, sID, sizeID, callback){
+	Authorise(aID, sID, function(authorised){
+		if(authorised.Success){
+			sizeManager.Get(sizeID, function(data){
 				callback(new DnDResponse(data, authorised));
 			});
 		}
