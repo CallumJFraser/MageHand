@@ -7,6 +7,7 @@ var storyManager = require('./Managers/StoryManager');
 var sizeManager = require('./Managers/SizeManager');
 var skillManager = require('./Managers/SkillManager');
 var raceManager = require('./Managers/RaceManager');
+var sessionManager = require('./Managers/SessionManager');
 
 var apiAuth = require('./API/Auth');
 var apiAccount = require('./API/Account');
@@ -59,6 +60,10 @@ describe('Skill Manager -', function(){
 
 describe('Race Manager -', function(){
 	raceManager.Test();	//	Done
+});
+
+describe('Session Manager -', function(){
+	sessionManager.Test();	//	Done
 });
 
 
