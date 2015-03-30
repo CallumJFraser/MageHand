@@ -8,6 +8,7 @@ var storyManager = require('./Managers/StoryManager');
 var skillManager = require('./Managers/SkillManager');
 var raceManager = require('./Managers/RaceManager');
 var sizeManager = require('./Managers/SizeManager');
+var sessionManager = require('./Managers/SessionManager');
 	
 module.exports = {
 	Start: function(success){
@@ -48,6 +49,9 @@ module.exports = {
 	},
 	GetSize: function(aID, sID, sizeID, callback){
 		GetSize(aID, sID, sizeID, callback);
+	},
+	GetSession: function(aID, sID, sessionID, callback){
+		GetSession(aID, sID, sessionID, callback);
 	}
 };
 
@@ -213,6 +217,19 @@ function GetSize(aID, sID, sizeID, callback){
 	Authorise(aID, sID, function(authorised){
 		if(authorised.Success){
 			sizeManager.Get(sizeID, function(data){
+				callback(new DnDResponse(data, authorised));
+			});
+		}
+		else{
+			callback(new DnDResponse({ Success:false, Reason: 'See authorisation' }, authorised));
+		}
+	});
+}
+
+function GetSession(aID, sID, sessionID, callback){
+	Authorise(aID, sID, function(authorised){
+		if(authorised.Success){
+			sessionManager.Get(sessionID, function(data){
 				callback(new DnDResponse(data, authorised));
 			});
 		}
