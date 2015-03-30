@@ -37,10 +37,10 @@ module.exports = {
 					dndAPI.Login(validUsername, validPassword, function(loginResponse){
 						dndAPI.GetSession(loginResponse.AID, loginResponse.SID, 1, function(result){
 							assert.equal(result.Result.ID, 1);
-							assert.equal(result.Result.Name, 'Gnome');
-							assert.equal(result.Result.Description, 'They are, like, waay small.');
-							assert.equal(result.Result.SizeID, 1);
-							assert.equal(result.Result.Speed, 20);
+							assert.notEqual(result.Result.Start, undefined);
+							//	Optional param set to null in db at the moment.
+//							assert.notEqual(result.Result.End, undefined);
+							assert.notEqual(result.Result.RunthroughID, undefined);
 							done();
 						});
 					});

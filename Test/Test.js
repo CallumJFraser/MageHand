@@ -90,11 +90,11 @@ describe('API Race -', function(){
 describe('API Size -', function(){
 	apiSize.Test();	//	
 });
-/*	TODO:
 
 describe('API Session -', function(){
 	apiSession.Test();	//	
 });
+/*	TODO:
 
 describe('API Skills -', function(){
 	apiSkills.Test();	//	
