@@ -5,11 +5,12 @@ Tests
 ------
 
 * Finish tests for created sections:
-	* Class
-	* Race
-	* Size
-	* Session
+	* ~~Class~~
+	* ~~Race~~
+	* ~~Size~~
+	* ~~Session~~
 	* Skills
+* Update tests to not rely on database calls for the tests.
 * Character
 	* Duplicate characters
 	* Object creation validation
