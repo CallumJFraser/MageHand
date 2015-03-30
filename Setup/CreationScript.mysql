@@ -24,6 +24,9 @@ DROP PROCEDURE sp_GetCharacterByAccount GO
 DROP PROCEDURE sp_GetStatType GO
 DROP PROCEDURE sp_GetSkill GO
 DROP PROCEDURE sp_GetCharactersSkill GO
+DROP PROCEDURE sp_GetStoryByID GO
+DROP PROCEDURE sp_GetRunthroughByID GO
+DROP PROCEDURE sp_GetSessionByID GO
 
 DROP TABLE CharacterSkill GO
 DROP TABLE Skill GO
@@ -298,6 +301,15 @@ CREATE TABLE Runthrough
 )
 GO
 
+CREATE PROCEDURE sp_GetRunthroughByID (IDParam INTEGER)
+BEGIN
+	SELECT
+		ID, StoryID
+	FROM Runthrough
+	WHERE ID = IDParam;
+END
+GO
+
 INSERT INTO Runthrough (StoryID)
 VALUES (1)
 GO
@@ -306,11 +318,20 @@ CREATE TABLE Session
 (
 	ID INTEGER NOT NULL AUTO_INCREMENT,
 	Start DATE NOT NULL,
-	END DATE NULL,
+	End DATE NULL,
 	RunthroughID INTEGER NULL,
 	CONSTRAINT pk_Session PRIMARY KEY (ID),
 	CONSTRAINT fk_SessionRunthroughID FOREIGN KEY (RunthroughID) REFERENCES Runthrough(ID)
 )
+GO
+
+CREATE PROCEDURE sp_GetSessionByID (IDParam INTEGER)
+BEGIN
+	SELECT
+		ID, Start, End, RunthroughID
+	FROM Session
+	WHERE ID = IDParam;
+END
 GO
 
 INSERT INTO Session (Start, RunthroughID)
@@ -326,6 +347,15 @@ CREATE TABLE SessionCharacters
 	CONSTRAINT fk_SessionCharactersSessionID FOREIGN KEY (SessionID) REFERENCES Session(ID),
 	CONSTRAINT fk_SessionCharactersCharacterID FOREIGN KEY (CharacterID) REFERENCES Characters(ID)
 )
+GO
+
+CREATE PROCEDURE sp_GetSessionCharacters (IDParam INTEGER)
+BEGIN
+	SELECT
+		SessionID, CharacterID, Experiance
+	FROM SessionCharacters
+	WHERE ID = IDParam;
+END
 GO
 
 INSERT INTO SessionCharacters (SessionID, CharacterID, Experiance)
@@ -380,6 +410,10 @@ INSERT INTO Skill (Name, BaseStatID, Usable, Description, VersionID)
 VALUES ('Climb', 1, 1, 'The ability to climb walls and ropes.', 1)
 GO
 
+INSERT INTO Skill (Name, BaseStatID, Usable, Description, VersionID)
+VALUES ('Climb', 1, 1, 'The ability to climb walls and ropes.', 1)
+GO
+
 CREATE TABLE CharacterSkill
 (
 	CharacterID INTEGER NOT NULL,
@@ -395,12 +429,16 @@ GO
 
 CREATE PROCEDURE sp_GetCharactersSkill (IDParam INTEGER)
 BEGIN
-	SELECT CharacterID, SkillID, Ranks, Info, MiscModifier FROM Skill WHERE CharacterID = IDParam;
+	SELECT CharacterID, SkillID, Ranks, Info, MiscModifier FROM CharacterSkill WHERE CharacterID = IDParam;
 END
 GO
 
 INSERT INTO CharacterSkill (CharacterID, SkillID, Ranks, Info, MiscModifier)
 VALUES (1, 1, 1, 'bad', 0)
+GO
+
+INSERT INTO CharacterSkill (CharacterID, SkillID, Ranks, Info, MiscModifier)
+VALUES (1, 2, 1, 'bad', 0)
 GO
 
 DELIMITER ;
