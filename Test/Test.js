@@ -94,9 +94,7 @@ describe('API Size -', function(){
 describe('API Session -', function(){
 	apiSession.Test();	//	
 });
-/*	TODO:
 
 describe('API Skills -', function(){
 	apiSkills.Test();	//	
 });
-*/
