@@ -13,6 +13,9 @@ module.exports = {
 	},
 	Search: function(text, callback){
 		SearchBasic(text, callback);
+	},
+	Create: function(accountObject, callback){
+		Create(accountObject, callback);
 	}
 };
 
@@ -36,6 +39,8 @@ function Account(row){
 	this.Hash = row.Hash;
 	this.Created = row.Created;
 	this.LastLogin = row.LastLogin;
+	if(this.ID != undefined && this.AID != undefined && this.Username != undefined)
+		this.Success = true;
 }
 
 function Create(username, password, callback){
@@ -113,5 +118,31 @@ function SearchBasic(text, callback){
 				callback(new Failed('No matching results'));
 			}
 		});
+	}
+}
+
+function Create(accountObject, callback){
+	//	TODO: Check username
+	//	TODO: Define account params, atm using the full account, but will need more information.
+	if(accountObject == undefined){
+		callback(new Failed('Missing parameter'));
+	}
+	else{
+		var account = new Account(accountObject);
+		if(account.Success){
+/*
+		databaseObject.Procedure('sp_CreateAccount', [text], function(rows){
+			if(rows.length > 0){
+*/				callback(new Account({ ID:1, AID:1, Username:"test", Email:"test@test.com", Hash:"hash", Created:"earlier", LastLogin:"NA" }));
+/*			}
+			else{
+				callback(new Failed('No matching results'));
+			}
+		});
+*/
+		}
+		else{
+			callback(new Failed('Invalid object'));
+		}
 	}
 }
