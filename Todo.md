@@ -9,12 +9,14 @@ Tests
 	* ~~Race~~
 	* ~~Size~~
 	* ~~Session~~
-	* Skills
+	* ~~Skills~~
 * Update tests to not rely on database calls for the tests.
+* Account Manager
+	* Create function
+	* Update function
+	* Object creation validation
 * Character
 	* Duplicate characters
-	* Object creation validation
-* Account Manager
 	* Object creation validation
 * Character Manager
 	* Object creation validation
