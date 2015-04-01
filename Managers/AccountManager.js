@@ -43,13 +43,6 @@ function Account(row){
 		this.Success = true;
 }
 
-function Create(username, password, callback){
-	if(username == undefined || password == undefined){
-		callback(new Failed('Missing parameter'));
-	}
-	var query = "INSERT INTO Account (ID, AID, Username, Email, Hash, Created, Password) VALUES (1, '1', 'CallumJFraser', 'email@callumjfraser.com', 'hash', 1395788542978, 'password')"
-}
-
 function GetBasicByID(id, callback){
 	if(id == undefined){
 		callback(new Failed('Missing parameter'));
