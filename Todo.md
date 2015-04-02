@@ -13,6 +13,7 @@ Tests
 * Update tests to not rely on database calls for the tests.
 * Account Manager
 	* Create function
+	* Username check function
 	* Update function
 	* Object creation validation
 * Character
