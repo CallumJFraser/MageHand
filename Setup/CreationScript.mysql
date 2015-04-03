@@ -10,6 +10,8 @@ DELIMITER GO
 
 DROP PROCEDURE sp_Login GO
 DROP PROCEDURE sp_Authorise GO
+DROP PROCEDURE sp_CreateAccount GO
+DROP PROCEDURE sp_CheckAccountUsername GO
 DROP PROCEDURE sp_GetAccountByAID GO
 DROP PROCEDURE sp_GetAccountByUsername GO
 DROP PROCEDURE sp_GetAccountByEmail GO
@@ -24,9 +26,9 @@ DROP PROCEDURE sp_GetCharacterByAccount GO
 DROP PROCEDURE sp_GetStatType GO
 DROP PROCEDURE sp_GetSkill GO
 DROP PROCEDURE sp_GetCharactersSkill GO
-DROP PROCEDURE sp_GetStoryByID GO
 DROP PROCEDURE sp_GetRunthroughByID GO
 DROP PROCEDURE sp_GetSessionByID GO
+DROP PROCEDURE sp_GetSessionCharacters GO
 
 DROP TABLE CharacterSkill GO
 DROP TABLE Skill GO
@@ -75,6 +77,21 @@ BEGIN
 	SELECT ID, AID, Username, Email, Created, Hash, LastLogin
 	FROM Account
 	WHERE AID = AccountAIDParam;
+END
+GO
+
+CREATE PROCEDURE sp_CheckAccountUsername (UsernameParam VARCHAR(100))
+BEGIN
+	SELECT COUNT(ID) AS Count
+	FROM Account
+	WHERE Username = UsernameParam;
+END
+GO
+
+CREATE PROCEDURE sp_CreateAccount(AccountAIDParam INTEGER, UsernameParam VARCHAR(100), EmailParam VARCHAR(100), HashParam VARCHAR(100), PasswordParam VARCHAR(200))
+BEGIN
+	INSERT INTO Account (AID, Username, Email, Created, Hash, Password, LastLogin)
+		VALUES (AccountAIDParam, UsernameParam, EmailParam, NOW(), HashParam, PasswordParam, NOW());
 END
 GO
 
