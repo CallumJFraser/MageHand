@@ -115,27 +115,42 @@ function SearchBasic(text, callback){
 }
 
 function Create(accountObject, callback){
-	//	TODO: Check username
 	//	TODO: Define account params, atm using the full account, but will need more information.
 	if(accountObject == undefined){
 		callback(new Failed('Missing parameter'));
 	}
 	else{
-		var account = new Account(accountObject);
-		if(account.Success){
-/*
-		databaseObject.Procedure('sp_CreateAccount', [text], function(rows){
-			if(rows.length > 0){
-*/				callback(new Account({ ID:1, AID:1, Username:"test", Email:"test@test.com", Hash:"hash", Created:"earlier", LastLogin:"NA" }));
-/*			}
+		UsernameAllowed(accountObject.Username, accountObject.Email, function(allowed){
+			if(allowed){
+				var account = new Account(accountObject);
+				if(account.Success){
+					databaseObject.Procedure('sp_CreateAccount', [account.AID, account.Username, account.Email, account.Hash, accountObject.Password], function(rows){
+						if(rows.length > 0){
+							callback({ Success: true, ID: rows[0].ID });
+						}
+						else{
+							callback(new Failed('No matching results'));
+						}
+					});
+				}
+				else{
+					callback(new Failed('Invalid object'));
+				}
+			}
 			else{
-				callback(new Failed('No matching results'));
+				callback(new Failed('Username "' + accountObject.Username + '" already taken'))
 			}
 		});
-*/
+	}
+}
+
+function UsernameAllowed(username, email, callback){
+	databaseObject.Procedure('sp_CheckAccount', [username, email], function(rows){
+		if(rows.length > 0){
+			callback(rows[0].Count == 0);
 		}
 		else{
-			callback(new Failed('Invalid object'));
+			callback(false);
 		}
-	}
+	});
 }
