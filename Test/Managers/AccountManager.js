@@ -1,4 +1,5 @@
 var assert = require('assert');
+var uuid = require('node-uuid');
 var manager = require('../../Managers/AccountManager.js');
 
 var blank = undefined;
@@ -470,63 +471,29 @@ module.exports = {
 
 		describe('Create:', function(){
 			// TODO: remove unnessasary fields.
-			var valid = { ID:1, AID:1, Username:"test", Email:"test@test.com", Hash:"hash", Created:"earlier", LastLogin:"NA" };
+			var randomNum = Math.random();
+			var valid = { ID:1, AID:uuid.v4(), Username: "Test" + randomNum, Email: randomNum + "@test.com", Hash:"hash", Password:"password", Created:"earlier", LastLogin:"NA" };
 			var invalid = {};
 			var missing = undefined;
 				
 			describe('Valid:', function(){
-				it('Result != undefined', function(done){
+				it('Correct', function(done){
 					manager.Create(valid, function(result){
+						console.log(result);
 						assert.notEqual(result, undefined);
-						done();
-					});
-				})
-				it('Success = true', function(done){
-					manager.Create(valid, function(result){
 						assert.equal(result.Success, true);
-						done();
-					});
-				})
-				it('Reason == undefined', function(done){
-					manager.Create(valid, function(result){
 						assert.equal(result.Reason, undefined);
-						done();
-					});
-				})
-				it('Valid', function(done){
-					manager.Create(valid, function(result){
 						assert.notEqual(result.ID, undefined);
-						assert.notEqual(result.AID, undefined);
-						assert.notEqual(result.Username, undefined);
-						assert.notEqual(result.Email, undefined);
-						assert.notEqual(result.Hash, undefined);
-						assert.notEqual(result.Created, undefined);
-						assert.notEqual(result.LastLogin, undefined);
 						done();
 					});
 				})
 			})
 			describe('Invalid:', function(){
-				it('Result != undefined', function(done){
+				it('Correct', function(done){
 					manager.Create(invalid, function(result){
 						assert.notEqual(result, undefined);
-						done();
-					});
-				})
-				it('Success = false', function(done){
-					manager.Create(invalid, function(result){
 						assert.equal(result.Success, false);
-						done();
-					});
-				})
-				it('Reason != undefined', function(done){
-					manager.Create(invalid, function(result){
 						assert.notEqual(result.Reason, undefined);
-						done();
-					});
-				})
-				it('Valid', function(done){
-					manager.Create(invalid, function(result){
 						assert.equal(result.ID, undefined);
 						assert.equal(result.AID, undefined);
 						assert.equal(result.Username, undefined);
@@ -539,26 +506,11 @@ module.exports = {
 				})
 			})
 			describe('Missing "Username":', function(){
-				it('Result != undefined', function(done){
+				it('Correct', function(done){
 					manager.Create(missing, function(result){
 						assert.notEqual(result, undefined);
-						done();
-					});
-				})
-				it('Success = false', function(done){
-					manager.Create(missing, function(result){
 						assert.equal(result.Success, false);
-						done();
-					});
-				})
-				it('Reason != undefined', function(done){
-					manager.Create(missing, function(result){
 						assert.notEqual(result.Reason, undefined);
-						done();
-					});
-				})
-				it('Valid', function(done){
-					manager.Create(missing, function(result){
 						assert.equal(result.ID, undefined);
 						assert.equal(result.AID, undefined);
 						assert.equal(result.Username, undefined);
