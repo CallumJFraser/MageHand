@@ -7,7 +7,7 @@
 	"author":{
 		"name" : "Callum Fraser",
 		"email" : "email@callumjfraser.com",
-		"url" : "http://www.callumjfraser.com/"
+		"url" : "http://www.callumfraser.com/"
 	},
 	"repository" :
 	{
@@ -17,6 +17,7 @@
 	"private": true,
 	"dependencies": {
 	"express": "3.x",
-	"async":">=0.7"
+	"async":">=0.7",
+	"node-uuid":"1.4.x"
 	}
 }

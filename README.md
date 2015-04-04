@@ -39,3 +39,4 @@ Credits
 ------
 
 Credit to [felixge](https://github.com/felixge) for the [MySQL package](https://github.com/felixge/node-mysql) now included in the project.
+Credit also goes to [broofa](https://github.com/broofa) for the [Node-UUID package](https://github.com/broofa/node-uuid) also included in the project.
