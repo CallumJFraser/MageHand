@@ -14,7 +14,9 @@ Tests
 * Account Manager
 	* ~~Create function~~
 	* ~~Username check function~~
-	* Update function
+	* Confirm Email function
+	* Change Email function
+	* Change Password function
 	* Object creation validation
 * Character
 	* Duplicate characters
