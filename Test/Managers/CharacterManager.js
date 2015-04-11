@@ -25,20 +25,10 @@ module.exports = {
 			var invalidFormat = 'invalid';
 
 			describe('Valid:', function(){
-				it('Value != undefined', function(done){
+				it('Correct', function(done){
 					manager.Get(valid, function(result){
 						assert.notEqual(result, undefined);
-						done();
-					});
-				})
-				it('Reason == undefined', function(done){
-					manager.Get(valid, function(result){
 						assert.equal(result.Reason, undefined);
-						done();
-					});
-				})
-				it('Valid', function(done){
-					manager.Get(valid, function(result){
 						assert.equal(result.ID, validObject.ID);
 						assert.equal(result.Name, validObject.Name);
 						assert.notEqual(result.Class, undefined);
@@ -68,26 +58,11 @@ module.exports = {
 			})
 			
 			describe('Invalid "ID" Value:', function(){
-				it('Value != undefined', function(done){
+				it('Correct', function(done){
 					manager.Get(invalid, function(result){
 						assert.notEqual(result, undefined);
-						done();
-					});
-				})
-				it('Reason != undefined', function(done){
-					manager.Get(invalid, function(result){
 						assert.notEqual(result.Reason, undefined);
-						done();
-					});
-				})
-				it('Success == false', function(done){
-					manager.Get(invalid, function(result){
 						assert.equal(result.Success, false);
-						done();
-					});
-				})
-				it('Valid', function(done){
-					manager.Get(invalid, function(result){
 						assert.equal(result.ID, undefined);
 						assert.equal(result.Name, undefined);
 						assert.equal(result.Class, undefined);
@@ -117,26 +92,11 @@ module.exports = {
 			})
 			
 			describe('Invalid "ID" Format:', function(){
-				it('Value != undefined', function(done){
+				it('Correct', function(done){
 					manager.Get(invalidFormat, function(result){
 						assert.notEqual(result, undefined);
-						done();
-					});
-				})
-				it('Reason != undefined', function(done){
-					manager.Get(invalidFormat, function(result){
 						assert.notEqual(result.Reason, undefined);
-						done();
-					});
-				})
-				it('Success == false', function(done){
-					manager.Get(invalidFormat, function(result){
 						assert.equal(result.Success, false);
-						done();
-					});
-				})
-				it('Valid', function(done){
-					manager.Get(invalidFormat, function(result){
 						assert.equal(result.ID, undefined);
 						assert.equal(result.Name, undefined);
 						assert.equal(result.Class, undefined);
@@ -166,26 +126,11 @@ module.exports = {
 			})
 			
 			describe('Missing "ID":', function(){
-				it('Value != undefined', function(done){
+				it('Correct', function(done){
 					manager.Get(blank, function(result){
 						assert.notEqual(result, undefined);
-						done();
-					});
-				})
-				it('Reason != undefined', function(done){
-					manager.Get(blank, function(result){
 						assert.notEqual(result.Reason, undefined);
-						done();
-					});
-				})
-				it('Success == false', function(done){
-					manager.Get(blank, function(result){
 						assert.equal(result.Success, false);
-						done();
-					});
-				})
-				it('Valid', function(done){
-					manager.Get(blank, function(result){
 						assert.equal(result.ID, undefined);
 						assert.equal(result.Name, undefined);
 						assert.equal(result.Class, undefined);
@@ -221,20 +166,10 @@ module.exports = {
 			var invalidFormat = 'invalid';
 
 			describe('Valid:', function(){
-				it('Value != undefined', function(done){
+				it('Correct', function(done){
 					manager.GetByAccount(valid, function(result){
 						assert.notEqual(result, undefined);
-						done();
-					});
-				})
-				it('Reason == undefined', function(done){
-					manager.GetByAccount(valid, function(result){
 						assert.equal(result.Reason, undefined);
-						done();
-					});
-				})
-				it('Valid', function(done){
-					manager.GetByAccount(valid, function(result){
 						assert.equal(result[0].ID, validObject.ID);
 						assert.equal(result[0].Name, validObject.Name);
 						assert.notEqual(result[0].Class, undefined);
@@ -264,20 +199,10 @@ module.exports = {
 			})
 			
 			describe('Invalid "ID" Value:', function(){
-				it('Value != undefined', function(done){
+				it('Correct', function(done){
 					manager.GetByAccount(invalid, function(result){
 						assert.notEqual(result, undefined);
-						done();
-					});
-				})
-				it('Reason != undefined', function(done){
-					manager.GetByAccount(invalid, function(result){
 						assert.notEqual(result.Reason, undefined);
-						done();
-					});
-				})
-				it('Result == undefined', function(done){
-					manager.GetByAccount(invalid, function(result){
 						assert.equal(result[0], undefined);
 						done();
 					});
@@ -285,20 +210,10 @@ module.exports = {
 			})
 			
 			describe('Invalid "ID" Format:', function(){
-				it('Value != undefined', function(done){
+				it('Correct', function(done){
 					manager.GetByAccount(invalidFormat, function(result){
 						assert.notEqual(result, undefined);
-						done();
-					});
-				})
-				it('Reason != undefined', function(done){
-					manager.GetByAccount(invalidFormat, function(result){
 						assert.notEqual(result.Reason, undefined);
-						done();
-					});
-				})
-				it('Result == undefined', function(done){
-					manager.GetByAccount(invalidFormat, function(result){
 						assert.equal(result[0], undefined);
 						done();
 					});
@@ -306,20 +221,10 @@ module.exports = {
 			})
 			
 			describe('Missing "ID":', function(){
-				it('Value != undefined', function(done){
+				it('Correct', function(done){
 					manager.GetByAccount(blank, function(result){
 						assert.notEqual(result, undefined);
-						done();
-					});
-				})
-				it('Reason != undefined', function(done){
-					manager.GetByAccount(blank, function(result){
 						assert.notEqual(result.Reason, undefined);
-						done();
-					});
-				})
-				it('Result == undefined', function(done){
-					manager.GetByAccount(blank, function(result){
 						assert.equal(result[0], undefined);
 						done();
 					});
