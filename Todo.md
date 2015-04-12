@@ -4,13 +4,8 @@ Todo List
 Tests
 ------
 
-* Finish tests for created sections:
-	* ~~Class~~
-	* ~~Race~~
-	* ~~Size~~
-	* ~~Session~~
-	* ~~Skills~~
-* Update tests to not rely on database calls for the tests.
+* Refactor Tests to remove un-nessasary 'describe' and 'it' calls.
+* Update tests to not rely on database calls for the tests. (i.e. using a Mock databse)
 * Account Manager
 	* ~~Create function~~
 	* ~~Username check function~~
