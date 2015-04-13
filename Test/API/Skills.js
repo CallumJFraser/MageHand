@@ -24,92 +24,41 @@ module.exports = {
 			var invalidSkillTypeID = 0;
 			var incorrectSkillTypeID = undefined;
 
-			describe('Valid call:', function(){
-				it('Should return Success:true', function(done){
-					dndAPI.Login(validUsername, validPassword, function(loginResponse){
-						dndAPI.GetSkillType(loginResponse.AID, loginResponse.SID, validSkillTypeID, function(result){
-							assert.equal(result.Auth.Success, true);
-							done();
-						});
+			it('Valid:', function(done){
+				dndAPI.Login(validUsername, validPassword, function(loginResponse){
+					dndAPI.GetSkillType(loginResponse.AID, loginResponse.SID, validSkillTypeID, function(result){
+						assert.notEqual(result.Result, undefined);
+						assert.notEqual(result.Result.ID, undefined);
+						assert.notEqual(result.Result.Name, undefined);
+						assert.notEqual(result.Result.BaseStatID, undefined);
+						assert.notEqual(result.Result.Usable, undefined);
+						assert.notEqual(result.Result.Description, undefined);
+						assert.notEqual(result.Result.Version, undefined);
+						done();
 					});
-				})
-				it('Should return a Result', function(done){
-					dndAPI.Login(validUsername, validPassword, function(loginResponse){
-						dndAPI.GetSkillType(loginResponse.AID, loginResponse.SID, validSkillTypeID, function(result){
-							assert.notEqual(result.Result, undefined);
-							done();
-						});
-					});
-				})
-				it('Valid', function(done){
-					dndAPI.Login(validUsername, validPassword, function(loginResponse){
-						dndAPI.GetSkillType(loginResponse.AID, loginResponse.SID, validSkillTypeID, function(result){
-							assert.notEqual(result.Result.ID, undefined);
-							assert.notEqual(result.Result.Name, undefined);
-							assert.notEqual(result.Result.BaseStatID, undefined);
-							assert.notEqual(result.Result.Usable, undefined);
-							assert.notEqual(result.Result.Description, undefined);
-							assert.notEqual(result.Result.Version, undefined);
-							done();
-						});
-					});
-				})
+				});
 			})
 
-			describe('Invalid call (incorrect param: "SkillTypeID"):', function(){
-				it('Should return a Result', function(done){
-					dndAPI.Login(validUsername, validPassword, function(loginResponse){
-						dndAPI.GetSkillType(loginResponse.AID, loginResponse.SID, invalidSkillTypeID, function(result){
-							assert.notEqual(result.Result, undefined);
-							done();
-						});
+			it('Invalid call (incorrect param: "SkillTypeID"):', function(done){
+				dndAPI.Login(validUsername, validPassword, function(loginResponse){
+					dndAPI.GetSkillType(loginResponse.AID, loginResponse.SID, invalidSkillTypeID, function(result){
+						assert.notEqual(result.Result, undefined);
+						assert.equal(result.Result.Success, false);
+						assert.notEqual(result.Result.Reason, undefined);
+						done();
 					});
-				})
-				it('Should return Success:false', function(done){
-					dndAPI.Login(validUsername, validPassword, function(loginResponse){
-						dndAPI.GetSkillType(loginResponse.AID, loginResponse.SID, invalidSkillTypeID, function(result){
-							assert.equal(result.Result.Success, false);
-							done();
-						});
-					});
-				})
-				it('Should return a result with error information', function(done){
-					dndAPI.Login(validUsername, validPassword, function(loginResponse){
-						dndAPI.GetSkillType(loginResponse.AID, loginResponse.SID, invalidSkillTypeID, function(result){
-							assert.equal(result.Result.Success, false);
-							assert.notEqual(result.Result.Reason, undefined);
-							done();
-						});
-					});
-				})
+				});
 			})
 
-			describe('Invalid call (missing param: "SkillTypeID"):', function(){
-				it('Should return a Result', function(done){
-					dndAPI.Login(validUsername, validPassword, function(loginResponse){
-						dndAPI.GetSkillType(loginResponse.AID, loginResponse.SID, incorrectSkillTypeID, function(result){
-							assert.notEqual(result.Result, undefined);
-							done();
-						});
+			it('Invalid call (missing param: "SkillTypeID"):', function(done){
+				dndAPI.Login(validUsername, validPassword, function(loginResponse){
+					dndAPI.GetSkillType(loginResponse.AID, loginResponse.SID, incorrectSkillTypeID, function(result){
+						assert.notEqual(result.Result, undefined);
+						assert.equal(result.Result.Success, false);
+						assert.notEqual(result.Result.Reason, undefined);
+						done();
 					});
-				})
-				it('Should return Success:false', function(done){
-					dndAPI.Login(validUsername, validPassword, function(loginResponse){
-						dndAPI.GetSkillType(loginResponse.AID, loginResponse.SID, incorrectSkillTypeID, function(result){
-							assert.equal(result.Result.Success, false);
-							done();
-						});
-					});
-				})
-				it('Should return a result with error information', function(done){
-					dndAPI.Login(validUsername, validPassword, function(loginResponse){
-						dndAPI.GetSkillType(loginResponse.AID, loginResponse.SID, incorrectSkillTypeID, function(result){
-							assert.equal(result.Result.Success, false);
-							assert.notEqual(result.Result.Reason, undefined);
-							done();
-						});
-					});
-				})
+				});
 			})
 		})
 
@@ -118,92 +67,41 @@ module.exports = {
 			var invalidCharacterID = 0;
 			var incorrectCharacterID = undefined;
 	
-			describe('Valid call:', function(){
-				it('Should return Success:true', function(done){
-					dndAPI.Login(validUsername, validPassword, function(loginResponse){
-						dndAPI.GetCharacterSkill(loginResponse.AID, loginResponse.SID, validCharacterID, function(result){
-							assert.equal(result.Auth.Success, true);
-							done();
-						});
+			it('Valid:', function(done){
+				dndAPI.Login(validUsername, validPassword, function(loginResponse){
+					dndAPI.GetCharacterSkill(loginResponse.AID, loginResponse.SID, validCharacterID, function(result){
+						assert.notEqual(result.Result, undefined);
+						//	Need to write a better test on this bit.
+						assert.notEqual(result.Result[0].CharacterID, undefined);
+						assert.notEqual(result.Result[0].Ranks, undefined);
+						assert.notEqual(result.Result[0].Info, undefined);
+						assert.notEqual(result.Result[0].MiscModifier, undefined);
+						assert.notEqual(result.Result[0].Skill, undefined);
+						done();
 					});
-				})
-				it('Should return a Result', function(done){
-					dndAPI.Login(validUsername, validPassword, function(loginResponse){
-						dndAPI.GetCharacterSkill(loginResponse.AID, loginResponse.SID, validCharacterID, function(result){
-							assert.notEqual(result.Result, undefined);
-							done();
-						});
-					});
-				})
-				it('Valid', function(done){
-					dndAPI.Login(validUsername, validPassword, function(loginResponse){
-						dndAPI.GetCharacterSkill(loginResponse.AID, loginResponse.SID, validCharacterID, function(result){
-							//	Need to write a better test on this bit.
-							assert.notEqual(result.Result[0].CharacterID, undefined);
-							assert.notEqual(result.Result[0].Ranks, undefined);
-							assert.notEqual(result.Result[0].Info, undefined);
-							assert.notEqual(result.Result[0].MiscModifier, undefined);
-							assert.notEqual(result.Result[0].Skill, undefined);
-							done();
-						});
-					});
-				})
+				});
 			})
-	
-			describe('Invalid call (missing param: "CharacterID"):', function(){
-				it('Should return Success:true', function(done){
-					dndAPI.Login(validUsername, validPassword, function(loginResponse){
-						dndAPI.GetCharacterSkill(loginResponse.AID, loginResponse.SID, invalidCharacterID, function(result){
-							assert.equal(result.Auth.Success, true);
-							done();
-						});
+
+			it('Invalid call (missing param: "CharacterID"):', function(done){
+				dndAPI.Login(validUsername, validPassword, function(loginResponse){
+					dndAPI.GetCharacterSkill(loginResponse.AID, loginResponse.SID, invalidCharacterID, function(result){
+						assert.notEqual(result.Result, undefined);
+						assert.equal(result.Result.Success, false);
+						assert.notEqual(result.Result.Reason, undefined);
+						done();
 					});
-				})
-				it('Should return a Result', function(done){
-					dndAPI.Login(validUsername, validPassword, function(loginResponse){
-						dndAPI.GetCharacterSkill(loginResponse.AID, loginResponse.SID, invalidCharacterID, function(result){
-							assert.notEqual(result.Result, undefined);
-							done();
-						});
-					});
-				})
-				it('Valid', function(done){
-					dndAPI.Login(validUsername, validPassword, function(loginResponse){
-						dndAPI.GetCharacterSkill(loginResponse.AID, loginResponse.SID, invalidCharacterID, function(result){
-							assert.equal(result.Result.Success, false);
-							assert.notEqual(result.Result.Reason, undefined);
-							done();
-						});
-					});
-				})
+				});
 			})
-	
-			describe('Invalid call (incorrect param: "CharacterID"):', function(){
-				it('Should return Success:true', function(done){
-					dndAPI.Login(validUsername, validPassword, function(loginResponse){
-						dndAPI.GetCharacterSkill(loginResponse.AID, loginResponse.SID, incorrectCharacterID, function(result){
-							assert.equal(result.Auth.Success, true);
-							done();
-						});
+
+			it('Invalid call (incorrect param: "CharacterID"):', function(done){
+				dndAPI.Login(validUsername, validPassword, function(loginResponse){
+					dndAPI.GetCharacterSkill(loginResponse.AID, loginResponse.SID, incorrectCharacterID, function(result){
+						assert.notEqual(result.Result, undefined);
+						assert.equal(result.Result.Success, false);
+						assert.notEqual(result.Result.Reason, undefined);
+						done();
 					});
-				})
-				it('Should return a Result', function(done){
-					dndAPI.Login(validUsername, validPassword, function(loginResponse){
-						dndAPI.GetCharacterSkill(loginResponse.AID, loginResponse.SID, incorrectCharacterID, function(result){
-							assert.notEqual(result.Result, undefined);
-							done();
-						});
-					});
-				})
-				it('Valid', function(done){
-					dndAPI.Login(validUsername, validPassword, function(loginResponse){
-						dndAPI.GetCharacterSkill(loginResponse.AID, loginResponse.SID, incorrectCharacterID, function(result){
-							assert.equal(result.Result.Success, false);
-							assert.notEqual(result.Result.Reason, undefined);
-							done();
-						});
-					});
-				})
+				});
 			})
 		})
 	}

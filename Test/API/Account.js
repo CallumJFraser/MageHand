@@ -2,6 +2,7 @@ var assert = require('assert');
 var dndAPI = require('../../MageHandAPI');
 
 var validUsername = 'Test1';
+var invalidUsername = 'DoesntExist';
 var validPassword = 'password';
 
 module.exports = {
@@ -14,70 +15,31 @@ module.exports = {
 		})
 
 		describe('GetAccount:', function(){
-			describe('Valid:', function(){
-				it('Result != undefined', function(done){
-					dndAPI.Login(validUsername, validPassword, function(loginResponse){
-						dndAPI.GetAccount(loginResponse.AID, loginResponse.SID, 'Test1', function(result){
-							assert.notEqual(result.Result, undefined);
-							done();
-						});
+			it('Valid:', function(done){
+				dndAPI.Login(validUsername, validPassword, function(loginResponse){
+					dndAPI.GetAccount(loginResponse.AID, loginResponse.SID, 'Test1', function(result){
+						assert.notEqual(result.Result, undefined);
+						assert.equal(result.Auth.Success, true);
+						assert.notEqual(result.Result.ID, undefined);
+						assert.notEqual(result.Result.AID, undefined);
+						assert.notEqual(result.Result.Username, undefined);
+						done();
 					});
 				});
-				it('Success = true', function(done){
-					dndAPI.Login(validUsername, validPassword, function(loginResponse){
-						dndAPI.GetAccount(loginResponse.AID, loginResponse.SID, 'Test1', function(result){
-							assert.equal(result.Auth.Success, true);
-							done();
-						});
+			});
+			it('Missing "Username":', function(done){
+				dndAPI.Login(invalidUsername, validPassword, function(loginResponse){
+					dndAPI.GetAccount(loginResponse.AID, loginResponse.SID, undefined, function(result){
+						assert.notEqual(result.Result, undefined);
+						assert.equal(result.Result.Success, false);
+						assert.notEqual(result.Result.Reason, undefined);
+						assert.equal(result.Result.ID, undefined);
+						assert.equal(result.Result.AID, undefined);
+						assert.equal(result.Result.Username, undefined);
+						done();
 					});
 				});
-				it('Valid', function(done){
-					dndAPI.Login(validUsername, validPassword, function(loginResponse){
-						dndAPI.GetAccount(loginResponse.AID, loginResponse.SID, 'Test1', function(result){
-							assert.equal(result.Result.ID, 1);
-							assert.equal(result.Result.AID, 1);
-							assert.equal(result.Result.Username, 'Test1');
-							done();
-						});
-					});
-				});
-			})
-			describe('Missing "Username":', function(){
-				it('Result != undefined', function(done){
-					dndAPI.Login(validUsername, validPassword, function(loginResponse){
-						dndAPI.GetAccount(loginResponse.AID, loginResponse.SID, undefined, function(result){
-							assert.notEqual(result.Result, undefined);
-							done();
-						});
-					});
-				});
-				it('Success = false', function(done){
-					dndAPI.Login(validUsername, validPassword, function(loginResponse){
-						dndAPI.GetAccount(loginResponse.AID, loginResponse.SID, undefined, function(result){
-							assert.equal(result.Result.Success, false);
-							done();
-						});
-					});
-				});
-				it('Reason != undefined', function(done){
-					dndAPI.Login(validUsername, validPassword, function(loginResponse){
-						dndAPI.GetAccount(loginResponse.AID, loginResponse.SID, undefined, function(result){
-							assert.notEqual(result.Result.Reason, undefined);
-							done();
-						});
-					});
-				});
-				it('Valid', function(done){
-					dndAPI.Login(validUsername, validPassword, function(loginResponse){
-						dndAPI.GetAccount(loginResponse.AID, loginResponse.SID, 'Test1', function(result){
-							assert.equal(result.Result.ID, 1);
-							assert.equal(result.Result.AID, 1);
-							assert.equal(result.Result.Username, 'Test1');
-							done();
-						});
-					});
-				});
-			})
+			});
 		})
 	}
 };

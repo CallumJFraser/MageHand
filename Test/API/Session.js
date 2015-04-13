@@ -16,63 +16,30 @@ module.exports = {
 	
 		describe('GetSession:', function(){
 		
-			describe('Valid call:', function(){
-				it('Should return Success:true', function(done){
-					dndAPI.Login(validUsername, validPassword, function(loginResponse){
-						dndAPI.GetSession(loginResponse.AID, loginResponse.SID, 1, function(result){
-							assert.equal(result.Auth.Success, true);
-							done();
-						});
-					});
-				})
-				it('Should return a Result', function(done){
-					dndAPI.Login(validUsername, validPassword, function(loginResponse){
-						dndAPI.GetSession(loginResponse.AID, loginResponse.SID, 1, function(result){
-							assert.notEqual(result.Result, undefined);
-							done();
-						});
-					});
-				})
-				it('Valid', function(done){
-					dndAPI.Login(validUsername, validPassword, function(loginResponse){
-						dndAPI.GetSession(loginResponse.AID, loginResponse.SID, 1, function(result){
-							assert.equal(result.Result.ID, 1);
-							assert.notEqual(result.Result.Start, undefined);
-							//	Optional param set to null in db at the moment.
+			it('Valid:', function(done){
+				dndAPI.Login(validUsername, validPassword, function(loginResponse){
+					dndAPI.GetSession(loginResponse.AID, loginResponse.SID, 1, function(result){
+						assert.equal(result.Auth.Success, true);
+						assert.notEqual(result.Result, undefined);
+						assert.notEqual(result.Result.ID, undefined);
+						assert.notEqual(result.Result.Start, undefined);
+						//	Optional param set to null in db at the moment.
 //							assert.notEqual(result.Result.End, undefined);
-							assert.notEqual(result.Result.RunthroughID, undefined);
-							done();
-						});
+						assert.notEqual(result.Result.RunthroughID, undefined);
+						done();
 					});
-				})
+				});
 			})
 
-			describe('Invalid call (missing param: "RunthroughID"):', function(){
-				it('Should return a Result', function(done){
-					dndAPI.Login(validUsername, validPassword, function(loginResponse){
-						dndAPI.GetSession(loginResponse.AID, loginResponse.SID, undefined, function(result){
-							assert.notEqual(result.Result, undefined);
-							done();
-						});
+			it('Invalid call (missing param: "RunthroughID"):', function(done){
+				dndAPI.Login(validUsername, validPassword, function(loginResponse){
+					dndAPI.GetSession(loginResponse.AID, loginResponse.SID, undefined, function(result){
+						assert.notEqual(result.Result, undefined);
+						assert.equal(result.Result.Success, false);
+						assert.notEqual(result.Result.Reason, undefined);
+						done();
 					});
-				})
-				it('Should return Success:false', function(done){
-					dndAPI.Login(validUsername, validPassword, function(loginResponse){
-						dndAPI.GetSession(loginResponse.AID, loginResponse.SID, undefined, function(result){
-							assert.equal(result.Result.Success, false);
-							done();
-						});
-					});
-				})
-				it('Should return a result with error information', function(done){
-					dndAPI.Login(validUsername, validPassword, function(loginResponse){
-						dndAPI.GetSession(loginResponse.AID, loginResponse.SID, undefined, function(result){
-							assert.equal(result.Result.Success, false);
-							assert.notEqual(result.Result.Reason, undefined);
-							done();
-						});
-					});
-				})
+				});
 			})
 		})
 	}
