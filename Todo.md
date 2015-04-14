@@ -4,7 +4,7 @@ Todo List
 Tests
 ------
 
-* Refactor Tests to remove un-nessasary 'describe' and 'it' calls.
+* ~~Refactor Tests to remove un-nessasary 'describe' and 'it' calls.~~
 * Update tests to not rely on database calls for the tests. (i.e. using a Mock databse)
 * Account Manager
 	* ~~Create function~~
