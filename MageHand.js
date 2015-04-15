@@ -1,6 +1,8 @@
 var crypto = require('crypto');
+var util = require('util');
 var express = require('express');
 var app = express();
+
 var database = require('./Database.js');
 var mageHandAPI = require('./MageHandAPI.js');
 //	Auth
@@ -27,13 +29,31 @@ app.get('/story/:AID/:SID/:StoryID', function(req, res){
 	GetStory(req, res);
 });
 
-var server = app.listen(1234, function() {
+var server = app.listen(1024, function() {
     console.log('Listening on port %d', server.address().port);
 });
 
 mageHandAPI.Start(function(){
 	console.log('Starting...');
 });
+
+process.stdin.resume();
+process.stdin.setEncoding('utf8');
+process.stdin.on('data', function (text) {
+	if (text === 'quit\n' || text === 'kill\n') {
+		kill();
+	}
+});
+
+
+function kill() {
+	console.log('Killing server...');
+	server.close();
+	process.exit();
+}
+
+
+
 
 /***************    .    ****************/
 /*
