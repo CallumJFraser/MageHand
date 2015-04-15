@@ -63,7 +63,7 @@ function DnDResponse(result, auth){
 	this.Auth = auth;
 }
 
-function Start(success){
+function Start(successCallback){
 	database.Restart({
 		host	: 'localhost',
 		user	: 'root',
@@ -72,7 +72,7 @@ function Start(success){
 		error	: function (err){
 			//
 		},
-		success	: success
+		success	: successCallback
 	});
 };
 
