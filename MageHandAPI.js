@@ -64,7 +64,7 @@ function DnDResponse(result, auth){
 }
 
 function Start(success){
-	database.Start({
+	database.Restart({
 		host	: 'localhost',
 		user	: 'root',
 		password: '',
