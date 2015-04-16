@@ -27,6 +27,14 @@ To run the system you need to call the following command in the projects root di
 
 > node MageHand
 
+Once running the system has some commands that can be used to manipulate the server:
+
+* Start - Start the server
+* Stop - Stop the server
+* Quit - Release server assets and drop to command line.
+
+Entering anything else will give the user a prompt with the availble commands.
+
 Testing
 ------
 I am slowly converting Magehand over to be test driven.
