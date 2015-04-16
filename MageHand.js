@@ -29,9 +29,7 @@ app.get('/story/:AID/:SID/:StoryID', function(req, res){
 	GetStory(req, res);
 });
 
-var server = app.listen(1024, function() {
-    console.log('Listening on port %d', server.address().port);
-});
+var server = {}
 
 mageHandAPI.Start(function(){
 	console.log('Starting...');
@@ -40,15 +38,36 @@ mageHandAPI.Start(function(){
 process.stdin.resume();
 process.stdin.setEncoding('utf8');
 process.stdin.on('data', function (text) {
-	if (text === 'quit\n' || text === 'kill\n') {
-		kill();
+	switch(text){
+		case 'quit\n':
+			quit();
+			break;
+		case 'stop\n':
+			kill();
+			break;
+		case 'start\n':
+			server = app.listen(1024, function() {
+			    console.log('	Listening on port %d', server.address().port);
+			});
+			break;
+		default:
+			console.log('	Commands available:');
+			console.log('	Start		- Start the server');
+			console.log('	Stop		- Stop the server');
+			console.log('	Quit		- Release server assets and drop to command line.');
 	}
 });
 
 
 function kill() {
-	console.log('Killing server...');
+	console.log('	Stopping server...');
 	server.close();
+}
+
+function quit(){
+	if(server != undefined)
+		kill();
+	console.log('	Quitting...');
 	process.exit();
 }
 
