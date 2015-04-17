@@ -76,6 +76,7 @@ function kill() {
 	if(server != undefined){
 		console.log('	Stopping server...');
 		server.close();
+		server = undefined;
 	}
 }
 
