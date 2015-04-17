@@ -29,7 +29,7 @@ app.get('/story/:AID/:SID/:StoryID', function(req, res){
 	GetStory(req, res);
 });
 
-var server = {}
+var server = undefined;
 
 mageHandAPI.Start(function(){
 	console.log('Starting...');
@@ -38,7 +38,12 @@ mageHandAPI.Start(function(){
 process.stdin.resume();
 process.stdin.setEncoding('utf8');
 process.stdin.on('data', function (text) {
-	switch(text){
+	var command = text;
+	var commands = text.split(' ');
+	if(commands.length > 1)
+		command = commands[0] + '\n';
+
+	switch(command){
 		case 'quit\n':
 			quit();
 			break;
@@ -55,18 +60,20 @@ process.stdin.on('data', function (text) {
 			console.log('	Start		- Start the server');
 			console.log('	Stop		- Stop the server');
 			console.log('	Quit		- Release server assets and drop to command line.');
+			break;
 	}
 });
 
 
 function kill() {
-	console.log('	Stopping server...');
-	server.close();
+	if(server != undefined){
+		console.log('	Stopping server...');
+		server.close();
+	}
 }
 
 function quit(){
-	if(server != undefined)
-		kill();
+	kill();
 	console.log('	Quitting...');
 	process.exit();
 }
