@@ -56,6 +56,7 @@ process.stdin.on('data', function (text) {
 		default:
 			console.log('	Commands available:');
 			console.log('	Start		- Start the server');
+			console.log('				- (Optional) Port');
 			console.log('	Stop		- Stop the server');
 			console.log('	Quit		- Release server assets and drop to command line.');
 			break;
@@ -66,7 +67,7 @@ function start(commands){
 	var port = 1024;
 	if(commands.length > 1)
 		port = parseInt(commands[1]);
-	
+
 	server = app.listen(port, function() {
 	    console.log('	Listening on port %d', server.address().port);
 	});
