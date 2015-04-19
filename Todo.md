@@ -42,7 +42,17 @@ Bugs
 Features
 ------
 
-* Commands
+* Commands:
+  * ~~Start~~
+  * ~~Stop~~
+  * ~~Quit~~
+  * Load
+* Arguments
+  * Start
+  * Stop
+  * Quit
+  * Load
+* 
 * Basic API
 * Story management
 * Chat
