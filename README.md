@@ -29,7 +29,7 @@ To run the system you need to call the following command in the projects root di
 
 Once running the system has some commands that can be used to manipulate the server:
 
-* Start - Start the server
+* Start - Start the server (You can optionally provide the port number after a space)
 * Stop - Stop the server
 * Quit - Release server assets and drop to command line.
 
