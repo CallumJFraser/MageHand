@@ -8,6 +8,7 @@ var sizeManager = require('./Managers/SizeManager');
 var skillManager = require('./Managers/SkillManager');
 var raceManager = require('./Managers/RaceManager');
 var sessionManager = require('./Managers/SessionManager');
+var runthroughManager = require('./Managers/RunthroughManager');
 
 var apiAuth = require('./API/Auth');
 var apiAccount = require('./API/Account');
@@ -66,6 +67,10 @@ describe('Race Manager -', function(){
 describe('Session Manager -', function(){
 	sessionManager.Test();	//	Done
 });
+
+describe('Runthrough Manager', function(){
+	runthroughManager.Test();	//
+})
 
 
 describe('API Auth Manager -', function(){
