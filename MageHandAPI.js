@@ -9,6 +9,7 @@ var skillManager = require('./Managers/SkillManager');
 var raceManager = require('./Managers/RaceManager');
 var sizeManager = require('./Managers/SizeManager');
 var sessionManager = require('./Managers/SessionManager');
+var runthroughManager = require('./Managers/RunthroughManager');
 	
 module.exports = {
 	Start: function(success){
@@ -55,6 +56,9 @@ module.exports = {
 	},
 	GetCharacterSkill: function(aID, sID, skillTypeID, callback){
 		GetCharacterSkill(aID, sID, skillTypeID, callback);
+	},
+	GetRunthrough: function(aID, sID, runthroughID, callback){
+		GetRunthrough(aID, sID, runthroughID, callback);
 	}
 };
 
@@ -246,6 +250,19 @@ function GetCharacterSkill(aID, sID, characterID, callback){
 	Authorise(aID, sID, function(authorised){
 		if(authorised.Success){
 			skillManager.GetByCharacter(characterID, function(data){
+				callback(new DnDResponse(data, authorised));
+			});
+		}
+		else{
+			callback(new DnDResponse({ Success:false, Reason: 'See authorisation' }, authorised));
+		}
+	});
+}
+
+function GetRunthrough(aID, sID, runthroughID, callback){
+	Authorise(aID, sID, function(authorised){
+		if(authorised.Success){
+			runthroughManager.Get(runthroughID, function(data){
 				callback(new DnDResponse(data, authorised));
 			});
 		}
