@@ -21,10 +21,7 @@ module.exports = {
 						assert.equal(result.Auth.Success, true);
 						assert.notEqual(result.Result, undefined);
 						assert.notEqual(result.Result.ID, undefined);
-						assert.notEqual(result.Result.Name, undefined);
-						assert.notEqual(result.Result.Description, undefined);
-						assert.notEqual(result.Result.SizeID, undefined);
-						assert.notEqual(result.Result.Speed, undefined);
+						assert.notEqual(result.Result.Story, undefined);
 						done();
 					});
 				});

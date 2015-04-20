@@ -17,6 +17,7 @@ var apiRace = require('./API/Race');
 var apiSize = require('./API/Size');
 var apiSession = require('./API/Session');
 var apiSkills = require('./API/Skills');
+var apiRunthrough = require('./API/Runthrough');
 /*
 var api = require('./API/');
 var api = require('./API/');
@@ -97,4 +98,8 @@ describe('API Session -', function(){
 
 describe('API Skills -', function(){
 	apiSkills.Test();	//	
+});
+
+describe('API Runthrough', function(){
+	apiRunthrough.Test();	//	Done
 });
