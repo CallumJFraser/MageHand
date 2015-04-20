@@ -56,7 +56,7 @@ process.stdin.on('data', function (text) {
 		default:
 			console.log('	Commands available:');
 			console.log('	Start		- Start the server');
-			console.log('				- (Optional) Port');
+			console.log('			- (Optional) Port');
 			console.log('	Stop		- Stop the server');
 			console.log('	Quit		- Release server assets and drop to command line.');
 			break;
