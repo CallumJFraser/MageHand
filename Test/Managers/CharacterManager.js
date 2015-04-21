@@ -215,5 +215,69 @@ module.exports = {
 				});
 			});
 		})
+	
+		describe('GetBySession:', function(){
+			var valid = 1;
+			var invalid = 0;
+			var invalidFormat = 'invalid';
+
+			it('Valid:', function(done){
+				manager.GetByAccount(valid, function(result){
+					assert.notEqual(result, undefined);
+					assert.equal(result.Reason, undefined);
+					assert.equal(result[0].ID, validObject.ID);
+					assert.equal(result[0].Name, validObject.Name);
+					assert.notEqual(result[0].Class, undefined);
+					assert.equal(result[0].Experiance, validObject.Experiance);
+					assert.notEqual(result[0].Race, undefined);
+					assert.equal(result[0].Age, validObject.Age);
+					assert.equal(result[0].Height, validObject.Height);
+					assert.equal(result[0].Strength, validObject.Strength);
+					assert.equal(result[0].Dexterity, validObject.Dexterity);
+					assert.equal(result[0].Constitution, validObject.Constitution);
+					assert.equal(result[0].Inteligence, validObject.Inteligence);
+					assert.equal(result[0].Wisdom, validObject.Wisdom);
+					assert.equal(result[0].Charisma, validObject.Charisma);
+					assert.equal(result[0].HP, validObject.HP);
+					assert.equal(result[0].AC, validObject.AC);
+					assert.equal(result[0].Fortitude, validObject.Fortitude);
+					assert.equal(result[0].Reflex, validObject.Reflex);
+					assert.equal(result[0].Will, validObject.Will);
+					assert.equal(result[0].Grapple, validObject.Grapple);
+					assert.equal(result[0].BaseAttack, validObject.BaseAttack);
+					assert.equal(result[0].SpellResistance, validObject.SpellResistance);
+					assert.equal(result[0].TouchAC, validObject.TouchAC);
+					assert.equal(result[0].FlatFootedAC, validObject.FlatFootedAC);
+					done();
+				});
+			})
+
+			it('Invalid "ID" Value:', function(done){
+				manager.GetByAccount(invalid, function(result){
+					assert.notEqual(result, undefined);
+					assert.notEqual(result.Reason, undefined);
+					assert.equal(result[0], undefined);
+					done();
+				});
+			});
+
+			it('Invalid "ID" Format:', function(done){
+				manager.GetByAccount(invalidFormat, function(result){
+					assert.notEqual(result, undefined);
+					assert.notEqual(result.Reason, undefined);
+					assert.equal(result[0], undefined);
+					done();
+				});
+			});
+
+			it('Missing "ID":', function(done){
+				manager.GetByAccount(blank, function(result){
+					assert.notEqual(result, undefined);
+					assert.notEqual(result.Reason, undefined);
+					assert.equal(result[0], undefined);
+					done();
+				});
+			});
+		})
 	}
 };
