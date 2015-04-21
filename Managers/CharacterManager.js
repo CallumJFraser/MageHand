@@ -10,6 +10,9 @@ module.exports = {
 	},
 	GetByAccount: function(id, callback){
 		GetByAccount(id, callback);
+	},
+	GetBySession: function(id, callback){
+		GetBySession(id, callback);
 	}
 };
 
@@ -96,18 +99,54 @@ function GetByAccount(id, callback){
 			databaseObject.Procedure('sp_GetCharacterByAccount', [intID], function(data){
 				if(data.length > 0){
 					async.map(data, function(item, eachCallback){
-						Character(item, function(value){
-							eachCallback(null, value);
+							Character(item, function(value){
+								eachCallback(null, value);
+							});
+						},
+						function(err, results){
+							if(err != undefined){
+								console.log('Error');
+							}
+							else{
+								callback(results);
+							}
 						});
-					},
-					function(err, results){
-						if(err != undefined){
-							console.log('Error');
-						}
-						else{
-							callback(results);
-						}
-					});
+				}
+				else{
+					callback(new Failed('No matching results'));
+				}
+			});
+		}
+		else{
+			callback(new Failed('Invalid parameter'));
+		}
+	}
+}
+
+function GetBySession(sessionID, callback){
+	if(sessionID == undefined){
+		callback(new Failed('Missing parameter'));
+	}
+	else{
+		var intSessionID = parseInt(sessionID);
+		if(intSessionID > 0){
+			databaseObject.Procedure('sp_GetSessionCharacters', [intSessionID], function(data){
+				if(data.length > 0){
+					var length = data.length;
+					var characterLists = [];
+					async.map(data, function(item, eachCallback){
+							Character(item, function(value){
+								eachCallback(null, value);
+							});
+						},
+						function(err, results){
+							if(err != undefined){
+								console.log('Error');
+							}
+							else{
+								callback(results);
+							}
+						});	
 				}
 				else{
 					callback(new Failed('No matching results'));
