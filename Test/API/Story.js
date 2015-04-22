@@ -26,7 +26,6 @@ module.exports = {
 						assert.notEqual(result.Result.ID, undefined);
 						assert.notEqual(result.Result.Title, undefined);
 						assert.notEqual(result.Result.Description, undefined);
-						assert.notEqual(result.Result.Parent, undefined);
 						done();
 					});
 				});
@@ -43,15 +42,15 @@ module.exports = {
 				});
 			})
 		})
-
-		describe('ListStory:', function(){
+/*
+		describe('SearchStories:', function(){
 			var validSearchFullTitle = 'Three little pigs';
 			var validSearchPartialTitle = 'little pigs';
-			var validSearchDescription = 'blown';
+			var validSearchDescription = 'wolf';
 	
 			it('Valid:', function(done){
 				dndAPI.Login(validUsername, validPassword, function(loginResponse){
-					dndAPI.ListStory(loginResponse.AID, loginResponse.SID, validSearchFullTitle, function(result){
+					dndAPI.SearchStories(loginResponse.AID, loginResponse.SID, validSearchFullTitle, function(result){
 						assert.equal(result.Auth.Success, true);
 						assert.notEqual(result.Result.ID, undefined);
 						assert.notEqual(result.Result.Title, undefined);
@@ -64,7 +63,7 @@ module.exports = {
 
 			it('Valid partial Title:', function(done){
 				dndAPI.Login(validUsername, validPassword, function(loginResponse){
-					dndAPI.ListStory(loginResponse.AID, loginResponse.SID, validSearchPartialTitle, function(result){
+					dndAPI.SearchStories(loginResponse.AID, loginResponse.SID, validSearchPartialTitle, function(result){
 						assert.equal(result.Auth.Success, true);
 						assert.notEqual(result.Result, undefined);
 						assert.notEqual(result.Result.ID, undefined);
@@ -78,7 +77,7 @@ module.exports = {
 
 			it('Valid Description:', function(done){
 				dndAPI.Login(validUsername, validPassword, function(loginResponse){
-					dndAPI.ListStory(loginResponse.AID, loginResponse.SID, validSearchDescription, function(result){
+					dndAPI.SearchStories(loginResponse.AID, loginResponse.SID, validSearchDescription, function(result){
 						assert.equal(result.Auth.Success, true);
 						assert.notEqual(result.Result, undefined);
 						assert.notEqual(result.Result.ID, undefined);
@@ -92,7 +91,7 @@ module.exports = {
 	
 			it('Valid call (missing param: "Search"):', function(done){
 				dndAPI.Login(validUsername, validPassword, function(loginResponse){
-					dndAPI.ListStory(loginResponse.AID, loginResponse.SID, undefined, function(result){
+					dndAPI.SearchStories(loginResponse.AID, loginResponse.SID, undefined, function(result){
 						assert.notEqual(result.Result, undefined);
 						assert.notEqual(result.Result.length, 0);
 						assert.notEqual(result.Result.length, 1);
@@ -101,6 +100,6 @@ module.exports = {
 				});
 			})
 		})
+*/
 	}
 };
-*/

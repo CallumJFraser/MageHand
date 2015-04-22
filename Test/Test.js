@@ -15,6 +15,7 @@ var apiAccount = require('./API/Account');
 var apiCharacter = require('./API/Character');
 var apiClass = require('./API/Class');
 var apiRace = require('./API/Race');
+var apiStory = require('./API/Story');
 var apiSize = require('./API/Size');
 var apiSession = require('./API/Session');
 var apiSkills = require('./API/Skills');
@@ -91,6 +92,10 @@ describe('API Class -', function(){
 
 describe('API Race -', function(){
 	apiRace.Test();	//	
+});
+
+describe('API Story -', function(){
+	apiStory.Test();	//	
 });
 
 describe('API Size -', function(){
