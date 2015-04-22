@@ -171,7 +171,7 @@ function GetStories(aID, sID, sessionID, callback){
 function GetStory(aID, sID, storyID, callback){
 	Authorise(aID, sID, function(authorised){
 		if(authorised.Success){
-			storyManager.GetStory(storyID, function(data){
+			storyManager.Get(storyID, function(data){
 				callback(new DnDResponse(data, authorised));
 			});
 		}
