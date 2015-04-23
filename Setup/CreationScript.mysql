@@ -19,6 +19,7 @@ DROP PROCEDURE sp_SearchAccounts GO
 DROP PROCEDURE sp_GetClass GO
 DROP PROCEDURE sp_GetVersion GO
 DROP PROCEDURE sp_GetStoryByID GO
+DROP PROCEDURE sp_SearchStory GO
 DROP PROCEDURE sp_GetSize GO
 DROP PROCEDURE sp_GetRace GO
 DROP PROCEDURE sp_GetCharacterByID GO
@@ -304,6 +305,15 @@ BEGIN
 		ID, Title, Description, ParentID, VersionID
 	FROM Story
 	WHERE ID = IDParam;
+END
+GO
+
+CREATE PROCEDURE sp_SearchStory (SearchParam VARCHAR(200))
+BEGIN
+	SELECT
+		ID, Title, Description, ParentID, VersionID
+	FROM Story
+	WHERE Title like CONCAT('%', SearchParam, '%') OR Description like CONCAT('%', SearchParam, '%');
 END
 GO
 
