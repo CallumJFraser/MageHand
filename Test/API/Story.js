@@ -42,7 +42,7 @@ module.exports = {
 				});
 			})
 		})
-/*
+
 		describe('SearchStories:', function(){
 			var validSearchFullTitle = 'Three little pigs';
 			var validSearchPartialTitle = 'little pigs';
@@ -55,7 +55,6 @@ module.exports = {
 						assert.notEqual(result.Result.ID, undefined);
 						assert.notEqual(result.Result.Title, undefined);
 						assert.notEqual(result.Result.Description, undefined);
-						assert.notEqual(result.Result.Parent, undefined);
 						done();
 					});
 				});
@@ -69,7 +68,6 @@ module.exports = {
 						assert.notEqual(result.Result.ID, undefined);
 						assert.notEqual(result.Result.Title, undefined);
 						assert.notEqual(result.Result.Description, undefined);
-						assert.notEqual(result.Result.Parent, undefined);
 						done();
 					});
 				});
@@ -83,7 +81,6 @@ module.exports = {
 						assert.notEqual(result.Result.ID, undefined);
 						assert.notEqual(result.Result.Title, undefined);
 						assert.notEqual(result.Result.Description, undefined);
-						assert.notEqual(result.Result.Parent, undefined);
 						done();
 					});
 				});
@@ -100,6 +97,5 @@ module.exports = {
 				});
 			})
 		})
-*/
 	}
 };
