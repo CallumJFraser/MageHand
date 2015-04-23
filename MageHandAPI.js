@@ -184,7 +184,7 @@ function GetStory(aID, sID, storyID, callback){
 function SearchStories(aID, sID, storyText, callback){
 	Authorise(aID, sID, function(authorised){
 		if(authorised.Success){
-			storyManager.SearchStories(storyText, function(data){
+			storyManager.Search(storyText, function(data){
 				callback(new DnDResponse(data, authorised));
 			});
 		}
