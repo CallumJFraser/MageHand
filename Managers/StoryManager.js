@@ -6,6 +6,9 @@ var Failed = require('../Failed');
 module.exports = {
 	Get: function (id, callback){
 		Get(id, callback);
+	},
+	Search: function (term, callback){
+		Search(term, callback);
 	}
 };
 
@@ -56,5 +59,23 @@ function Get(id, callback){
 		else{
 			callback(new Failed('Invalid parameter'));
 		}
+	}
+}
+
+function Search(term, callback){
+	if(term == undefined){
+		callback(new Failed('Missing parameter'));
+	}
+	else{
+		databaseObject.Procedure('sp_SearchStory', [term], function(rows){
+			if(rows.length > 0){
+				Story(rows[0], function(value){
+					callback(value);
+				});
+			}
+			else{
+				callback(new Failed('No matching results'));
+			}
+		});
 	}
 }
