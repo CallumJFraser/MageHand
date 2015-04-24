@@ -6,7 +6,11 @@ var Failed = require('../Failed');
 module.exports = {
 	Get: function (id, callback){
 		GetByID(id, callback);
+	},
+	List: function (callback){
+		GetList(callback);
 	}
+	
 };
 
 function Class(row, callback){
@@ -27,7 +31,7 @@ function Class(row, callback){
 			object.Version = results[0];
 			callback(object);
 		}
-		);
+	);
 }
 
 function GetByID(id, callback){
@@ -52,4 +56,29 @@ function GetByID(id, callback){
 			callback(new Failed('Invalid parameter'));
 		}
 	}
+}
+
+function GetList(callback){
+	databaseObject.Procedure('sp_GetClasses', [], function(rows){
+		if(rows.length > 0){
+			var characterLists = [];
+			async.map(rows, function(item, eachCallback){
+					Class(item, function(value){
+						eachCallback(null, value);
+					});
+				},
+				function(err, results){
+					if(err != undefined){
+						console.log('Error');
+					}
+					else{
+						callback(results);
+					}
+				}
+			);	
+		}
+		else{
+			callback(new Failed('No matching results'));
+		}
+	});
 }
