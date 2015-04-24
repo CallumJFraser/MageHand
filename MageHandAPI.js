@@ -33,6 +33,8 @@ module.exports = {
 	GetClass:function(aID, sID, ID, callback){
 		GetClass(aID, sID, ID, callback);
 	},
+	GetClasses:function(aID, sID, callback){
+	},
 	GetStory: function(aID, sID, storyID, callback){
 		GetStory(aID, sID, storyID, callback);
 	},
