@@ -34,6 +34,7 @@ module.exports = {
 		GetClass(aID, sID, ID, callback);
 	},
 	GetClasses:function(aID, sID, callback){
+		GetClasses(aID, sID, callback);
 	},
 	GetStory: function(aID, sID, storyID, callback){
 		GetStory(aID, sID, storyID, callback);
@@ -135,6 +136,19 @@ function GetClass(aID, sID, ID, callback){
 	Authorise(aID, sID, function(authorised){
 		if(authorised.Success){
 			classManager.Get(ID, function(data){
+				callback(new DnDResponse(data, authorised));
+			});
+		}
+		else{
+			callback(new DnDResponse({ Success:false, Reason: 'See authorisation' }, authorised));
+		}
+	});
+}
+
+function GetClasses(aID, sID, callback){
+	Authorise(aID, sID, function(authorised){
+		if(authorised.Success){
+			classManager.List(function(data){
 				callback(new DnDResponse(data, authorised));
 			});
 		}
