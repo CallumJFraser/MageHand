@@ -12,6 +12,10 @@ module.exports = {
 				assert.notEqual(dndAPI.GetClass, undefined);
 				done();
 			});
+			if('GetClasses != undefined', function(done){
+				assert.notEqual(dndAPI.GetClasses, undefined);
+				done();
+			});
 		})
 
 		describe('GetClass:', function(){
