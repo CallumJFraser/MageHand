@@ -21,7 +21,7 @@ Tests
 	* Object creation validation
 * Class Manager
 	* Object creation validation
-	* List functon
+	* ~~List functon~~
 * Login Manager
 	* Object creation validation
 * Race Manager
