@@ -17,6 +17,7 @@ DROP PROCEDURE sp_GetAccountByUsername GO
 DROP PROCEDURE sp_GetAccountByEmail GO
 DROP PROCEDURE sp_SearchAccounts GO
 DROP PROCEDURE sp_GetClass GO
+DROP PROCEDURE sp_GetClasses GO
 DROP PROCEDURE sp_GetVersion GO
 DROP PROCEDURE sp_GetStoryByID GO
 DROP PROCEDURE sp_SearchStory GO
@@ -179,8 +180,20 @@ BEGIN
 END
 GO
 
+CREATE PROCEDURE sp_GetClasses ()
+BEGIN
+	SELECT
+		ID, Name, Description, VersionID
+	FROM Class;
+END
+GO
+
 INSERT INTO Class (Name, VersionID, Description)
 VALUES ('Bard', 1, '')
+GO
+
+INSERT INTO Class (Name, VersionID, Description)
+VALUES ('Ranger', 1, '')
 GO
 
 CREATE TABLE Size
