@@ -8,8 +8,6 @@ Tests
 * ~~Refactor Tests to remove un-nessasary 'describe' and 'it' calls.~~
 * Update tests to not rely on database calls for the tests. (i.e. using a Mock databse)
 * Account Manager
-	* ~~Create function~~
-	* ~~Username check function~~
 	* Confirm Email function
 	* Change Email function
 	* Change Password function
@@ -21,7 +19,6 @@ Tests
 	* Object creation validation
 * Class Manager
 	* Object creation validation
-	* ~~List functon~~
 * Login Manager
 	* Object creation validation
 * Race Manager
@@ -34,22 +31,18 @@ Tests
 	* List functon
 * Story Manager
 	* Object creation validation
-	* ~~Search Function~~
 * Version Manager
 	* Object creation validation
 
 Bugs
 ------
 
-* ~~Running Magehand throws exception - (TypeError: Object #<Object> has no method 'Start' at Start (/Users/callumjfraser/Projects/MageHandAPI/MageHandAPI.js:52:11))~~
+
 
 Features
 ------
 
 * Commands:
-  * ~~Start~~
-  * ~~Stop~~
-  * ~~Quit~~
   * Load
 * Arguments
   * Start
