@@ -7,6 +7,9 @@ var Failed = require('../Failed');
 module.exports = {
 	Get: function (id, callback){
 		Get(id, callback);
+	},
+	List: function (callback){
+		GetList(callback);
 	}
 };
 
@@ -63,4 +66,28 @@ function Get(id, callback){
 			callback(new Failed('Invalid parameter'));
 		}
 	}
+}
+
+function GetList(callback){
+	databaseObject.Procedure('sp_GetRaces', [], function(rows){
+		if(rows.length > 0){
+			async.map(rows, function(item, eachCallback){
+					Race(item, function(value){
+						eachCallback(null, value);
+					});
+				},
+				function(err, results){
+					if(err != undefined){
+						console.log('Error');
+					}
+					else{
+						callback(results);
+					}
+				}
+			);	
+		}
+		else{
+			callback(new Failed('No matching results'));
+		}
+	});
 }
