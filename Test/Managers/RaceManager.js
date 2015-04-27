@@ -73,5 +73,24 @@ module.exports = {
 				});
 			})
 		})
+
+		describe('List:', function(){
+
+			it('Valid:', function(done){
+				manager.List(function(result){
+					console.log(result);
+					var first = result[0];
+					assert.notEqual(first, undefined);
+					assert.equal(first.Reason, undefined);
+					assert.notEqual(first.ID, undefined);
+					assert.notEqual(first.Name, undefined);
+					assert.notEqual(first.Description, undefined);
+					assert.notEqual(first.Speed, undefined);
+					assert.notEqual(first.Size, undefined);
+					assert.notEqual(first.Version, undefined);
+					done();
+				});
+			})
+		})
 	}
 };
