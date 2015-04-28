@@ -51,6 +51,9 @@ module.exports = {
 	GetRace: function(aID, sID, raceID, callback){
 		GetRace(aID, sID, raceID, callback);
 	},
+	GetRaces: function(aID, sID, callback){
+		GetRaces(aID, sID, callback);
+	},
 	GetSize: function(aID, sID, sizeID, callback){
 		GetSize(aID, sID, sizeID, callback);
 	},
@@ -227,6 +230,19 @@ function GetRace(aID, sID, raceID, callback){
 	Authorise(aID, sID, function(authorised){
 		if(authorised.Success){
 			raceManager.Get(raceID, function(data){
+				callback(new DnDResponse(data, authorised));
+			});
+		}
+		else{
+			callback(new DnDResponse({ Success:false, Reason: 'See authorisation' }, authorised));
+		}
+	});
+}
+
+function GetRaces(aID, sID, callback){
+	Authorise(aID, sID, function(authorised){
+		if(authorised.Success){
+			raceManager.List(function(data){
 				callback(new DnDResponse(data, authorised));
 			});
 		}
