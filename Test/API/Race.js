@@ -42,5 +42,26 @@ module.exports = {
 				});
 			})
 		})
+
+		describe('GetRaces:', function(){
+
+			it('Valid:', function(done){
+				dndAPI.Login(validUsername, validPassword, function(loginResponse){
+					dndAPI.GetRaces(loginResponse.AID, loginResponse.SID, function(result){
+						assert.equal(result.Auth.Success, true);
+						assert.notEqual(result.Result, undefined);
+						var first = result.Result[0];
+						assert.notEqual(first, undefined);
+						assert.notEqual(first.ID, undefined);
+						assert.notEqual(first.Name, undefined);
+						assert.notEqual(first.Description, undefined);
+						assert.notEqual(first.Speed, undefined);
+						assert.notEqual(first.Size, undefined);
+						assert.notEqual(first.Version, undefined);
+						done();
+					});
+				})
+			})
+		})
 	}
 };
