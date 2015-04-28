@@ -78,7 +78,6 @@ module.exports = {
 
 			it('Valid:', function(done){
 				manager.List(function(result){
-					console.log(result);
 					var first = result[0];
 					assert.notEqual(first, undefined);
 					assert.equal(first.Reason, undefined);
