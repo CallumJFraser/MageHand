@@ -6,7 +6,7 @@ var Failed = require('../Failed');
 
 module.exports = {
 	Get: Get,
-	List: GetList(
+	List: GetList
 };
 
 function Race(row, callback){
