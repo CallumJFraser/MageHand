@@ -4,13 +4,8 @@ var versionManager = require('../Managers/VersionManager');
 var Failed = require('../Failed');
 
 module.exports = {
-	Get: function (id, callback){
-		GetByID(id, callback);
-	},
-	List: function (callback){
-		GetList(callback);
-	}
-	
+	Get: GetByID,
+	List: GetList
 };
 
 function Class(row, callback){
