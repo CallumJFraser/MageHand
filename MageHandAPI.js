@@ -12,60 +12,23 @@ var sessionManager = require('./Managers/SessionManager');
 var runthroughManager = require('./Managers/RunthroughManager');
 	
 module.exports = {
-	Start: function(success){
-		Start(success);
-	},
-	Login: function(username, password, callback) {
-		Login(username, password, callback);
-	},
-	Authorise: function(aID, sID, callback){
-		Authorise(aID, sID, callback);
-	},
-	GetAccount: function(aID, sID, username, callback){
-		GetAccount(aID, sID, username, callback);
-	},
-	GetCharacter: function(aID, sID, characterID, callback){
-		GetCharacter(aID, sID, characterID, callback);
-	},
-	GetAccountCharacters: function(aID, sID, accountAID, callback){
-		GetAccountCharacters(aID, sID, accountAID, callback);
-	},
-	GetClass:function(aID, sID, ID, callback){
-		GetClass(aID, sID, ID, callback);
-	},
-	GetClasses:function(aID, sID, callback){
-		GetClasses(aID, sID, callback);
-	},
-	GetStory: function(aID, sID, storyID, callback){
-		GetStory(aID, sID, storyID, callback);
-	},
-	SearchStories: function(aID, sID, storyText, callback){
-		SearchStories(aID, sID, storyText, callback);
-	},
-	GetAbillity:  function(aID, sID, abilityID, callback){
-		GetAbility(aID, sID, abilityID, callback);
-	},
-	GetSkillType:  function(aID, sID, skillTypeID, callback){
-		GetSkillType(aID, sID, skillTypeID, callback);
-	},
-	GetRace: function(aID, sID, raceID, callback){
-		GetRace(aID, sID, raceID, callback);
-	},
-	GetRaces: function(aID, sID, callback){
-		GetRaces(aID, sID, callback);
-	},
-	GetSize: function(aID, sID, sizeID, callback){
-		GetSize(aID, sID, sizeID, callback);
-	},
-	GetSession: function(aID, sID, sessionID, callback){
-		GetSession(aID, sID, sessionID, callback);
-	},
-	GetCharacterSkill: function(aID, sID, skillTypeID, callback){
-		GetCharacterSkill(aID, sID, skillTypeID, callback);
-	},
-	GetRunthrough: function(aID, sID, runthroughID, callback){
-		GetRunthrough(aID, sID, runthroughID, callback);
-	}
+	Start: Start,
+	Login: Login,
+	Authorise: Authorise,
+	GetAccount: GetAccount,
+	GetCharacter: GetCharacter,
+	GetAccountCharacters: GetAccountCharacters,
+	GetClass: GetClass,
+	GetClasses: GetClasses,
+	GetStory: GetStory,
+	SearchStories: SearchStories,
+	GetSkillType: GetSkillType,
+	GetRace: GetRace,
+	GetRaces: GetRaces,
+	GetSize: GetSize,
+	GetSession: GetSession,
+	GetCharacterSkill: GetCharacterSkill,
+	GetRunthrough: GetRunthrough
 };
 
 function DnDResponse(result, auth){
