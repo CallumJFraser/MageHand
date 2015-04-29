@@ -5,15 +5,9 @@ var raceManager = require('../Managers/RaceManager');
 var Failed = require('../Failed');
 
 module.exports = {
-	Get: function(id, callback){
-		Get(id, callback);
-	},
-	GetByAccount: function(id, callback){
-		GetByAccount(id, callback);
-	},
-	GetBySession: function(id, callback){
-		GetBySession(id, callback);
-	}
+	Get: Get,
+	GetByAccount: GetByAccount,
+	GetBySession: GetBySession
 };
 
 function Character(data, callback){
