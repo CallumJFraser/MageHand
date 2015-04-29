@@ -5,12 +5,8 @@ var versionManager = require('../Managers/VersionManager');
 var Failed = require('../Failed');
 
 module.exports = {
-	Get: function (id, callback){
-		Get(id, callback);
-	},
-	List: function (callback){
-		GetList(callback);
-	}
+	Get: Get,
+	List: GetList(
 };
 
 function Race(row, callback){
