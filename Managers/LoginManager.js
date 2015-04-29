@@ -2,12 +2,8 @@ var databaseObject = require('../Database');
 var Failed = require('../Failed');
 
 module.exports = {
-	Login: function(username, password, callback){
-		Login(username, password, callback);
-	},
-	Authorise: function (aID, sID, callback){
-		Authorise(aID, sID, callback);
-	}
+	Login: Login,
+	Authorise: Authorise
 };
 
 function LoginResponse(row){
