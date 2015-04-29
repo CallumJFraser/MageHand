@@ -2,21 +2,11 @@ var databaseObject = require('../Database');
 var Failed = require('../Failed');
 
 module.exports = {
-	Get: function(id, callback){
-		GetBasicByID(id, callback);
-	},
-	GetByUsername: function(username, callback){
-		GetBasicByUsername(username, callback);
-	},
-	GetByEmail: function(email, callback){
-		GetBasicByEmail(email, callback);
-	},
-	Search: function(text, callback){
-		SearchBasic(text, callback);
-	},
-	Create: function(accountObject, callback){
-		Create(accountObject, callback);
-	}
+	Get: GetBasicByID,
+	GetByUsername: GetBasicByUsername,
+	GetByEmail: GetBasicByEmail,
+	Search: SearchBasic,
+	Create: Create
 };
 
 function BasicAccount(row){
