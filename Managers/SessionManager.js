@@ -3,9 +3,7 @@ var databaseObject = require('../Database');
 var Failed = require('../Failed');
 
 module.exports = {
-	Get: function (id, callback){
-		GetByID(id, callback);
-	}
+	Get: GetByID
 };
 
 function Class(row, callback){
