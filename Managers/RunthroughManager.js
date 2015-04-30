@@ -4,9 +4,7 @@ var storyManager = require('../Managers/StoryManager');
 var Failed = require('../Failed');
 
 module.exports = {
-	Get: function (id, callback){
-		Get(id, callback);
-	}
+	Get: Get
 };
 
 function Runthrough(row, callback){
