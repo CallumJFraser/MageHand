@@ -4,12 +4,8 @@ var versionManager = require('../Managers/VersionManager');
 var Failed = require('../Failed');
 
 module.exports = {
-	Get: function (id, callback){
-		Get(id, callback);
-	},
-	Search: function (term, callback){
-		Search(term, callback);
-	}
+	Get: Get,
+	Search: Search
 };
 
 function Story(row, callback){
