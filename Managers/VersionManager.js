@@ -2,9 +2,7 @@ var databaseObject = require('../Database');
 var Failed = require('../Failed');
 
 module.exports = {
-	Get: function (id, callback){
-		Get(id, callback);
-	}
+	Get: Get
 };
 
 function Version(row, callback){
