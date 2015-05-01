@@ -3,9 +3,7 @@ var versionManager = require('../Managers/VersionManager');
 var Failed = require('../Failed');
 
 module.exports = {
-	Get: function (id, callback){
-		Get(id, callback);
-	}
+	Get: Get
 };
 
 function Size(row, callback){
