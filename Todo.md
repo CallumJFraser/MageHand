@@ -23,7 +23,7 @@ Tests
 	* Object creation validation
 * Race Manager
 	* Object creation validation
-	* List functon
+	* ~~List functon~~
 * Size Manager
 	* Object creation validation
 * Skill Manager
