@@ -37,11 +37,10 @@ Entering anything else will give the user a prompt with the availble commands.
 
 Testing
 ------
-I am slowly converting Magehand over to be test driven.
 
 It is possible to run tests on Magehand once you have installed NodeJS and NPM by executing the following command in the projects root directory:
 
-> mocha -R spec
+> grunt mochaTest
 
 Credits
 ------
