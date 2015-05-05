@@ -25,15 +25,17 @@ The development of this API was done on a mac and this is why the Test.command a
 
 To install the API you will need to run the following commands in the projects root directory:
 
-‘npm install‘
-‘cd API‘
-‘npm install‘
+> npm install
+
+> cd API
+
+> npm install
 
 ##Running
 
 To run the system you need to call the following command in the projects root directory:
 
-‘node MageHand‘
+> node MageHand
 
 Once running the system has some commands that can be used to manipulate the server:
 
@@ -47,7 +49,7 @@ Entering anything else will give the user a prompt with the availble commands.
 
 It is possible to run tests on Magehand once you have installed NodeJS and NPM by executing the following command in the projects root directory:
 
-‘grunt mochaTest‘
+> grunt mochaTest
 
 ##Credits
 
