@@ -1,5 +1,6 @@
 "Use Strict";
 
+var mageHandAPI = require('./MageHandAPI.js');
 var crypto = require('crypto');
 var util = require('util');
 var express = require('express');
