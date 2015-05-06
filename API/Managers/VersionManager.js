@@ -1,3 +1,5 @@
+"Use Strict";
+
 var databaseObject = require('../Database');
 var Failed = require('../Failed');
 

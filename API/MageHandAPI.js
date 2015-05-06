@@ -1,3 +1,5 @@
+"Use Strict";
+
 //	API
 var database = require('./Database');
 

@@ -1,3 +1,5 @@
+"Use Strict";
+
 var assert = require('assert');
 var uuid = require('node-uuid');
 var manager = require('../../Managers/AccountManager.js');

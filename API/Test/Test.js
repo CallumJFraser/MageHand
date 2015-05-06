@@ -1,3 +1,5 @@
+"Use Strict";
+
 var database = require('../database');
 var accountManager = require('./Managers/AccountManager');
 var characterManager = require('./Managers/CharacterManager');

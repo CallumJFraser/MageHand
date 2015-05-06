@@ -1,3 +1,5 @@
+"Use Strict";
+
 var async = require('async');
 var databaseObject = require('../Database');
 var versionManager = require('../Managers/VersionManager');

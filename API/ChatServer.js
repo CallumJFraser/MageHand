@@ -1,3 +1,5 @@
+"Use Strict";
+
 var net = require('net');
 
 ///	RoomUser: Stores the user account id (for identification), name (to display) and socket (to send messages)

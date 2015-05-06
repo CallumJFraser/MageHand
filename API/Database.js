@@ -1,3 +1,5 @@
+"Use Strict";
+
 var mysql = require('mysql');
 
 var connection = {};

@@ -1,3 +1,5 @@
+"Use Strict";
+
 var assert = require('assert');
 var manager = require('../../Managers/RunthroughManager.js');
 

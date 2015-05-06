@@ -1,3 +1,5 @@
+"Use Strict";
+
 var databaseObject = require('../Database');
 var versionManager = require('../Managers/VersionManager');
 var Failed = require('../Failed');
