@@ -2,6 +2,7 @@
 
 var http = require("http");
 var assert = require('assert');
+var RESTAPI = require('../../index.js');
 
 var options = {
 	hostname: 'localhost',
@@ -17,6 +18,14 @@ var options = {
 module.exports = {
 	Test: function(){
 
+		before(function(){
+			RESTAPI.Start({});
+		})
+
+		after(function(){
+			RESTAPI.Kill();
+		})
+
 		describe('Login:', function(){
 			it('Valid:', function(done){
 				http.request(options,
@@ -29,7 +38,7 @@ module.exports = {
 							assert.notEqual(result.Username, undefined);
 							assert.notEqual(result.AID, undefined);
 							assert.notEqual(result.SID, undefined);
-							done()
+							done();
 						});
 					}
 				).end();

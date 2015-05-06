@@ -206,3 +206,8 @@ function EndResponse(response, code, endObject){
 	response.json(endObject);
 	response.status(code).end();
 }
+
+module.exports = {
+	Start: start,
+	Kill: kill
+}
