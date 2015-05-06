@@ -22,6 +22,8 @@ var apiSize = require('./API/Size');
 var apiSession = require('./API/Session');
 var apiSkills = require('./API/Skills');
 var apiRunthrough = require('./API/Runthrough');
+
+var restAPI = require('./RESTAPI/index');
 /*
 var api = require('./API/');
 var api = require('./API/');
@@ -115,3 +117,7 @@ describe('API Skills -', function(){
 describe('API Runthrough', function(){
 	apiRunthrough.Test();	//	Done
 });
+
+describe('REST API -', function(){
+	restAPI.Test();
+})
