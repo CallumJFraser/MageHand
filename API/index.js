@@ -8,7 +8,7 @@ var app = express();
 
 var database = require('./Database.js');
 //	Auth
-app.get('/login/:Username/:Password', function(req, res){
+app.get('/login/:Username', function(req, res){
 	Login(req, res);
 });
 //	Account
@@ -118,8 +118,8 @@ function GetData(request, response, callback){
 
 //	Expect Username, Password. Return AID + sessionID
 function Login(request, response){
-	if(request.params != undefined){
-		mageHandAPI.Login(request.params.Username, request.params.Password, function(apiResponse){
+	if(request.params && request.headers){
+		mageHandAPI.Login(request.params.Username, request.headers.password, function(apiResponse){
 			if(apiResponse.Error){
 				EndResponse(response, 500, apiResponse);
 			}
@@ -127,6 +127,9 @@ function Login(request, response){
 				EndResponse(response, 200, apiResponse);
 			}
 		});
+	}
+	else{
+		EndResponse(response, 500, undefined);
 	}
 }
 
@@ -200,5 +203,6 @@ function GetAdminAccount(request, response){
 //	Utility Functions
 
 function EndResponse(response, code, endObject){
-	response.send(JSON.stringify(endObject));
+	response.json(endObject);
+	response.status(code).end();
 }
