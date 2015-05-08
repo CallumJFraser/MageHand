@@ -101,6 +101,46 @@ module.exports = {
 					}
 				).end();
 			});
+
+			it('Invalid information reveals no hints:', function(done){
+				var options = {
+					hostname: 'localhost',
+					port: 1024,
+					path: '/login/NoUser',
+					method: 'GET',
+					headers: {
+						'Password': 'password1',
+						'Content-Length': 0
+					}
+				};
+
+				http.request(options,
+					function(res) {
+						res.setEncoding('utf8');
+						res.on('data', function (userChunk) {
+							var invalidUserResult = JSON.parse(userChunk);
+
+							options.path = '/login/User1';
+							options.headers = {
+								'Password': 'notthepassword',
+								'Content-Length': 0
+							};
+
+							http.request(options,
+								function(res) {
+									res.setEncoding('utf8');
+									res.on('data', function (passwordChunk) {
+										var invalidPasswordResult = JSON.parse(passwordChunk);
+										assert.equal(invalidUserResult.Success, invalidPasswordResult.Success);
+										assert.equal(invalidUserResult.Reason, invalidPasswordResult.Reason)
+										done();
+									});
+								}
+							).end();
+						});
+					}
+				).end();
+			});
 		})
 	}
 }
