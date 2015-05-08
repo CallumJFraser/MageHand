@@ -44,6 +44,35 @@ module.exports = {
 				).end();
 			});
 
+			it('Invalid Username:', function(done){
+				var options = {
+					hostname: 'localhost',
+					port: 1024,
+					path: '/login/NoUser',
+					method: 'GET',
+					headers: {
+						'Password': 'password',
+						'Content-Length': 0
+					}
+				};
+
+				http.request(options,
+					function(res) {
+						res.setEncoding('utf8');
+						res.on('data', function (chunk) {
+							var result = JSON.parse(chunk);
+							assert.equal(result.Success, false);
+							assert.notEqual(result.Reason, undefined)
+							assert.equal(result.AccountID, undefined);
+							assert.equal(result.Username, undefined);
+							assert.equal(result.AID, undefined);
+							assert.equal(result.SID, undefined);
+							done();
+						});
+					}
+				).end();
+			});
+
 			it('Invalid Password:', function(done){
 				var options = {
 					hostname: 'localhost',
@@ -59,7 +88,6 @@ module.exports = {
 				http.request(options,
 					function(res) {
 						res.setEncoding('utf8');
-//						console.log(res.statusCode);
 						res.on('data', function (chunk) {
 							var result = JSON.parse(chunk);
 							assert.equal(result.Success, false);
