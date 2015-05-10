@@ -31,7 +31,7 @@ var api = require('./API/');
 */
 describe('Database:', function(){
 	it('Restart', function(done){
-		database.Restart(undefined);
+		database.Start();
 		done();
 	})
 })

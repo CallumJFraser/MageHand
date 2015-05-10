@@ -41,7 +41,7 @@ function DnDResponse(result, auth){
 }
 
 function APIStart(successCallback){
-	database.Restart({
+	database.Start({
 		host	: 'localhost',
 		user	: 'root',
 		password: '',
