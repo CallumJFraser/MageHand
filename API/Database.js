@@ -23,7 +23,7 @@ function database(config){
 	this.Query = function Query(command, callback){
 		connection.query(command, function(err, rows, fields){
 			if(err){
-				console.log('Database.query: ' + err);
+				console.error('Database.query: ' + err);
 			}
 			else{
 				callback(rows);
