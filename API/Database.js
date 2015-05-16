@@ -40,8 +40,10 @@ function database(config){
 			procedureCall += '"' + params[i] + '"';
 		}
 		procedureCall += ')';
-		self.Query(procedureCall, function(rows){
-			callback(rows[0]);
+		self.Query(procedureCall, function(err, rows){
+			if(err)
+				callback(err, undefined);
+			callback(undefined, rows[0]);
 		});
 	};
 };
