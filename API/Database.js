@@ -24,9 +24,10 @@ function database(config){
 		connection.query(command, function(err, rows, fields){
 			if(err){
 				console.error('Database.query: ' + err);
+				callback(err, undefined);
 			}
 			else{
-				callback(rows);
+				callback(undefined, rows);
 			}
 		});
 	};
