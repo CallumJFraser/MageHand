@@ -32,8 +32,7 @@ describe('Query', function(){
 	});
 
 	it('Should return data when calling a valid Query function', function (done) {
-		database.Query('SELECT true as Success', function(err, rows){
-			assert.equal(err, undefined);
+		database.Query('SELECT true as Success', function(rows){
 			assert.notEqual(rows, undefined);
 			assert.notEqual(rows[0], undefined);
 			assert.notEqual(rows[0].Success, undefined);
