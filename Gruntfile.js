@@ -6,19 +6,17 @@ module.exports = function(grunt) {
   grunt.initConfig({
     // Configure a mochaTest task 
     mochaTest: {
-      Site: {
-        options: {
-          reporter: 'spec',
-//          captureFile: 'results.txt', // Capture the reporter output to a file 
-        },
-        src: ['Test/Test.js']
-      },
       API: {
         options: {
-          reporter: 'spec',
-//          captureFile: 'results.txt', // Capture the reporter output to a file 
+          reporter: 'spec'
         },
-        src: ['API/Test/Test.js']
+        src: ['API/Test/**/*.js']
+      },
+      Site: {
+        options: {
+          reporter: 'spec'
+        },
+        src: ['Site/Test/**/*.js']
       }
     }
   });
