@@ -24,10 +24,9 @@ function database(config){
 		connection.query(command, function(err, rows, fields){
 			if(err){
 				console.error('Database.query: ' + err);
-				callback(err, undefined);
 			}
 			else{
-				callback(undefined, rows);
+				callback(rows);
 			}
 		});
 	};
@@ -40,10 +39,8 @@ function database(config){
 			procedureCall += '"' + params[i] + '"';
 		}
 		procedureCall += ')';
-		self.Query(procedureCall, function(err, rows){
-			if(err)
-				callback(err, undefined);
-			callback(undefined, rows[0]);
+		self.Query(procedureCall, function(rows){
+			callback(rows[0]);
 		});
 	};
 };
