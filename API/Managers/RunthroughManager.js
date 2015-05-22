@@ -15,42 +15,42 @@ function Runthrough(row, callback){
 	async.map(
 		[row.StoryID],
 		function(item, parallelCallback){
-			storyManager.Get(item, function(result){
-				parallelCallback(undefined, result)
+			storyManager.Get(item, function(err, result){
+				parallelCallback(err, result)
 			});
 		},
 		function(err, results){
-			if(err != undefined)
-				callback(undefined);
-				
+			if(err)
+				callback(err, undefined);
+
 			var object = {};
 			object.ID = row.ID;
 			object.Story = results[0];
-			callback(object);
+			callback(undefined, object);
 		}
 	);
 }
 
 function Get(id, callback){
 	if(id == undefined){
-		callback(new Failed('Missing parameter'));
+		callback('Id undefined', new Failed('Missing parameter'));
 	}
 	else{
 		var intID = parseInt(id);
 		if(intID > 0){
-			databaseObject.Procedure('sp_GetRunthroughByID', [id], function(rows){
-				if(rows.length > 0){
-					Runthrough(rows[0], function(value){
-						callback(value);
+			databaseObject.Procedure('sp_GetRunthroughByID', [id], function(err, rows){
+				if(rows.length > 0 && !err){
+					Runthrough(rows[0], function(err, value){
+						callback(err, value);
 					});
 				}
 				else{
-					callback(new Failed('No matching results'));
+					callback(err, new Failed('No matching results'));
 				}
 			});
 		}
 		else{
-			callback(new Failed('Invalid parameter'));
+			callback('Invalid id', new Failed('Invalid parameter'));
 		}
 	}
 }
