@@ -37,38 +37,38 @@ function Account(row){
 
 function GetBasicByID(id, callback){
 	if(id == undefined){
-		callback('Id undefined', new Failed('Missing parameter'));
+		callback(new Failed('Missing parameter'));
 	}
 	else{
 		var intID = parseInt(id);
 		if(intID > 0){
-			databaseObject.Procedure('sp_GetAccountByAID', [intID], function(err, rows){
-				if(rows.length > 0 && !err){
+			databaseObject.Procedure('sp_GetAccountByAID', [intID], function(rows){
+				if(rows.length > 0){
 					var value = new BasicAccount(rows[0]);
-					callback(undefined, value);
+					callback(value);
 				}
 				else{
-					callback(err, new Failed('No matching results'));
+					callback(new Failed('No matching results'));
 				}
 			});
 		}
 		else{
-			callback(intID, new Failed('Invalid parameter'));
+			callback(new Failed('Invalid parameter'));
 		}
 	}
 }
 
 function GetBasicByUsername(username, callback){
 	if(username == undefined){
-		callback('Username undefined', new Failed('Missing parameter'));
+		callback(new Failed('Missing parameter'));
 	}
 	else{
-		databaseObject.Procedure('sp_GetAccountByUsername', [username], function(err, rows){
-			if(rows.length > 0 && !err){
-				callback(undefined, new BasicAccount(rows[0]));
+		databaseObject.Procedure('sp_GetAccountByUsername', [username], function(rows){
+			if(rows.length > 0){
+				callback(new BasicAccount(rows[0]));
 			}
 			else{
-				callback(err, new Failed('No matching results'));
+				callback(new Failed('No matching results'));
 			}
 		});
 	}
@@ -76,15 +76,15 @@ function GetBasicByUsername(username, callback){
 
 function GetBasicByEmail(email, callback){
 	if(email == undefined){
-		callback('Email undefined', new Failed('Missing parameter'));
+		callback(new Failed('Missing parameter'));
 	}
 	else{
-		databaseObject.Procedure('sp_GetAccountByEmail', [email], function(err, rows){
-			if(rows.length > 0 && !err){
-				callback(undefined, new BasicAccount(rows[0]));
+		databaseObject.Procedure('sp_GetAccountByEmail', [email], function(rows){
+			if(rows.length > 0){
+				callback(new BasicAccount(rows[0]));
 			}
 			else{
-				callback(err, new Failed('No matching results'));
+				callback(new Failed('No matching results'));
 			}
 		});
 	}
@@ -92,15 +92,15 @@ function GetBasicByEmail(email, callback){
 
 function SearchBasic(text, callback){
 	if(text == undefined){
-		callback('Query text undefined', new Failed('Missing parameter'));
+		callback(new Failed('Missing parameter'));
 	}
 	else{
-		databaseObject.Procedure('sp_SearchAccounts', [text], function(err, rows){
-			if(rows.length > 0 && !err){
-				callback(undefined, new BasicAccount(rows[0]));
+		databaseObject.Procedure('sp_SearchAccounts', [text], function(rows){
+			if(rows.length > 0){
+				callback(new BasicAccount(rows[0]));
 			}
 			else{
-				callback(err, new Failed('No matching results'));
+				callback(new Failed('No matching results'));
 			}
 		});
 	}
@@ -109,40 +109,40 @@ function SearchBasic(text, callback){
 function Create(accountObject, callback){
 	//	TODO: Define account params, atm using the full account, but will need more information.
 	if(accountObject == undefined){
-		callback('Account undefined', new Failed('Missing parameter'));
+		callback(new Failed('Missing parameter'));
 	}
 	else{
 		UsernameAllowed(accountObject.Username, accountObject.Email, function(allowed){
 			if(allowed){
 				var account = new Account(accountObject);
 				if(account.Success){
-					databaseObject.Procedure('sp_CreateAccount', [account.AID, account.Username, account.Email, account.Hash, accountObject.Password], function(err, rows){
-						if(rows.length > 0 && !err){
-							callback(undefined, { Success: true, ID: rows[0].ID });
+					databaseObject.Procedure('sp_CreateAccount', [account.AID, account.Username, account.Email, account.Hash, accountObject.Password], function(rows){
+						if(rows.length > 0){
+							callback({ Success: true, ID: rows[0].ID });
 						}
 						else{
-							callback(err, new Failed('No matching results'));
+							callback(new Failed('No matching results'));
 						}
 					});
 				}
 				else{
-					callback(account.Success, new Failed('Invalid object'));
+					callback(new Failed('Invalid object'));
 				}
 			}
 			else{
-				callback(allowed, new Failed('Username "' + accountObject.Username + '" already taken'))
+				callback(new Failed('Username "' + accountObject.Username + '" already taken'))
 			}
 		});
 	}
 }
 
 function UsernameAllowed(username, email, callback){
-	databaseObject.Procedure('sp_CheckAccount', [username, email], function(err, rows){
-		if(rows.length > 0 && !err){
-			callback(undefined, rows[0].Count == 0);
+	databaseObject.Procedure('sp_CheckAccount', [username, email], function(rows){
+		if(rows.length > 0){
+			callback(rows[0].Count == 0);
 		}
 		else{
-			callback(err, false);
+			callback(false);
 		}
 	});
 }

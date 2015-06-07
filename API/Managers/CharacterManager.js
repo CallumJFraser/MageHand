@@ -14,21 +14,21 @@ module.exports = {
 
 function Character(data, callback){
 	if(data == undefined)
-		callback('Passed data undefined', Failed('Missing parameter'));
+		return new Failed('Missing parameter');
 	async.parallel([
 			function(parallelCallback){
-				classManager.Get(data.ClassID, function(err, result){
-					parallelCallback(err, result)
+				classManager.Get(data.ClassID, function(result){
+					parallelCallback(null, result)
 				});
 			},
 			function(parallelCallback){
-				raceManager.Get(data.RaceID, function(err, result){
-					parallelCallback(err, result)
+				raceManager.Get(data.RaceID, function(result){
+					parallelCallback(null, result)
 				});
 			}
 		],
 		function(err, results){
-			if(results.length > 1 && !err){
+			if(results.length > 1){
 				var object = {};
 				object.ID = data.ID;
 				object.Name = data.Name;
@@ -55,10 +55,7 @@ function Character(data, callback){
 				object.FlatFootedAC = data.FlatFootedAC;
 				object.Class = results[0];
 				object.Race = results[1];
-				callback(undefined, object);
-			}
-			else{
-				callback(err, undefined);
+				callback(object);
 			}
 		}
 	);
@@ -66,94 +63,94 @@ function Character(data, callback){
 
 function Get(id, callback){
 	if(id == undefined){
-		callback('Id undefined', new Failed('Missing parameter'));
+		callback(new Failed('Missing parameter'));
 	}
 	else{
 		var intID = parseInt(id);
 		if(intID > 0){
-			databaseObject.Procedure('sp_GetCharacterByID', [intID], function(err, data){
-				if(data.length > 0 && !err){
-					Character(data[0], function(err, value){
-						callback(err, value);
+			databaseObject.Procedure('sp_GetCharacterByID', [intID], function(data){
+				if(data.length > 0){
+					Character(data[0], function(value){
+						callback(value);
 					});
 				}
 				else{
-					callback(err, new Failed('No matching results'));
+					callback(new Failed('No matching results'));
 				}
 			});
 		}
 		else{
-			callback(indID, new Failed('Invalid parameter'));
+			callback(new Failed('Invalid parameter'));
 		}
 	}
 }
 //	TODO:	Update to only pull in the ID values fo the matching characters.
 function GetByAccount(id, callback){
 	if(id == undefined){
-		callback('Id undefined', new Failed('Missing parameter'));
+		callback(new Failed('Missing parameter'));
 	}
 	else{
 		var intID = parseInt(id);
 		if(intID > 0){
-			databaseObject.Procedure('sp_GetCharacterByAccount', [intID], function(err, data){
-				if(data.length > 0 && !err){
+			databaseObject.Procedure('sp_GetCharacterByAccount', [intID], function(data){
+				if(data.length > 0){
 					async.map(data, function(item, eachCallback){
-							Character(item, function(err, value){
-								eachCallback(err, value);
+							Character(item, function(value){
+								eachCallback(null, value);
 							});
 						},
 						function(err, results){
 							if(err != undefined){
-								callback(err, undefined);
+								console.log('Error');
 							}
 							else{
-								callback(undefined, results);
+								callback(results);
 							}
 						});
 				}
 				else{
-					callback(err, new Failed('No matching results'));
+					callback(new Failed('No matching results'));
 				}
 			});
 		}
 		else{
-			callback(intID, new Failed('Invalid parameter'));
+			callback(new Failed('Invalid parameter'));
 		}
 	}
 }
 
 function GetBySession(sessionID, callback){
 	if(sessionID == undefined){
-		callback('Session id undefined', new Failed('Missing parameter'));
+		callback(new Failed('Missing parameter'));
 	}
 	else{
 		var intSessionID = parseInt(sessionID);
 		if(intSessionID > 0){
-			databaseObject.Procedure('sp_GetSessionCharacters', [intSessionID], function(err, data){
-				if(data.length > 0 && !err){
+			databaseObject.Procedure('sp_GetSessionCharacters', [intSessionID], function(data){
+				if(data.length > 0){
 					var length = data.length;
 					var characterLists = [];
 					async.map(data, function(item, eachCallback){
-							Character(item, function(err, value){
-								eachCallback(err, value);
+							Character(item, function(value){
+								eachCallback(null, value);
 							});
 						},
 						function(err, results){
 							if(err != undefined){
-								callback(err, undefined);
+								console.log('Error');
 							}
 							else{
-								callback(undefined, results);
+								callback(results);
 							}
 						});	
 				}
 				else{
-					callback(err, new Failed('No matching results'));
+					callback(new Failed('No matching results'));
 				}
 			});
 		}
 		else{
-			callback(intSessionID, new Failed('Invalid parameter'));
+			callback(new Failed('Invalid parameter'));
 		}
 	}
 }

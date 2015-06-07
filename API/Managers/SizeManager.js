@@ -19,24 +19,24 @@ function Size(row, callback){
 
 function Get(id, callback){
 	if(id == undefined){
-		callback('Id undefined', new Failed('Missing parameter'));
+		callback(new Failed('Missing parameter'));
 	}
 	else{
 		var intID = parseInt(id);
 		if(intID > 0){
-			databaseObject.Procedure('sp_GetSize', [id], function(err, rows){
+			databaseObject.Procedure('sp_GetSize', [id], function(rows){
 				if(rows.length > 0){
 					Size(rows[0], function(value){
-						callback(undefined, value);
+						callback(value);
 					});
 				}
 				else{
-					callback(err, new Failed('No matching results'));
+					callback(new Failed('No matching results'));
 				}
 			});
 		}
 		else{
-			callback('Invalid id', new Failed('Invalid parameter'));
+			callback(new Failed('Invalid parameter'));
 		}
 	}
 }

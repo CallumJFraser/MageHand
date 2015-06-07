@@ -5,6 +5,7 @@ Tests
 ------
 
 * Command tests
+* ~~Refactor Tests to remove un-nessasary 'describe' and 'it' calls.~~
 * Update tests to not rely on database calls for the tests. (i.e. using a Mock databse)
 * Account Manager
 	* Confirm Email function
@@ -22,6 +23,7 @@ Tests
 	* Object creation validation
 * Race Manager
 	* Object creation validation
+	* ~~List functon~~
 * Size Manager
 	* Object creation validation
 * Skill Manager
