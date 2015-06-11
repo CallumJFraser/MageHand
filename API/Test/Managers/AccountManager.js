@@ -368,24 +368,70 @@ describe('Account Manager', function() {
 	})
 
 	describe('Create:', function(){
-		// TODO: remove unnessasary fields.
 		var randomNum = Math.random();
 		var valid = { ID:1, AID:uuid.v4(), Username: "Test" + randomNum, Email: randomNum + "@test.com", Hash:"hash", Password:"password", Created:"earlier", LastLogin:"NA" };
 		var invalid = {};
 		var missing = undefined;
 			
-		it('Valid:', function(done){
-			manager.Create(valid, function(result){
+		it('Valid:', function (done) {
+			var successfullResponse = { ID: 1};
+			fakeDatabase.Procedure = function (procedure, values, callback) {
+				//	Procedure is called 2 times, first for sp_CheckAccount, then sp_CreateAccount
+				if(procedure === 'sp_CheckAccount') {
+					assert.equal(procedure, 'sp_CheckAccount');
+					assert.equal(values.length, 2);
+					assert.equal(values[0], valid.Username);
+					assert.equal(values[1], valid.Email);
+					assert.notEqual(callback, undefined);
+					callback([{ Count: 0 }]);
+				} else {
+					assert.equal(procedure, 'sp_CreateAccount');
+					assert.equal(values.length, 5);
+					assert.equal(values[0], valid.AID);
+					assert.equal(values[1], valid.Username);
+					assert.equal(values[2], valid.Email);
+					assert.equal(values[3], valid.Hash);
+					assert.equal(values[4], valid.Password);
+					assert.notEqual(callback, undefined);
+					callback([successfullResponse])
+				}
+			};
+
+			fakeManager.Create(valid, function(result){
 				assert.notEqual(result, undefined);
 				assert.equal(result.Success, true);
 				assert.equal(result.Reason, undefined);
-				assert.notEqual(result.ID, undefined);
+				assert.equal(result.ID, successfullResponse.ID);
 				done();
 			});
 		})
 
-		it('Invalid:', function(done){
-			manager.Create(invalid, function(result){
+		it('Empty object:', function (done) {
+			fakeDatabase.Procedure = function (procedure, values, callback) {
+				done('failed, should not be calling the database');
+			};
+
+			fakeManager.Create(invalid, function(result){
+				assert.notEqual(result, undefined);
+				assert.equal(result.Success, false);
+				assert.notEqual(result.Reason, undefined);
+				assert.equal(result.ID, undefined);
+				assert.equal(result.AID, undefined);
+				assert.equal(result.Username, undefined);
+				assert.equal(result.Email, undefined);
+				assert.equal(result.Hash, undefined);
+				assert.equal(result.Created, undefined);
+				assert.equal(result.LastLogin, undefined);
+				done();
+			});
+		})
+
+		it('Passed undefined:', function(done){
+			fakeDatabase.Procedure = function (procedure, values, callback) {
+				done('failed, should not be calling the database');
+			};
+
+			fakeManager.Create(missing, function(result){
 				assert.notEqual(result, undefined);
 				assert.equal(result.Success, false);
 				assert.notEqual(result.Reason, undefined);
@@ -401,7 +447,33 @@ describe('Account Manager', function() {
 		})
 
 		it('Missing "Username":', function(done){
-			manager.Create(missing, function(result){
+			var missingUsername = { ID:1, AID:uuid.v4(), Email: randomNum + "@test.com", Hash:"hash", Password:"password", Created:"earlier", LastLogin:"NA" };
+			fakeDatabase.Procedure = function (procedure, values, callback) {
+				done('failed, should not be calling the database');
+			};
+
+			fakeManager.Create(missingUsername, function(result){
+				assert.notEqual(result, undefined);
+				assert.equal(result.Success, false);
+				assert.notEqual(result.Reason, undefined);
+				assert.equal(result.ID, undefined);
+				assert.equal(result.AID, undefined);
+				assert.equal(result.Username, undefined);
+				assert.equal(result.Email, undefined);
+				assert.equal(result.Hash, undefined);
+				assert.equal(result.Created, undefined);
+				assert.equal(result.LastLogin, undefined);
+				done();
+			});
+		})
+
+		it('Missing "Email":', function(done){
+			var missingEmail = { ID:1, AID:uuid.v4(), Username: "Test" + randomNum, Hash:"hash", Password:"password", Created:"earlier", LastLogin:"NA" };
+			fakeDatabase.Procedure = function (procedure, values, callback) {
+				done('failed, should not be calling the database');
+			};
+
+			fakeManager.Create(missingEmail, function(result){
 				assert.notEqual(result, undefined);
 				assert.equal(result.Success, false);
 				assert.notEqual(result.Reason, undefined);
