@@ -108,10 +108,7 @@ function SearchBasic(text, callback){
 
 function Create(accountObject, callback){
 	//	TODO: Define account params, atm using the full account, but will need more information.
-	if(accountObject == undefined){
-		callback(new Failed('Missing parameter'));
-	}
-	else{
+	if (accountObject && accountObject.Username && accountObject.Email) {
 		UsernameAllowed(accountObject.Username, accountObject.Email, function(allowed){
 			if(allowed){
 				var account = new Account(accountObject);
@@ -133,6 +130,8 @@ function Create(accountObject, callback){
 				callback(new Failed('Username "' + accountObject.Username + '" already taken'))
 			}
 		});
+	} else {
+		callback(new Failed('Missing parameter'));
 	}
 }
 
