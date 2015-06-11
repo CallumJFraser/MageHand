@@ -294,8 +294,16 @@ describe('Account Manager', function() {
 		var valid = 'Test1';
 		var invalid = 'invalid';
 		
-		it('Valid:', function(done){
-			manager.Search(valid, function(result){
+		it('Valid:', function (done) {
+			fakeDatabase.Procedure = function (procedure, values, callback) {
+				assert.equal(procedure, 'sp_SearchAccounts');
+				assert.equal(values.length, 1);
+				assert.equal(values[0], valid);
+				assert.notEqual(callback, undefined);
+				callback([validRow]);
+			};
+
+			fakeManager.Search(valid, function(result){
 				assert.notEqual(result, undefined);
 				assert.equal(result.Success, true);
 				assert.equal(result.Reason, undefined);
@@ -304,14 +312,22 @@ describe('Account Manager', function() {
 				assert.equal(result.Username, validObject.Username);
 				assert.equal(result.Email, undefined);
 				assert.equal(result.Hash, undefined);
-				assert.equal(result.Created, undefined);
+				assert.equal(result.Created, validObject.Created);
 				assert.equal(result.LastLogin, undefined);
 				done();
 			});
 		})
 
-		it('Invalid:', function(done){
-			manager.Search(invalid, function(result){
+		it('Invalid:', function (done) {
+			fakeDatabase.Procedure = function (procedure, values, callback) {
+				assert.equal(procedure, 'sp_SearchAccounts');
+				assert.equal(values.length, 1);
+				assert.equal(values[0], invalid);
+				assert.notEqual(callback, undefined);
+				callback([]);
+			};
+
+			fakeManager.Search(invalid, function(result){
 				assert.notEqual(result, undefined);
 				assert.equal(result.Success, false);
 				assert.notEqual(result.Reason, undefined);
@@ -326,8 +342,16 @@ describe('Account Manager', function() {
 			});
 		})
 
-		it('Missing "Username":', function(done){
-			manager.Search(blank, function(result){
+		it('Missing "Username":', function (done) {
+			fakeDatabase.Procedure = function (procedure, values, callback) {
+				assert.equal(procedure, 'sp_SearchAccounts');
+				assert.equal(values.length, 1);
+				assert.equal(values[0], blank);
+				assert.notEqual(callback, undefined);
+				callback([]);
+			};
+
+			fakeManager.Search(blank, function(result){
 				assert.notEqual(result, undefined);
 				assert.equal(result.Success, false);
 				assert.notEqual(result.Reason, undefined);
