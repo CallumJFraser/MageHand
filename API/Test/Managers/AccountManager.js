@@ -6,7 +6,7 @@ var proxyquire = require('proxyquire').noCallThru();
 
 var manager = require('../../Managers/AccountManager.js');
 
-describe.only('Account Manager', function() {
+describe('Account Manager', function() {
 	var blank = undefined;
 	var validRow = {"ID":1,"AID":"1","Username":"Test1","Email":"4500","Hash":"100","Created":"100","LastLogin":"10"};
 	var validObject = {"ID":1,"AID":"1","Username":"Test1","Email":"4500","Hash":"100","Created":"100","LastLogin":"10","Success":true};
