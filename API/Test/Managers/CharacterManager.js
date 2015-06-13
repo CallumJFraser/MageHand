@@ -10,7 +10,7 @@ var blank = undefined;
 var validRow = {"ID":1,"AccountAID":"1","Name":"Test","Experiance":4500,"Age":100,"Height":100,"Strength":10,"Dexterity":14,"Constitution":10,"Inteligence":10,"Wisdom":10,"Charisma":19,"HP":20,"AC":18,"Initiative":3,"Fortitude":3,"Reflex":3,"Will":3,"Grapple":2,"BaseAttack":3,"SpellResistance":10,"TouchAC":18,"FlatFootedAC":15,"ClassID":1,"RaceID":1};
 var validObject = {"ID":1,"AccountAID":"1","Name":"Test","ClassID":1,"Experiance":4500,"RaceID":1,"Age":100,"Height":100,"Strength":10,"Dexterity":14,"Constitution":10,"Inteligence":10,"Wisdom":10,"Charisma":19,"HP":20,"AC":18,"Fortitude":3,"Reflex":3,"Will":3,"Grapple":2,"BaseAttack":3,"SpellResistance":10,"TouchAC":18,"FlatFootedAC":15,"Success":true};
 
-describe('Character Manager', function() {
+describe.only('Character Manager', function() {
 	var fakeDatabase = { };
 	var fakeManager = proxyquire('../../Managers/CharacterManager', {
 		'../Database': fakeDatabase
@@ -197,7 +197,15 @@ describe('Character Manager', function() {
 		var invalidFormat = 'invalid';
 
 		it('Valid:', function(done){
-			manager.GetByAccount(valid, function(result){
+			fakeDatabase.Procedure = function (procedure, values, callback) {
+				assert.equal(procedure, 'sp_GetCharacterByAccount');
+				assert.equal(values.length, 1);
+				assert.equal(values[0], valid);
+				assert.notEqual(callback, undefined);
+				callback([validRow]);
+			};
+
+			fakeManager.GetByAccount(valid, function(result){
 				assert.notEqual(result, undefined);
 				assert.equal(result.Reason, undefined);
 				assert.equal(result[0].ID, validObject.ID);
@@ -228,7 +236,15 @@ describe('Character Manager', function() {
 		})
 
 		it('Invalid "ID" Value:', function(done){
-			manager.GetByAccount(invalid, function(result){
+			fakeDatabase.Procedure = function (procedure, values, callback) {
+				assert.equal(procedure, 'sp_GetCharacterByAccount');
+				assert.equal(values.length, 1);
+				assert.equal(values[0], invalid);
+				assert.notEqual(callback, undefined);
+				callback([]);
+			};
+
+			fakeManager.GetByAccount(invalid, function(result){
 				assert.notEqual(result, undefined);
 				assert.notEqual(result.Reason, undefined);
 				assert.equal(result[0], undefined);
@@ -237,7 +253,15 @@ describe('Character Manager', function() {
 		});
 
 		it('Invalid "ID" Format:', function(done){
-			manager.GetByAccount(invalidFormat, function(result){
+			fakeDatabase.Procedure = function (procedure, values, callback) {
+				assert.equal(procedure, 'sp_GetCharacterByAccount');
+				assert.equal(values.length, 1);
+				assert.equal(values[0], invalidFormat);
+				assert.notEqual(callback, undefined);
+				callback([]);
+			};
+
+			fakeManager.GetByAccount(invalidFormat, function(result){
 				assert.notEqual(result, undefined);
 				assert.notEqual(result.Reason, undefined);
 				assert.equal(result[0], undefined);
@@ -246,7 +270,15 @@ describe('Character Manager', function() {
 		});
 
 		it('Missing "ID":', function(done){
-			manager.GetByAccount(blank, function(result){
+			fakeDatabase.Procedure = function (procedure, values, callback) {
+				assert.equal(procedure, 'sp_GetCharacterByAccount');
+				assert.equal(values.length, 1);
+				assert.equal(values[0], blank);
+				assert.notEqual(callback, undefined);
+				callback([]);
+			};
+
+			fakeManager.GetByAccount(blank, function(result){
 				assert.notEqual(result, undefined);
 				assert.notEqual(result.Reason, undefined);
 				assert.equal(result[0], undefined);
