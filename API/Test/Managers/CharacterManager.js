@@ -293,7 +293,15 @@ describe.only('Character Manager', function() {
 		var invalidFormat = 'invalid';
 
 		it('Valid:', function(done){
-			manager.GetByAccount(valid, function(result){
+			fakeDatabase.Procedure = function (procedure, values, callback) {
+				assert.equal(procedure, 'sp_GetSessionCharacters');
+				assert.equal(values.length, 1);
+				assert.equal(values[0], valid);
+				assert.notEqual(callback, undefined);
+				callback([validRow]);
+			};
+
+			fakeManager.GetBySession(valid, function(result){
 				assert.notEqual(result, undefined);
 				assert.equal(result.Reason, undefined);
 				assert.equal(result[0].ID, validObject.ID);
@@ -324,7 +332,15 @@ describe.only('Character Manager', function() {
 		})
 
 		it('Invalid "ID" Value:', function(done){
-			manager.GetByAccount(invalid, function(result){
+			fakeDatabase.Procedure = function (procedure, values, callback) {
+				assert.equal(procedure, 'sp_GetSessionCharacters');
+				assert.equal(values.length, 1);
+				assert.equal(values[0], invalid);
+				assert.notEqual(callback, undefined);
+				callback([validRow]);
+			};
+
+			fakeManager.GetBySession(invalid, function(result){
 				assert.notEqual(result, undefined);
 				assert.notEqual(result.Reason, undefined);
 				assert.equal(result[0], undefined);
@@ -333,7 +349,15 @@ describe.only('Character Manager', function() {
 		});
 
 		it('Invalid "ID" Format:', function(done){
-			manager.GetByAccount(invalidFormat, function(result){
+			fakeDatabase.Procedure = function (procedure, values, callback) {
+				assert.equal(procedure, 'sp_GetSessionCharacters');
+				assert.equal(values.length, 1);
+				assert.equal(values[0], invalidFormat);
+				assert.notEqual(callback, undefined);
+				callback([validRow]);
+			};
+
+			fakeManager.GetBySession(invalidFormat, function(result){
 				assert.notEqual(result, undefined);
 				assert.notEqual(result.Reason, undefined);
 				assert.equal(result[0], undefined);
@@ -342,7 +366,15 @@ describe.only('Character Manager', function() {
 		});
 
 		it('Missing "ID":', function(done){
-			manager.GetByAccount(blank, function(result){
+			fakeDatabase.Procedure = function (procedure, values, callback) {
+				assert.equal(procedure, 'sp_GetSessionCharacters');
+				assert.equal(values.length, 1);
+				assert.equal(values[0], blank);
+				assert.notEqual(callback, undefined);
+				callback([validRow]);
+			};
+
+			fakeManager.GetBySession(blank, function(result){
 				assert.notEqual(result, undefined);
 				assert.notEqual(result.Reason, undefined);
 				assert.equal(result[0], undefined);
