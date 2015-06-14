@@ -3,35 +3,42 @@
 var assert = require('assert');
 var proxyquire = require('proxyquire').noCallThru();
 
-var manager = require('../../Managers/CharacterManager.js');
-
 var blank = undefined;
 
-var validRow = {"ID":1,"AccountAID":"1","Name":"Test","Experiance":4500,"Age":100,"Height":100,"Strength":10,"Dexterity":14,"Constitution":10,"Inteligence":10,"Wisdom":10,"Charisma":19,"HP":20,"AC":18,"Initiative":3,"Fortitude":3,"Reflex":3,"Will":3,"Grapple":2,"BaseAttack":3,"SpellResistance":10,"TouchAC":18,"FlatFootedAC":15,"ClassID":1,"RaceID":1};
 var validObject = {"ID":1,"AccountAID":"1","Name":"Test","ClassID":1,"Experiance":4500,"RaceID":1,"Age":100,"Height":100,"Strength":10,"Dexterity":14,"Constitution":10,"Inteligence":10,"Wisdom":10,"Charisma":19,"HP":20,"AC":18,"Fortitude":3,"Reflex":3,"Will":3,"Grapple":2,"BaseAttack":3,"SpellResistance":10,"TouchAC":18,"FlatFootedAC":15,"Success":true};
 
 describe('Character Manager', function() {
-	var fakeDatabase = { };
+	var fakeDatabase = {};
 	var fakeManager = proxyquire('../../Managers/CharacterManager', {
-		'../Database': fakeDatabase
+		'../Database': fakeDatabase,
+		'../Managers/ClassManager': {
+			Get: function (id, callback){
+				callback({});
+			}
+		},
+		'../Managers/RaceManager': {
+			Get: function (id, callback){
+				callback({});
+			}
+		}
 	});
 
 	describe('Public functions:', function(){
 		it('GetCharacter != undefined', function(){
-			assert.notEqual(manager.Get, undefined);
+			assert.notEqual(fakeManager.Get, undefined);
 		})
 		it('GetAccountCharacters != undefined', function(){
-			assert.notEqual(manager.GetByAccount, undefined);
+			assert.notEqual(fakeManager.GetByAccount, undefined);
 		})
 	})
 
 	describe('Get:', function(){
-
 		var valid = 1;
 		var invalid = 0;
 		var invalidFormat = 'invalid';
 
 		it('Valid:', function(done){
+			var validRow = {"ID":1,"AccountAID":"1","Name":"Test","Experiance":4500,"Age":100,"Height":100,"Strength":10,"Dexterity":14,"Constitution":10,"Inteligence":10,"Wisdom":10,"Charisma":19,"HP":20,"AC":18,"Initiative":3,"Fortitude":3,"Reflex":3,"Will":3,"Grapple":2,"BaseAttack":3,"SpellResistance":10,"TouchAC":18,"FlatFootedAC":15,"ClassID":1,"RaceID":1};
 			fakeDatabase.Procedure = function (procedure, values, callback) {
 				assert.equal(procedure, 'sp_GetCharacterByID');
 				assert.equal(values.length, 1);
@@ -197,6 +204,7 @@ describe('Character Manager', function() {
 		var invalidFormat = 'invalid';
 
 		it('Valid:', function(done){
+			var validRow = {"ID":1,"AccountAID":"1","Name":"Test","Experiance":4500,"Age":100,"Height":100,"Strength":10,"Dexterity":14,"Constitution":10,"Inteligence":10,"Wisdom":10,"Charisma":19,"HP":20,"AC":18,"Initiative":3,"Fortitude":3,"Reflex":3,"Will":3,"Grapple":2,"BaseAttack":3,"SpellResistance":10,"TouchAC":18,"FlatFootedAC":15,"ClassID":1,"RaceID":1};
 			fakeDatabase.Procedure = function (procedure, values, callback) {
 				assert.equal(procedure, 'sp_GetCharacterByAccount');
 				assert.equal(values.length, 1);
@@ -293,6 +301,7 @@ describe('Character Manager', function() {
 		var invalidFormat = 'invalid';
 
 		it('Valid:', function(done){
+			var validRow = {"ID":1,"AccountAID":"1","Name":"Test","Experiance":4500,"Age":100,"Height":100,"Strength":10,"Dexterity":14,"Constitution":10,"Inteligence":10,"Wisdom":10,"Charisma":19,"HP":20,"AC":18,"Initiative":3,"Fortitude":3,"Reflex":3,"Will":3,"Grapple":2,"BaseAttack":3,"SpellResistance":10,"TouchAC":18,"FlatFootedAC":15,"ClassID":1,"RaceID":1};
 			fakeDatabase.Procedure = function (procedure, values, callback) {
 				assert.equal(procedure, 'sp_GetSessionCharacters');
 				assert.equal(values.length, 1);
