@@ -2,15 +2,7 @@
 
 var http = require("http");
 var assert = require('assert');
-var RESTAPI = require('../../index.js');
-
-before(function(){
-	RESTAPI.Start({});
-})
-
-after(function(){
-	RESTAPI.Kill();
-})
+// var RESTAPI = require('../../index.js');
 
 describe('Login:', function(){
 	it('Valid:', function(done){
