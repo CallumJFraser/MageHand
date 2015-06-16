@@ -20,7 +20,14 @@ function database(config){
 		connection.connect();
 	};
 
+	var checkConnection = function () {	
+		if (!connection) {
+			this.Start();
+		}
+	}
+
 	this.Query = function Query(command, callback){
+		checkConnection();
 		connection.query(command, function(err, rows, fields){
 			if(err){
 				console.error('Database.query: ' + err);
@@ -32,6 +39,7 @@ function database(config){
 	};
 
 	this.Procedure = function Procedure(procedure, params, callback){
+		checkConnection();
 		var procedureCall = 'CALL ' + procedure + ' (';
 		for(var i = 0; i < params.length; i++){
 			if(i > 0)
