@@ -17,7 +17,7 @@ describe('Public functions:', function(){
 	});
 })
 
-describe('GetClass:', function(){
+describe.skip('GetClass:', function(){
 	it('Valid:', function(done){
 		dndAPI.Login(validUsername, validPassword, function(loginResponse){
 			dndAPI.GetClass(loginResponse.AID, loginResponse.SID, 1, function(result){
@@ -45,7 +45,7 @@ describe('GetClass:', function(){
 	});
 })
 
-describe('GetClasses:', function(){
+describe.skip('GetClasses:', function(){
 	it('Valid:', function(done){
 		dndAPI.Login(validUsername, validPassword, function(loginResponse){
 			dndAPI.GetClasses(loginResponse.AID, loginResponse.SID, function(result){
