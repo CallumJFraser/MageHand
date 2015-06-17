@@ -13,7 +13,7 @@ describe('Public functions:', function(){
 	});
 })
 
-describe('GetRace:', function(){
+describe.skip('GetRace:', function(){
 	it('Valid:', function(done){
 		dndAPI.Login(validUsername, validPassword, function(loginResponse){
 			dndAPI.GetRace(loginResponse.AID, loginResponse.SID, 1, function(result){
@@ -42,7 +42,7 @@ describe('GetRace:', function(){
 	})
 })
 
-describe('GetRaces:', function(){
+describe.skip('GetRaces:', function(){
 
 	it('Valid:', function(done){
 		dndAPI.Login(validUsername, validPassword, function(loginResponse){
