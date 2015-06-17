@@ -18,7 +18,7 @@ describe('Public functions:', function(){
 })
 
 
-describe('GetSkillType -', function(){
+describe.skip('GetSkillType -', function(){
 	var validSkillTypeID = 1;
 	var invalidSkillTypeID = 0;
 	var incorrectSkillTypeID = undefined;
@@ -61,7 +61,7 @@ describe('GetSkillType -', function(){
 	})
 })
 
-describe('GetCharacterSkill -', function(){
+describe.skip('GetCharacterSkill -', function(){
 	var validCharacterID = 1;
 	var invalidCharacterID = 0;
 	var incorrectCharacterID = undefined;
