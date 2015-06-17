@@ -17,7 +17,7 @@ describe('Public functions:', function(){
 	});
 })
 
-describe('GetStory:', function(){
+describe.skip('GetStory:', function(){
 	it('Valid:', function(done){
 		dndAPI.Login(validUsername, validPassword, function(loginResponse){
 			dndAPI.GetStory(loginResponse.AID, loginResponse.SID, 1, function(result){
@@ -42,7 +42,7 @@ describe('GetStory:', function(){
 	})
 })
 
-describe('SearchStories:', function(){
+describe.skip('SearchStories:', function(){
 	var validSearchFullTitle = 'Three little pigs';
 	var validSearchPartialTitle = 'little pigs';
 	var validSearchDescription = 'wolf';
