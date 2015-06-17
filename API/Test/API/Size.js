@@ -13,7 +13,7 @@ describe('Public functions:', function(){
 	});
 })
 
-describe('GetSize:', function(){
+describe.skip('GetSize:', function(){
 
 	it('Valid:', function(done){
 		dndAPI.Login(validUsername, validPassword, function(loginResponse){
