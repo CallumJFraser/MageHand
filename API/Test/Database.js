@@ -3,7 +3,7 @@
 var assert = require('assert');
 var database = require('../database');
 
-describe('Database', function(){
+describe.skip('Database', function(){
 	it('Should start with default settings', function () {
 		assert.notEqual(database, undefined);
 		assert.notEqual(database.Configuration, undefined);
@@ -26,7 +26,7 @@ describe('Database', function(){
 	});
 })
 
-describe('Query', function(){
+describe.skip('Query', function(){
 	before(function(){
 		database.Start();
 	});
