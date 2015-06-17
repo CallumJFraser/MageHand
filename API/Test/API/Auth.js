@@ -18,7 +18,7 @@ describe('Public functions:', function(){
 	});
 })
 
-describe('Login:', function(){
+describe.skip('Login:', function(){
 	it('Valid:', function(done){
 		dndAPI.Login(validUsername, validPassword, function(loginResponse){
 			assert.equal(loginResponse.Success, true);
@@ -57,7 +57,7 @@ describe('Login:', function(){
 	});
 })
 
-describe('Authorise:', function(){
+describe.skip('Authorise:', function(){
 
 	it('Valid:', function(done){
 		dndAPI.Login(validUsername, validPassword, function(loginResponse){
