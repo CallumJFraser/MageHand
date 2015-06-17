@@ -17,7 +17,7 @@ describe('Public functions:', function(){
 	});
 })
 
-describe('GetCharacter:', function(){
+describe.skip('GetCharacter:', function(){
 
 	it('Valid:', function(done){
 		dndAPI.Login(validUsername, validPassword, function(loginResponse){
@@ -87,7 +87,7 @@ describe('GetCharacter:', function(){
 	});
 })
 
-describe('GetAccountCharacters:', function(){
+describe.skip('GetAccountCharacters:', function(){
 
 	it('Valid:', function(done){
 		dndAPI.Login(validUsername, validPassword, function(loginResponse){
