@@ -14,7 +14,7 @@ describe('Public functions:', function(){
 	});
 })
 
-describe('GetAccount:', function(){
+describe.skip('GetAccount:', function(){
 	it('Valid:', function(done){
 		dndAPI.Login(validUsername, validPassword, function(loginResponse){
 			dndAPI.GetAccount(loginResponse.AID, loginResponse.SID, 'Test1', function(result){
