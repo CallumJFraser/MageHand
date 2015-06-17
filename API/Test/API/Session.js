@@ -13,7 +13,7 @@ describe('Public functions:', function(){
 	});
 })
 
-describe('GetSession:', function(){
+describe.skip('GetSession:', function(){
 
 	it('Valid:', function(done){
 		dndAPI.Login(validUsername, validPassword, function(loginResponse){
