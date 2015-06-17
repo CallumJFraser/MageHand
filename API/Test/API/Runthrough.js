@@ -13,7 +13,7 @@ describe('Public functions:', function(){
 	});
 })
 
-describe('GetRunthrough:', function(){
+describe.skip('GetRunthrough:', function(){
 	it('Valid:', function(done){
 		dndAPI.Login(validUsername, validPassword, function(loginResponse){
 			dndAPI.GetRunthrough(loginResponse.AID, loginResponse.SID, 1, function(result){
