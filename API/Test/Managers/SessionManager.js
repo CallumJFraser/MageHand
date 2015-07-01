@@ -6,7 +6,7 @@ var manager = require('../../Managers/SessionManager.js');
 
 var blank = undefined;
 
-describe.only('Session Manager', function() {
+describe('Session Manager', function() {
 	var fakeDatabase = {};
 	var fakeManager = proxyquire('../../Managers/SessionManager.js', {
 		'../Database': fakeDatabase
