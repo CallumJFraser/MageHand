@@ -7,7 +7,7 @@ var manager = require('../../Managers/SkillManager.js');
 var blank = undefined;
 
 
-describe.only('Skill Manager', function(){
+describe('Skill Manager', function(){
 	var fakeDatabase = {};
 	var fakeManager = proxyquire('../../Managers/SkillManager.js', {
 		'../Database': fakeDatabase
