@@ -24,18 +24,14 @@ Tests
 	* Database Mocking
 * Race Manager
 	* Object creation validation
-	* ~~Database Mocking~~
 	* ~~List functon~~
 * Size Manager
 	* Object creation validation
-	* Database Mocking
 * Skill Manager
 	* Object creation validation
 	* Database Mocking
-	* List functon
 * Story Manager
 	* Object creation validation
-	* Database Mocking
 * Version Manager
 	* Object creation validation
 	* Database Mocking
