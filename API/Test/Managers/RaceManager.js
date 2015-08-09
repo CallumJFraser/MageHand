@@ -2,7 +2,6 @@
 
 var assert = require('assert');
 var proxyquire = require('proxyquire').noCallThru();
-var manager = require('../../Managers/RaceManager.js');
 
 var blank = undefined;
 
@@ -24,7 +23,7 @@ describe('Race Manager', function () {
 
 	describe('Public functions:', function(){
 		it('Get != undefined', function(){
-			assert.notEqual(manager.Get, undefined);
+			assert.notEqual(fakeManager.Get, undefined);
 		})
 	})
 
