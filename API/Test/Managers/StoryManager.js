@@ -2,7 +2,6 @@
 
 var assert = require('assert');
 var proxyquire = require('proxyquire').noCallThru();
-var manager = require('../../Managers/StoryManager.js');
 
 var blank = undefined;
 
@@ -20,7 +19,7 @@ describe('Story Manager', function(){
 
 	describe('Public functions:', function(){
 		it('Get != undefined', function(){
-			assert.notEqual(manager.Get, undefined);
+			assert.notEqual(fakeManager.Get, undefined);
 		})
 	})
 
