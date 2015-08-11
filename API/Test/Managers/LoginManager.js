@@ -158,24 +158,33 @@ describe('Login Manager -', function(){
 		})
 	})
 
-	describe.skip('Authorise:', function(){
+	describe('Authorise:', function(){
 		var validUsername = 'Test1';
 		var validPwd = 'password';
 		var invalid = 'invalid';
 		var blank = undefined;
 
-		it('Valid:', function(done){
+		it('Valid:', function(done) {
 			var validRow = { ID: 1, Username: 'Test1', AID: 'Description' };
 			fakeDatabase.Procedure = function (procedure, values, callback) {
-				assert.equal(procedure, 'sp_Login');
-				assert.equal(values.length, 3);
-				assert.equal(values[0], valid);
-				assert.notEqual(callback, undefined);
-				callback([validRow]);
+				if(procedure === 'sp_Login') {
+					assert.equal(procedure, 'sp_Login');
+					assert.equal(values.length, 3);
+					assert.equal(values[0], validUsername);
+					assert.equal(values[1], validPwd);
+					assert.notEqual(callback, undefined);
+					callback([validRow]);
+				} else {
+					assert.equal(procedure, 'sp_Authorise');
+					assert.equal(values.length, 1);
+					assert.equal(values[0], validRow.AID);
+					assert.notEqual(callback, undefined);
+					callback([validRow]);
+				}
 			};
 
 			fakeManager.Login(validUsername, validPwd, function(loginResult){
-				manager.Authorise(loginResult.AID, loginResult.SID, function(result){
+				fakeManager.Authorise(loginResult.AID, loginResult.SID, function(result){
 					assert.equal(result.Success, true);
 					assert.equal(result.SID, loginResult.SID);
 					assert.equal(result.Success, true);
@@ -186,9 +195,27 @@ describe('Login Manager -', function(){
 			});
 		})
 
-		it('Invalid "AID":', function(done){
-			manager.Login(validUsername, validPwd, function(loginResult){
-				manager.Authorise(invalid, loginResult.SID, function(result){
+		it('Invalid "AID":', function(done) {
+			var invalidRow = { ID: 1, Username: 'Test1', AID: 'Description' };
+			fakeDatabase.Procedure = function (procedure, values, callback) {
+				if(procedure === 'sp_Login') {
+					assert.equal(procedure, 'sp_Login');
+					assert.equal(values.length, 3);
+					assert.equal(values[0], validUsername);
+					assert.equal(values[1], validPwd);
+					assert.notEqual(callback, undefined);
+					callback([invalidRow]);
+				} else {
+					assert.equal(procedure, 'sp_Authorise');
+					assert.equal(values.length, 1);
+					assert.equal(values[0], invalid);
+					assert.notEqual(callback, undefined);
+					callback([]);
+				}
+			};
+
+			fakeManager.Login(validUsername, validPwd, function(loginResult) {
+				fakeManager.Authorise(invalid, loginResult.SID, function(result){
 					assert.notEqual(result, undefined);
 					assert.equal(result.Success, false);
 					assert.notEqual(result.Reason, undefined);
@@ -202,9 +229,27 @@ describe('Login Manager -', function(){
 			});
 		})
 
-		it('Missing "AID":', function(done){
-			manager.Login(validUsername, validPwd, function(loginResult){
-				manager.Authorise(blank, loginResult.SID, function(result){
+		it('Missing "AID":', function(done) {
+			var invalidRow = { ID: 1, Username: 'Test1', AID: 'Description' };
+			fakeDatabase.Procedure = function (procedure, values, callback) {
+				if(procedure === 'sp_Login') {
+					assert.equal(procedure, 'sp_Login');
+					assert.equal(values.length, 3);
+					assert.equal(values[0], validUsername);
+					assert.equal(values[1], validPwd);
+					assert.notEqual(callback, undefined);
+					callback([invalidRow]);
+				} else {
+					assert.equal(procedure, 'sp_Authorise');
+					assert.equal(values.length, 1);
+					assert.equal(values[0], blank);
+					assert.notEqual(callback, undefined);
+					callback([]);
+				}
+			};
+
+			fakeManager.Login(validUsername, validPwd, function(loginResult){
+				fakeManager.Authorise(blank, loginResult.SID, function(result){
 					assert.notEqual(result, undefined);
 					assert.equal(result.Success, false);
 					assert.notEqual(result.Reason, undefined);
@@ -214,9 +259,27 @@ describe('Login Manager -', function(){
 			});
 		})
 
-		it('Missing "SID":', function(done){
-			manager.Login(validUsername, validPwd, function(loginResult){
-				manager.Authorise(loginResult.AID, blank, function(result){
+		it('Missing "SID":', function(done) {
+			var invalidRow = { ID: 1, Username: 'Test1', AID: 'Description' };
+			fakeDatabase.Procedure = function (procedure, values, callback) {
+				if(procedure === 'sp_Login') {
+					assert.equal(procedure, 'sp_Login');
+					assert.equal(values.length, 3);
+					assert.equal(values[0], validUsername);
+					assert.equal(values[1], validPwd);
+					assert.notEqual(callback, undefined);
+					callback([invalidRow]);
+				} else {
+					assert.equal(procedure, 'sp_Authorise');
+					assert.equal(values.length, 1);
+					assert.equal(values[0], blank);
+					assert.notEqual(callback, undefined);
+					callback([]);
+				}
+			};
+
+			fakeManager.Login(validUsername, validPwd, function(loginResult){
+				fakeManager.Authorise(loginResult.AID, blank, function(result){
 					assert.notEqual(result, undefined);
 					assert.equal(result.Success, false);
 					assert.notEqual(result.Reason, undefined);
@@ -226,9 +289,27 @@ describe('Login Manager -', function(){
 			});
 		})
 
-		it('Missing "AID", "SID":', function(done){
-			manager.Login(validUsername, validPwd, function(loginResult){
-				manager.Authorise(blank, blank, function(result){
+		it('Missing "AID", "SID":', function(done) {
+			var invalidRow = { ID: 1, Username: 'Test1', AID: 'Description' };
+			fakeDatabase.Procedure = function (procedure, values, callback) {
+				if(procedure === 'sp_Login') {
+					assert.equal(procedure, 'sp_Login');
+					assert.equal(values.length, 3);
+					assert.equal(values[0], validUsername);
+					assert.equal(values[1], validPwd);
+					assert.notEqual(callback, undefined);
+					callback([invalidRow]);
+				} else {
+					assert.equal(procedure, 'sp_Authorise');
+					assert.equal(values.length, 1);
+					assert.equal(values[0], blank);
+					assert.notEqual(callback, undefined);
+					callback([]);
+				}
+			};
+
+			fakeManager.Login(validUsername, validPwd, function(loginResult){
+				fakeManager.Authorise(blank, blank, function(result){
 					assert.notEqual(result, undefined);
 					assert.equal(result.Success, false);
 					assert.notEqual(result.Reason, undefined);
