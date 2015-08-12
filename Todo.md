@@ -20,7 +20,6 @@ Tests
 	* Object creation validation
 * Login Manager
 	* Object creation validation
-	* Database Mocking
 * Race Manager
 	* Object creation validation
 	* ~~List functon~~
