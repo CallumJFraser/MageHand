@@ -4,7 +4,7 @@ var http = require("http");
 var assert = require('assert');
 // var RESTAPI = require('../../index.js');
 
-describe('Login:', function(){
+describe.skip('Login:', function(){
 	it('Valid:', function(done){
 		var options = {
 			hostname: 'localhost',
