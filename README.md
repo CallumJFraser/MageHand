@@ -47,6 +47,8 @@ Entering anything else will give the user a prompt with the availble commands.
 
 It is possible to run tests on Magehand once you have installed NodeJS and NPM by executing the following command in the projects root directory:
 
+> grunt
+or
 > grunt mochaTest
 
 ##Credits
