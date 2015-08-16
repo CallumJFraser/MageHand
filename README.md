@@ -23,11 +23,11 @@ I am not afraid to make mistakes, as there is no better way to learn. For this r
 
 To install the API you will need to run the following commands in the projects root directory:
 
-> npm install
+> npm i
 
 > cd API
 
-> npm install
+> npm i
 
 ##Running
 
