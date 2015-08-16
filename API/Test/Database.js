@@ -1,7 +1,7 @@
 "Use Strict";
 
 var assert = require('assert');
-var database = require('../database');
+var database = require('../Database');
 
 describe.skip('Database', function(){
 	it('Should start with default settings', function () {
