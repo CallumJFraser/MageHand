@@ -19,6 +19,10 @@ I am not afraid to make mistakes, as there is no better way to learn. For this r
 * Support multiple versions of D&amp;D.
 * Store character, user and session information in a database.
 
+##Design
+
+The [Magehand API(http://docs.magehand.apiary.io/#) is being mocked and designed in [apiary](https://apiary.io/).
+
 ##Install
 
 To install the API you will need to run the following commands in the projects root directory:
