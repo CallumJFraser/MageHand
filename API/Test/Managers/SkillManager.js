@@ -101,19 +101,29 @@ describe('Skill Manager', function(){
 		})
 	})
 
-	describe.skip('GetByCharacter:', function(){
+	describe('GetByCharacter:', function(){
 		var valid = 1;
 		var invalid = 0;
 		var invalidFormat = 'invalid';
 
 		it('Valid:', function(done){
-			var validRow = [{"CharacterID":1,"Skill":1, "Ranks":1, "Info":"info", "MiscModifier":0}];
+			var validRow = [
+				{"CharacterID":1,"SkillID":1, "Ranks":1, "Info":"info", "MiscModifier":0},
+				{"CharacterID":2,"SkillID":1, "Ranks":2, "Info":"info", "MiscModifier":0}
+			];
 			fakeDatabase.Procedure = function (procedure, values, callback) {
-				assert.equal(procedure, 'sp_GetCharactersSkill');
-				assert.equal(values.length, 1);
-				assert.equal(values[0], valid);
-				assert.notEqual(callback, undefined);
-				callback([validRow]);
+				if(procedure === 'sp_GetCharactersSkill') {
+					assert.equal(procedure, 'sp_GetCharactersSkill');
+					assert.equal(values.length, 1);
+					assert.equal(values[0], valid);
+					assert.notEqual(callback, undefined);
+					callback(validRow);
+				} else {
+					assert.equal(procedure, 'sp_GetSkill');
+					assert.equal(values.length, 1);
+					assert.notEqual(callback, undefined);
+					callback({"ID":1,"Name":"Test", "BaseStatID":1, "Usable":true, "Description":"Description"});
+				}
 			};
 
 			fakeManager.GetByCharacter(valid, function(result){
@@ -130,7 +140,7 @@ describe('Skill Manager', function(){
 			});
 		})
 
-		it('Invalid "ID" Value:', function(done){
+		it.skip('Invalid "ID" Value:', function(done){
 			fakeDatabase.Procedure = function (procedure, values, callback) {
 				assert.equal(procedure, 'sp_GetCharactersSkill');
 				assert.equal(values.length, 1);

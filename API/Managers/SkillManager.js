@@ -1,6 +1,6 @@
 "Use Strict";
 
-var async = require('async');
+var Promise = require("bluebird");
 var databaseObject = require('../Database');
 var Failed = require('../Failed');
 	
@@ -19,31 +19,23 @@ function Skill(row, callback){
 	object.Usable = row.Usable;
 	object.Description = row.Description;
 	object.Version = {};
-	callback(object);
+	return callback(object);
 }
 
-function CharacterSkill(row, callback){
+function CharacterSkill(row){
 	if(row == undefined)
 		return new Failed('Missing parameter');
-	async.map(
-		[row.SkillID],
-		function(item, parallelCallback){
-			Get(item, function(result){
-				parallelCallback(null, result);
-			})
-		},
-		function (err, results){
-			if(err != undefined)
-				callback(undefined);
+	return new Promise(function(fulfill, reject) {
+		Get(row.SkillID, function(result){
 			var object = {};
 			object.CharacterID = row.CharacterID;
 			object.Ranks = row.Ranks;
 			object.Info = row.Info;
 			object.MiscModifier = row.MiscModifier;
-			object.Skill = results[0];
-			callback(object);
-		}
-	);
+			object.Skill = result;
+			fulfill(object);
+		});
+	});
 }
 
 function Get(id, callback){
@@ -77,20 +69,15 @@ function GetByCharacter(id, callback){
 		if(intID > 0){
 			databaseObject.Procedure('sp_GetCharactersSkill', [intID], function(data){
 				if(data.length > 0){
-					async.map(
+					Promise.map(
 						data,
-						function(item, eachCallback){
-							CharacterSkill(item, function(value){
-								eachCallback(null, value);
+						function(item){
+							return CharacterSkill(item, function(value){
+								return value;
 							});
-						},
-						function(err, results){
-							if(err != undefined){
-								callback(undefined);
-							}
+						}).then(function(results) {
 							callback(results);
-						}
-					);
+						});
 				}
 				else{
 					callback(new Failed('No matching results'));
