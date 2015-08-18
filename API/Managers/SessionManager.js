@@ -1,6 +1,5 @@
 "Use Strict";
 
-var async = require('async');
 var databaseObject = require('../Database');
 var Failed = require('../Failed');
 
