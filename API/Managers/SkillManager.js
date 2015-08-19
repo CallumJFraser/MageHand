@@ -9,83 +9,92 @@ module.exports = {
 	GetByCharacter: GetByCharacter
 };
 
-function Skill(row, callback){
+function Skill(row){
 	if(row == undefined)
 		return new Failed('Missing parameter');
-	var object = {};
-	object.ID = row.ID;
-	object.Name = row.Name;
-	object.BaseStatID = row.BaseStatID;
-	object.Usable = row.Usable;
-	object.Description = row.Description;
-	object.Version = {};
-	return callback(object);
+	return new Promise(function(fulfill, reject) {
+		var object = {};
+		object.ID = row.ID;
+		object.Name = row.Name;
+		object.BaseStatID = row.BaseStatID;
+		object.Usable = row.Usable;
+		object.Description = row.Description;
+		object.Version = {};
+		fulfill(object);
+	});
 }
 
 function CharacterSkill(row){
 	if(row == undefined)
 		return new Failed('Missing parameter');
 	return new Promise(function(fulfill, reject) {
-		Get(row.SkillID, function(result){
-			var object = {};
-			object.CharacterID = row.CharacterID;
-			object.Ranks = row.Ranks;
-			object.Info = row.Info;
-			object.MiscModifier = row.MiscModifier;
-			object.Skill = result;
+		var object = {};
+		object.CharacterID = row.CharacterID;
+		object.Ranks = row.Ranks;
+		object.Info = row.Info;
+		object.MiscModifier = row.MiscModifier;
+		Get(row.SkillID).then(function(value){
+			object.Skill = value;
 			fulfill(object);
+		},
+		function(){
+			reject();
 		});
 	});
 }
 
-function Get(id, callback){
+function Get(id){
 	if(id == undefined){
-		callback(new Failed('Missing parameter'));
+		return Promise.reject(new Failed('Missing parameter'));
 	}
 	else{
 		var intID = parseInt(id);
 		if(intID > 0){
-			databaseObject.Procedure('sp_GetSkill', [id], function(rows){
-				if(rows.length > 0){
-					Skill(rows[0], callback);
-				}
-				else{
-					callback(new Failed('No matching results'));
-				}
+			return new Promise(function(fulfill, reject){
+				databaseObject.Procedure('sp_GetSkill', [id], function(rows){
+					if(rows.length > 0){
+						fulfill(Skill(rows[0]));
+					}
+					else{
+						reject(new Failed('No matching results'));
+					}
+				});
 			});
 		}
 		else{
-			callback(new Failed('Invalid parameter'));
+			return Promise.reject(new Failed('Invalid parameter'));
 		}
 	}
 }
 
-function GetByCharacter(id, callback){
+function GetByCharacter(id){
 	if(id == undefined){
-		callback(new Failed('Missing parameter'));
+		return Promise.reject(new Failed('Missing parameter'));
 	}
 	else{
 		var intID = parseInt(id);
 		if(intID > 0){
-			databaseObject.Procedure('sp_GetCharactersSkill', [intID], function(data){
-				if(data.length > 0){
-					Promise.map(
-						data,
-						function(item){
-							return CharacterSkill(item, function(value){
-								return value;
+			return new Promise(function(fulfill, reject){
+				databaseObject.Procedure('sp_GetCharactersSkill', [intID], function(data){
+					if(data.length > 0){
+						Promise.map(
+							data,
+							function(item){
+								return CharacterSkill(item);
+							}).then(function(result){
+								fulfill(result);
+							}, function() {
+								reject();
 							});
-						}).then(function(results) {
-							callback(results);
-						});
-				}
-				else{
-					callback(new Failed('No matching results'));
-				}
+					}
+					else{
+						return Promise.reject(new Failed('No matching results'));
+					}
+				});
 			});
 		}
 		else{
-			callback(new Failed('Invalid parameter'));
+			return Promise.reject(new Failed('Invalid parameter'));
 		}
 	}
 }

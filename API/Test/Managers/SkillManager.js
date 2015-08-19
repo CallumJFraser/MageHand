@@ -37,7 +37,8 @@ describe('Skill Manager', function(){
 				callback([validRow]);
 			};
 
-			fakeManager.Get(valid, function(result){
+			fakeManager.Get(valid)
+				.then(function(result) {
 				assert.notEqual(result, undefined);
 				assert.equal(result.Reason, undefined);
 				assert.notEqual(result.ID, undefined);	
@@ -55,7 +56,9 @@ describe('Skill Manager', function(){
 				callback([]);
 			};
 
-			fakeManager.Get(invalid, function(result){
+			fakeManager.Get(invalid).then(function() {
+				done('failed');
+			}, function(result){
 				assert.notEqual(result, undefined);
 				assert.notEqual(result.Reason, undefined);
 				assert.equal(result.ID, undefined);
@@ -73,7 +76,9 @@ describe('Skill Manager', function(){
 				callback([]);
 			};
 
-			fakeManager.Get(invalidFormat, function(result){
+			fakeManager.Get(invalidFormat).then(function() {
+				done('failed');
+			}, function(result){
 				assert.notEqual(result, undefined);
 				assert.notEqual(result.Reason, undefined);	
 				assert.equal(result.ID, undefined);
@@ -91,7 +96,9 @@ describe('Skill Manager', function(){
 				callback([]);
 			};
 
-			fakeManager.Get(blank, function(result){
+			fakeManager.Get(blank).then(function() {
+				done('failed');
+			}, function(result){
 				assert.notEqual(result, undefined);
 				assert.notEqual(result.Reason, undefined);
 				assert.equal(result.ID, undefined);
@@ -122,11 +129,11 @@ describe('Skill Manager', function(){
 					assert.equal(procedure, 'sp_GetSkill');
 					assert.equal(values.length, 1);
 					assert.notEqual(callback, undefined);
-					callback({"ID":1,"Name":"Test", "BaseStatID":1, "Usable":true, "Description":"Description"});
+					callback([{"ID":1,"Name":"Test", "BaseStatID":1, "Usable":true, "Description":"Description"}]);
 				}
 			};
 
-			fakeManager.GetByCharacter(valid, function(result){
+			fakeManager.GetByCharacter(valid).then(function(result){
 				assert.notEqual(result, undefined);
 				assert.equal(result.length > 0, true);
 				var row = result[0];
