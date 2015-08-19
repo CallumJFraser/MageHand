@@ -11,7 +11,7 @@ module.exports = {
 
 function Skill(row){
 	if(row == undefined)
-		return new Failed('Missing parameter');
+		return Promise.reject(new Failed('Missing parameter'));
 	return new Promise(function(fulfill, reject) {
 		var object = {};
 		object.ID = row.ID;
@@ -26,7 +26,7 @@ function Skill(row){
 
 function CharacterSkill(row){
 	if(row == undefined)
-		return new Failed('Missing parameter');
+		return Promise.reject(new Failed('Missing parameter'));
 	return new Promise(function(fulfill, reject) {
 		var object = {};
 		object.CharacterID = row.CharacterID;
