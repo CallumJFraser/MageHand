@@ -48,7 +48,7 @@ describe('Account Manager', function() {
 				callback([validRow]);
 			};
 
-			fakeManager.Get(valid, function(result){
+			fakeManager.Get(valid).then(function(result){
 				assert.notEqual(result, undefined);
 				assert.equal(result.Success, true);
 				assert.equal(result.Reason, undefined);
@@ -72,18 +72,21 @@ describe('Account Manager', function() {
 				callback([]);
 			};
 
-			fakeManager.Get(invalid, function(result){
-				assert.notEqual(result, undefined);
-				assert.equal(result.Success, false);
-				assert.notEqual(result.Reason, undefined);
-				assert.equal(result.ID, undefined);
-				assert.equal(result.AID, undefined);
-				assert.equal(result.Username, undefined);
-				assert.equal(result.Email, undefined);
-				assert.equal(result.Hash, undefined);
-				assert.equal(result.Created, undefined);
-				assert.equal(result.LastLogin, undefined);
-				done();
+			fakeManager.Get(invalid).then(function() {
+					done('failed');
+				},
+				function(result){
+					assert.notEqual(result, undefined);
+					assert.equal(result.Success, false);
+					assert.notEqual(result.Reason, undefined);
+					assert.equal(result.ID, undefined);
+					assert.equal(result.AID, undefined);
+					assert.equal(result.Username, undefined);
+					assert.equal(result.Email, undefined);
+					assert.equal(result.Hash, undefined);
+					assert.equal(result.Created, undefined);
+					assert.equal(result.LastLogin, undefined);
+					done();
 			});
 		})
 
@@ -96,18 +99,21 @@ describe('Account Manager', function() {
 				callback([]);
 			};
 
-			fakeManager.Get(invalidFormat, function(result){
-				assert.notEqual(result, undefined);
-				assert.equal(result.Success, false);
-				assert.notEqual(result.Reason, undefined);
-				assert.equal(result.ID, undefined);
-				assert.equal(result.AID, undefined);
-				assert.equal(result.Username, undefined);
-				assert.equal(result.Email, undefined);
-				assert.equal(result.Hash, undefined);
-				assert.equal(result.Created, undefined);
-				assert.equal(result.LastLogin, undefined);
-				done();
+			fakeManager.Get(invalidFormat).then(function() {
+					done('failed');
+				},
+				function(result){
+					assert.notEqual(result, undefined);
+					assert.equal(result.Success, false);
+					assert.notEqual(result.Reason, undefined);
+					assert.equal(result.ID, undefined);
+					assert.equal(result.AID, undefined);
+					assert.equal(result.Username, undefined);
+					assert.equal(result.Email, undefined);
+					assert.equal(result.Hash, undefined);
+					assert.equal(result.Created, undefined);
+					assert.equal(result.LastLogin, undefined);
+					done();
 			});
 		})
 
@@ -120,18 +126,21 @@ describe('Account Manager', function() {
 				callback([]);
 			};
 
-			fakeManager.Get(blank, function(result){
-				assert.notEqual(result, undefined);
-				assert.equal(result.Success, false);
-				assert.notEqual(result.Reason, undefined);
-				assert.equal(result.ID, undefined);
-				assert.equal(result.AID, undefined);
-				assert.equal(result.Username, undefined);
-				assert.equal(result.Email, undefined);
-				assert.equal(result.Hash, undefined);
-				assert.equal(result.Created, undefined);
-				assert.equal(result.LastLogin, undefined);
-				done();
+			fakeManager.Get(blank).then(function() {
+					done('failed');
+				},
+				function(result){
+					assert.notEqual(result, undefined);
+					assert.equal(result.Success, false);
+					assert.notEqual(result.Reason, undefined);
+					assert.equal(result.ID, undefined);
+					assert.equal(result.AID, undefined);
+					assert.equal(result.Username, undefined);
+					assert.equal(result.Email, undefined);
+					assert.equal(result.Hash, undefined);
+					assert.equal(result.Created, undefined);
+					assert.equal(result.LastLogin, undefined);
+					done();
 			});
 		})
 	})
@@ -149,7 +158,7 @@ describe('Account Manager', function() {
 				callback([validRow]);
 			};
 
-			fakeManager.GetByUsername(valid, function(result){
+			fakeManager.GetByUsername(valid).then(function(result){
 				assert.notEqual(result, undefined);
 				assert.equal(result.Success, true);
 				assert.equal(result.Reason, undefined);
@@ -173,18 +182,21 @@ describe('Account Manager', function() {
 				callback([]);
 			};
 
-			fakeManager.GetByUsername(invalid, function(result){
-				assert.notEqual(result, undefined);
-				assert.equal(result.Success, false);
-				assert.notEqual(result.Reason, undefined);
-				assert.equal(result.ID, undefined);
-				assert.equal(result.AID, undefined);
-				assert.equal(result.Username, undefined);
-				assert.equal(result.Email, undefined);
-				assert.equal(result.Hash, undefined);
-				assert.equal(result.Created, undefined);
-				assert.equal(result.LastLogin, undefined);
-				done();
+			fakeManager.GetByUsername(invalid).then(function() {
+					done('failed');
+				},
+				function(result){
+					assert.notEqual(result, undefined);
+					assert.equal(result.Success, false);
+					assert.notEqual(result.Reason, undefined);
+					assert.equal(result.ID, undefined);
+					assert.equal(result.AID, undefined);
+					assert.equal(result.Username, undefined);
+					assert.equal(result.Email, undefined);
+					assert.equal(result.Hash, undefined);
+					assert.equal(result.Created, undefined);
+					assert.equal(result.LastLogin, undefined);
+					done();
 			});
 		})
 
@@ -197,18 +209,21 @@ describe('Account Manager', function() {
 				callback([]);
 			};
 
-			fakeManager.GetByUsername(blank, function(result){
-				assert.notEqual(result, undefined);
-				assert.equal(result.Success, false);
-				assert.notEqual(result.Reason, undefined);
-				assert.equal(result.ID, undefined);
-				assert.equal(result.AID, undefined);
-				assert.equal(result.Username, undefined);
-				assert.equal(result.Email, undefined);
-				assert.equal(result.Hash, undefined);
-				assert.equal(result.Created, undefined);
-				assert.equal(result.LastLogin, undefined);
-				done();
+			fakeManager.GetByUsername(blank).then(function() {
+					done('failed');
+				},
+				function(result){
+					assert.notEqual(result, undefined);
+					assert.equal(result.Success, false);
+					assert.notEqual(result.Reason, undefined);
+					assert.equal(result.ID, undefined);
+					assert.equal(result.AID, undefined);
+					assert.equal(result.Username, undefined);
+					assert.equal(result.Email, undefined);
+					assert.equal(result.Hash, undefined);
+					assert.equal(result.Created, undefined);
+					assert.equal(result.LastLogin, undefined);
+					done();
 			});
 		})
 	})
@@ -226,7 +241,7 @@ describe('Account Manager', function() {
 				callback([validRow]);
 			};
 
-			fakeManager.GetByEmail(valid, function(result){
+			fakeManager.GetByEmail(valid).then(function(result){
 				assert.notEqual(result, undefined);
 				assert.equal(result.Success, true);
 				assert.equal(result.Reason, undefined);
@@ -250,18 +265,21 @@ describe('Account Manager', function() {
 				callback([]);
 			};
 
-			fakeManager.GetByEmail(invalid, function(result){
-				assert.notEqual(result, undefined);
-				assert.equal(result.Success, false);
-				assert.notEqual(result.Reason, undefined);
-				assert.equal(result.ID, undefined);
-				assert.equal(result.AID, undefined);
-				assert.equal(result.Username, undefined);
-				assert.equal(result.Email, undefined);
-				assert.equal(result.Hash, undefined);
-				assert.equal(result.Created, undefined);
-				assert.equal(result.LastLogin, undefined);
-				done();
+			fakeManager.GetByEmail(invalid).then(function() {
+					done('failed');
+				},
+				function(result){
+					assert.notEqual(result, undefined);
+					assert.equal(result.Success, false);
+					assert.notEqual(result.Reason, undefined);
+					assert.equal(result.ID, undefined);
+					assert.equal(result.AID, undefined);
+					assert.equal(result.Username, undefined);
+					assert.equal(result.Email, undefined);
+					assert.equal(result.Hash, undefined);
+					assert.equal(result.Created, undefined);
+					assert.equal(result.LastLogin, undefined);
+					done();
 			});
 		})
 
@@ -274,18 +292,21 @@ describe('Account Manager', function() {
 				callback([]);
 			};
 
-			fakeManager.GetByEmail(blank, function(result){
-				assert.notEqual(result, undefined);
-				assert.equal(result.Success, false);
-				assert.notEqual(result.Reason, undefined);
-				assert.equal(result.ID, undefined);
-				assert.equal(result.AID, undefined);
-				assert.equal(result.Username, undefined);
-				assert.equal(result.Email, undefined);
-				assert.equal(result.Hash, undefined);
-				assert.equal(result.Created, undefined);
-				assert.equal(result.LastLogin, undefined);
-				done();
+			fakeManager.GetByEmail(blank).then(function() {
+					done('failed');
+				},
+				function(result){
+					assert.notEqual(result, undefined);
+					assert.equal(result.Success, false);
+					assert.notEqual(result.Reason, undefined);
+					assert.equal(result.ID, undefined);
+					assert.equal(result.AID, undefined);
+					assert.equal(result.Username, undefined);
+					assert.equal(result.Email, undefined);
+					assert.equal(result.Hash, undefined);
+					assert.equal(result.Created, undefined);
+					assert.equal(result.LastLogin, undefined);
+					done();
 			});
 		})
 	})
@@ -303,7 +324,7 @@ describe('Account Manager', function() {
 				callback([validRow]);
 			};
 
-			fakeManager.Search(valid, function(result){
+			fakeManager.Search(valid).then(function(result){
 				assert.notEqual(result, undefined);
 				assert.equal(result.Success, true);
 				assert.equal(result.Reason, undefined);
@@ -327,18 +348,21 @@ describe('Account Manager', function() {
 				callback([]);
 			};
 
-			fakeManager.Search(invalid, function(result){
-				assert.notEqual(result, undefined);
-				assert.equal(result.Success, false);
-				assert.notEqual(result.Reason, undefined);
-				assert.equal(result.ID, undefined);
-				assert.equal(result.AID, undefined);
-				assert.equal(result.Username, undefined);
-				assert.equal(result.Email, undefined);
-				assert.equal(result.Hash, undefined);
-				assert.equal(result.Created, undefined);
-				assert.equal(result.LastLogin, undefined);
-				done();
+			fakeManager.Search(invalid).then(function() {
+					done('failed');
+				},
+				function(result){
+					assert.notEqual(result, undefined);
+					assert.equal(result.Success, false);
+					assert.notEqual(result.Reason, undefined);
+					assert.equal(result.ID, undefined);
+					assert.equal(result.AID, undefined);
+					assert.equal(result.Username, undefined);
+					assert.equal(result.Email, undefined);
+					assert.equal(result.Hash, undefined);
+					assert.equal(result.Created, undefined);
+					assert.equal(result.LastLogin, undefined);
+					done();
 			});
 		})
 
@@ -351,7 +375,10 @@ describe('Account Manager', function() {
 				callback([]);
 			};
 
-			fakeManager.Search(blank, function(result){
+			fakeManager.Search(blank).then(function() {
+					done('failed');
+				},
+				function(result){
 				assert.notEqual(result, undefined);
 				assert.equal(result.Success, false);
 				assert.notEqual(result.Reason, undefined);
@@ -397,7 +424,7 @@ describe('Account Manager', function() {
 				}
 			};
 
-			fakeManager.Create(valid, function(result){
+			fakeManager.Create(valid).then(function(result){
 				assert.notEqual(result, undefined);
 				assert.equal(result.Success, true);
 				assert.equal(result.Reason, undefined);
@@ -411,7 +438,10 @@ describe('Account Manager', function() {
 				done('failed, should not be calling the database');
 			};
 
-			fakeManager.Create(invalid, function(result){
+			fakeManager.Create(invalid).then(function() {
+					done('failed');
+				},
+				function(result){
 				assert.notEqual(result, undefined);
 				assert.equal(result.Success, false);
 				assert.notEqual(result.Reason, undefined);
@@ -431,7 +461,10 @@ describe('Account Manager', function() {
 				done('failed, should not be calling the database');
 			};
 
-			fakeManager.Create(missing, function(result){
+			fakeManager.Create(missing).then(function() {
+					done('failed');
+				},
+				function(result){
 				assert.notEqual(result, undefined);
 				assert.equal(result.Success, false);
 				assert.notEqual(result.Reason, undefined);
@@ -452,18 +485,21 @@ describe('Account Manager', function() {
 				done('failed, should not be calling the database');
 			};
 
-			fakeManager.Create(missingUsername, function(result){
-				assert.notEqual(result, undefined);
-				assert.equal(result.Success, false);
-				assert.notEqual(result.Reason, undefined);
-				assert.equal(result.ID, undefined);
-				assert.equal(result.AID, undefined);
-				assert.equal(result.Username, undefined);
-				assert.equal(result.Email, undefined);
-				assert.equal(result.Hash, undefined);
-				assert.equal(result.Created, undefined);
-				assert.equal(result.LastLogin, undefined);
-				done();
+			fakeManager.Create(missingUsername).then(function() {
+					done('failed');
+				},
+				function(result){
+					assert.notEqual(result, undefined);
+					assert.equal(result.Success, false);
+					assert.notEqual(result.Reason, undefined);
+					assert.equal(result.ID, undefined);
+					assert.equal(result.AID, undefined);
+					assert.equal(result.Username, undefined);
+					assert.equal(result.Email, undefined);
+					assert.equal(result.Hash, undefined);
+					assert.equal(result.Created, undefined);
+					assert.equal(result.LastLogin, undefined);
+					done();
 			});
 		})
 
@@ -473,7 +509,10 @@ describe('Account Manager', function() {
 				done('failed, should not be calling the database');
 			};
 
-			fakeManager.Create(missingEmail, function(result){
+			fakeManager.Create(missingEmail).then(function() {
+					done('failed');
+				},
+				function(result){
 				assert.notEqual(result, undefined);
 				assert.equal(result.Success, false);
 				assert.notEqual(result.Reason, undefined);

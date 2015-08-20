@@ -1,5 +1,6 @@
 "Use Strict";
 
+var Promise = require("bluebird");
 var databaseObject = require('../Database');
 var Failed = require('../Failed');
 
@@ -13,135 +14,156 @@ module.exports = {
 
 function BasicAccount(row){
 	if(row == undefined)
-		return new Failed('Missing parameter');
-	this.ID = row.ID;
-	this.AID = row.AID;
-	this.Username = row.Username;
-	this.Created = row.Created;
-	this.Success = true;
+		return Promise.reject(new Failed('Missing parameter'));
+
+	return new Promise(function(fulfill, reject) {
+		var object = {};
+		object.ID = row.ID;
+		object.AID = row.AID;
+		object.Username = row.Username;
+		object.Created = row.Created;
+		object.Success = true;
+		fulfill(object);
+	});
 }
 
 function Account(row){
 	if(row == undefined)
-		return new Failed('Missing parameter');
-	this.ID = row.ID;
-	this.AID = row.AID;
-	this.Username = row.Username;
-	this.Email = row.Email;
-	this.Hash = row.Hash;
-	this.Created = row.Created;
-	this.LastLogin = row.LastLogin;
-	if(this.ID != undefined && this.AID != undefined && this.Username != undefined)
-		this.Success = true;
+		return Promise.reject(new Failed('Missing parameter'));
+	return new Promise(function(fulfill, reject) {
+		var object = {};
+		object.ID = row.ID;
+		object.AID = row.AID;
+		object.Username = row.Username;
+		object.Email = row.Email;
+		object.Hash = row.Hash;
+		object.Created = row.Created;
+		object.LastLogin = row.LastLogin;
+		if(object.ID != undefined && object.AID != undefined && object.Username != undefined)
+			object.Success = true;
+		fulfill(object);
+	});
 }
 
-function GetBasicByID(id, callback){
+function GetBasicByID(id){
 	if(id == undefined){
-		callback(new Failed('Missing parameter'));
+		return Promise.reject(new Failed('Missing parameter'));
 	}
 	else{
 		var intID = parseInt(id);
 		if(intID > 0){
-			databaseObject.Procedure('sp_GetAccountByAID', [intID], function(rows){
-				if(rows.length > 0){
-					var value = new BasicAccount(rows[0]);
-					callback(value);
-				}
-				else{
-					callback(new Failed('No matching results'));
-				}
+			return new Promise(function (fulfill, reject){
+				databaseObject.Procedure('sp_GetAccountByAID', [intID], function(rows){
+					if(rows.length > 0){
+						fulfill(BasicAccount(rows[0]));
+					}
+					else{
+						reject(new Failed('No matching results'));
+					}
+				});
 			});
 		}
 		else{
-			callback(new Failed('Invalid parameter'));
+			return Promise.reject(new Failed('Invalid parameter'));
 		}
 	}
 }
 
-function GetBasicByUsername(username, callback){
+function GetBasicByUsername(username){
 	if(username == undefined){
-		callback(new Failed('Missing parameter'));
+		return Promise.reject(new Failed('Missing parameter'));
 	}
 	else{
-		databaseObject.Procedure('sp_GetAccountByUsername', [username], function(rows){
-			if(rows.length > 0){
-				callback(new BasicAccount(rows[0]));
-			}
-			else{
-				callback(new Failed('No matching results'));
-			}
-		});
-	}
-}
-
-function GetBasicByEmail(email, callback){
-	if(email == undefined){
-		callback(new Failed('Missing parameter'));
-	}
-	else{
-		databaseObject.Procedure('sp_GetAccountByEmail', [email], function(rows){
-			if(rows.length > 0){
-				callback(new BasicAccount(rows[0]));
-			}
-			else{
-				callback(new Failed('No matching results'));
-			}
-		});
-	}
-}
-
-function SearchBasic(text, callback){
-	if(text == undefined){
-		callback(new Failed('Missing parameter'));
-	}
-	else{
-		databaseObject.Procedure('sp_SearchAccounts', [text], function(rows){
-			if(rows.length > 0){
-				callback(new BasicAccount(rows[0]));
-			}
-			else{
-				callback(new Failed('No matching results'));
-			}
-		});
-	}
-}
-
-function Create(accountObject, callback){
-	//	TODO: Define account params, atm using the full account, but will need more information.
-	if (accountObject && accountObject.Username && accountObject.Email) {
-		UsernameAllowed(accountObject.Username, accountObject.Email, function(allowed){
-			if(allowed){
-				var account = new Account(accountObject);
-				if(account.Success){
-					databaseObject.Procedure('sp_CreateAccount', [account.AID, account.Username, account.Email, account.Hash, accountObject.Password], function(rows){
-						if(rows.length > 0){
-							callback({ Success: true, ID: rows[0].ID });
-						}
-						else{
-							callback(new Failed('No matching results'));
-						}
-					});
+		return new Promise(function (fulfill, reject){
+			databaseObject.Procedure('sp_GetAccountByUsername', [username], function(rows){
+				if(rows.length > 0){
+					fulfill(BasicAccount(rows[0]));
 				}
 				else{
-					callback(new Failed('Invalid object'));
+					reject(new Failed('No matching results'));
 				}
-			}
-			else{
-				callback(new Failed('Username "' + accountObject.Username + '" already taken'))
-			}
+			});
 		});
-	} else {
-		callback(new Failed('Missing parameter'));
 	}
 }
 
-function UsernameAllowed(username, email, callback){
-	databaseObject.Procedure('sp_CheckAccount', [username, email], function(rows){
-		if(rows.length > 0){
-			callback(rows[0].Count == 0);
-		}
-		else{
-			callback(false);
-		}
+function GetBasicByEmail(email){
+	if(email == undefined){
+		return Promise.reject(new Failed('Missing parameter'));
+	}
+	else{
+		return new Promise(function (fulfill, reject){
+			databaseObject.Procedure('sp_GetAccountByEmail', [email], function(rows){
+				if(rows.length > 0){
+					fulfill(new BasicAccount(rows[0]));
+				}
+				else{
+					reject(new Failed('No matching results'));
+				}
+			});
+		});
+	}
+}
+
+function SearchBasic(text){
+	if(text == undefined){
+		return Promise.reject(new Failed('Missing parameter'));
+	}
+	else{
+		return new Promise(function (fulfill, reject){
+			databaseObject.Procedure('sp_SearchAccounts', [text], function(rows){
+				if(rows.length > 0){
+					fulfill(new BasicAccount(rows[0]));
+				}
+				else{
+					reject(new Failed('No matching results'));
+				}
+			});
+		});
+	}
+}
+
+function Create(accountObject){
+	//	TODO: Define account params, atm using the full account, but will need more information.
+	if (accountObject && accountObject.Username && accountObject.Email) {
+		return new Promise(function(fulfill, reject){
+			UsernameAllowed(accountObject.Username, accountObject.Email).then(function(allowed) {
+				if(allowed) {
+					Account(accountObject).then(function(account){
+						if(account.Success) {
+							databaseObject.Procedure('sp_CreateAccount', [account.AID, account.Username, account.Email, account.Hash, accountObject.Password], function(rows){
+								if(rows.length > 0) {
+									fulfill({ Success: true, ID: rows[0].ID });
+								} else {
+									reject(new Failed('No matching results'));
+								}
+							});
+						} else {
+							return Promise.reject(new Failed('Invalid object'));
+						}
+					});
+				} else {
+					return Promise.reject(new Failed('Username "' + accountObject.Username + '" already taken'));
+				}
+			},
+			function() {
+				return Promise.reject('Username "' + accountObject.Username + '" already taken');
+			});
+		});
+	} else {
+		return Promise.reject(new Failed('Missing parameter'));
+	}
+}
+
+function UsernameAllowed(username, email){
+	return new Promise(function(fulfill, reject){
+		databaseObject.Procedure('sp_CheckAccount', [username, email], function(rows){
+			if(rows.length > 0){
+				fulfill(rows[0].Count == 0);
+			}
+			else{
+				reject(false);
+			}
+		});
 	});
 }
