@@ -1,6 +1,6 @@
 "Use Strict";
 
-var async = require('async');
+var Promise = require("bluebird");
 var databaseObject = require('../Database');
 var classManager = require('../Managers/ClassManager');
 var raceManager = require('../Managers/RaceManager');
@@ -12,23 +12,24 @@ module.exports = {
 	GetBySession: GetBySession
 };
 
-function Character(data, callback){
+function Character(data){
 	if(data == undefined)
-		return new Failed('Missing parameter');
-	async.parallel([
-			function(parallelCallback){
-				classManager.Get(data.ClassID, function(result){
-					parallelCallback(null, result)
-				});
-			},
-			function(parallelCallback){
-				raceManager.Get(data.RaceID, function(result){
-					parallelCallback(null, result)
-				});
-			}
-		],
-		function(err, results){
-			if(results.length > 1){
+		return Promise.reject(new Failed('Missing parameter'));
+
+	return new Promise(function(fulfill, reject){
+		var classPromise = new Promise(function(resolve, reject){
+			classManager.Get(data.ClassID, function(result){
+				resolve(result);
+			});
+		});
+		var racePromise = new Promise(function(resolve, reject){
+			raceManager.Get(data.RaceID, function(result){
+				resolve(result)
+			});
+		});
+
+		Promise.all([classPromise, racePromise])
+			.then(function(results){
 				var object = {};
 				object.ID = data.ID;
 				object.Name = data.Name;
@@ -55,66 +56,62 @@ function Character(data, callback){
 				object.FlatFootedAC = data.FlatFootedAC;
 				object.Class = results[0];
 				object.Race = results[1];
-				callback(object);
-			}
-		}
-	);
+				fulfill(object);
+			});
+		});
 }
 
 function Get(id, callback){
 	if(id == undefined){
-		callback(new Failed('Missing parameter'));
+		return Promise.reject(new Failed('Missing parameter'));
 	}
 	else{
 		var intID = parseInt(id);
 		if(intID > 0){
-			databaseObject.Procedure('sp_GetCharacterByID', [intID], function(data){
-				if(data.length > 0){
-					Character(data[0], function(value){
-						callback(value);
-					});
-				}
-				else{
-					callback(new Failed('No matching results'));
-				}
+			return new Promise(function(fulfill, reject){
+				databaseObject.Procedure('sp_GetCharacterByID', [intID], function(data){
+					if(data.length > 0){
+						Character(data[0]).then(function(value){
+							fulfill(value);
+						},
+						function(value){
+							reject(value);
+						});
+					}
+					else{
+						reject(new Failed('No matching results'));
+					}
+				});
 			});
 		}
 		else{
-			callback(new Failed('Invalid parameter'));
+			return Promise.reject(new Failed('Invalid parameter'));
 		}
 	}
 }
 //	TODO:	Update to only pull in the ID values fo the matching characters.
-function GetByAccount(id, callback){
+function GetByAccount(id){
 	if(id == undefined){
-		callback(new Failed('Missing parameter'));
+		return Promise.reject(new Failed('Missing parameter'));
 	}
 	else{
 		var intID = parseInt(id);
 		if(intID > 0){
-			databaseObject.Procedure('sp_GetCharacterByAccount', [intID], function(data){
-				if(data.length > 0){
-					async.map(data, function(item, eachCallback){
-							Character(item, function(value){
-								eachCallback(null, value);
-							});
-						},
-						function(err, results){
-							if(err != undefined){
-								console.log('Error');
-							}
-							else{
-								callback(results);
-							}
+			return new Promise(function(fulfill, reject){
+				databaseObject.Procedure('sp_GetCharacterByAccount', [intID], function(data){
+					if(data.length > 0){
+						Character(data[0]).then(function(character){
+							fulfill(character);
 						});
-				}
-				else{
-					callback(new Failed('No matching results'));
-				}
+					}
+					else{
+						reject(new Failed('No matching results'));
+					}
+				});
 			});
 		}
 		else{
-			callback(new Failed('Invalid parameter'));
+			return Promise.reject(new Failed('Invalid parameter'));
 		}
 	}
 }
@@ -130,7 +127,7 @@ function GetBySession(sessionID, callback){
 				if(data.length > 0){
 					var length = data.length;
 					var characterLists = [];
-					async.map(data, function(item, eachCallback){
+					Promise.map(data, function(item, eachCallback){
 							Character(item, function(value){
 								eachCallback(null, value);
 							});
