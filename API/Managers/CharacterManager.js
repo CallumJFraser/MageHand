@@ -118,36 +118,26 @@ function GetByAccount(id){
 
 function GetBySession(sessionID, callback){
 	if(sessionID == undefined){
-		callback(new Failed('Missing parameter'));
+		return Promise.reject(new Failed('Missing parameter'));
 	}
 	else{
 		var intSessionID = parseInt(sessionID);
 		if(intSessionID > 0){
-			databaseObject.Procedure('sp_GetSessionCharacters', [intSessionID], function(data){
-				if(data.length > 0){
-					var length = data.length;
-					var characterLists = [];
-					Promise.map(data, function(item, eachCallback){
-							Character(item, function(value){
-								eachCallback(null, value);
-							});
-						},
-						function(err, results){
-							if(err != undefined){
-								console.log('Error');
-							}
-							else{
-								callback(results);
-							}
-						});	
-				}
-				else{
-					callback(new Failed('No matching results'));
-				}
+			return new Promise(function(fulfill, reject){
+				databaseObject.Procedure('sp_GetSessionCharacters', [intSessionID], function(data){
+					if(data.length > 0){
+						Character(data[0]).then(function (character){
+							fulfill(character);
+						});
+					}
+					else{
+						reject(new Failed('No matching results'));
+					}
+				});
 			});
 		}
 		else{
-			callback(new Failed('Invalid parameter'));
+			return Promise.reject(new Failed('Invalid parameter'));
 		}
 	}
 }

@@ -316,7 +316,7 @@ describe('Character Manager', function() {
 		});
 	})
 
-	describe.skip('GetBySession:', function(){
+	describe('GetBySession:', function(){
 		var valid = 1;
 		var invalid = 0;
 		var invalidFormat = 'invalid';
@@ -331,32 +331,33 @@ describe('Character Manager', function() {
 				callback([validRow]);
 			};
 
-			fakeManager.GetBySession(valid, function(result){
+			fakeManager.GetBySession(valid).then(function(result){
 				assert.notEqual(result, undefined);
+				console.log(result);
 				assert.equal(result.Reason, undefined);
-				assert.equal(result[0].ID, validObject.ID);
-				assert.equal(result[0].Name, validObject.Name);
-				assert.notEqual(result[0].Class, undefined);
-				assert.equal(result[0].Experiance, validObject.Experiance);
-				assert.notEqual(result[0].Race, undefined);
-				assert.equal(result[0].Age, validObject.Age);
-				assert.equal(result[0].Height, validObject.Height);
-				assert.equal(result[0].Strength, validObject.Strength);
-				assert.equal(result[0].Dexterity, validObject.Dexterity);
-				assert.equal(result[0].Constitution, validObject.Constitution);
-				assert.equal(result[0].Inteligence, validObject.Inteligence);
-				assert.equal(result[0].Wisdom, validObject.Wisdom);
-				assert.equal(result[0].Charisma, validObject.Charisma);
-				assert.equal(result[0].HP, validObject.HP);
-				assert.equal(result[0].AC, validObject.AC);
-				assert.equal(result[0].Fortitude, validObject.Fortitude);
-				assert.equal(result[0].Reflex, validObject.Reflex);
-				assert.equal(result[0].Will, validObject.Will);
-				assert.equal(result[0].Grapple, validObject.Grapple);
-				assert.equal(result[0].BaseAttack, validObject.BaseAttack);
-				assert.equal(result[0].SpellResistance, validObject.SpellResistance);
-				assert.equal(result[0].TouchAC, validObject.TouchAC);
-				assert.equal(result[0].FlatFootedAC, validObject.FlatFootedAC);
+				assert.equal(result.ID, validObject.ID);
+				assert.equal(result.Name, validObject.Name);
+				assert.notEqual(result.Class, undefined);
+				assert.equal(result.Experiance, validObject.Experiance);
+				assert.notEqual(result.Race, undefined);
+				assert.equal(result.Age, validObject.Age);
+				assert.equal(result.Height, validObject.Height);
+				assert.equal(result.Strength, validObject.Strength);
+				assert.equal(result.Dexterity, validObject.Dexterity);
+				assert.equal(result.Constitution, validObject.Constitution);
+				assert.equal(result.Inteligence, validObject.Inteligence);
+				assert.equal(result.Wisdom, validObject.Wisdom);
+				assert.equal(result.Charisma, validObject.Charisma);
+				assert.equal(result.HP, validObject.HP);
+				assert.equal(result.AC, validObject.AC);
+				assert.equal(result.Fortitude, validObject.Fortitude);
+				assert.equal(result.Reflex, validObject.Reflex);
+				assert.equal(result.Will, validObject.Will);
+				assert.equal(result.Grapple, validObject.Grapple);
+				assert.equal(result.BaseAttack, validObject.BaseAttack);
+				assert.equal(result.SpellResistance, validObject.SpellResistance);
+				assert.equal(result.TouchAC, validObject.TouchAC);
+				assert.equal(result.FlatFootedAC, validObject.FlatFootedAC);
 				done();
 			});
 		})
@@ -365,12 +366,15 @@ describe('Character Manager', function() {
 			fakeDatabase.Procedure = function (procedure, values, callback) {
 				assert.equal(procedure, 'sp_GetSessionCharacters');
 				assert.equal(values.length, 1);
-				assert.equal(values[0], invalid);
+				assert.equal(values, invalid);
 				assert.notEqual(callback, undefined);
 				callback([validRow]);
 			};
 
-			fakeManager.GetBySession(invalid, function(result){
+			fakeManager.GetBySession(invalid).then(function(result){
+				done(result);
+			},
+			function(result){
 				assert.notEqual(result, undefined);
 				assert.notEqual(result.Reason, undefined);
 				assert.equal(result[0], undefined);
@@ -387,7 +391,10 @@ describe('Character Manager', function() {
 				callback([validRow]);
 			};
 
-			fakeManager.GetBySession(invalidFormat, function(result){
+			fakeManager.GetBySession(invalidFormat).then(function(result){
+				done(result);
+			},
+			function(result){
 				assert.notEqual(result, undefined);
 				assert.notEqual(result.Reason, undefined);
 				assert.equal(result[0], undefined);
@@ -404,7 +411,10 @@ describe('Character Manager', function() {
 				callback([validRow]);
 			};
 
-			fakeManager.GetBySession(blank, function(result){
+			fakeManager.GetBySession(blank).then(function(result){
+				done(result);
+			},
+			function(result){
 				assert.notEqual(result, undefined);
 				assert.notEqual(result.Reason, undefined);
 				assert.equal(result[0], undefined);
