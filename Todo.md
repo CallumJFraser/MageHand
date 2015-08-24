@@ -13,25 +13,33 @@ Tests
 	* Object creation validation
 * Character
 	* Duplicate characters
+	* Promises
 	* Object creation validation
 * Character Manager
 	* Object creation validation
 * Class Manager
 	* Object creation validation
+	* Promises
 * Login Manager
 	* Object creation validation
+	* Promises
 * Race Manager
 	* Object creation validation
+	* Promises
 	* ~~List functon~~
 * Size Manager
 	* Object creation validation
+	* Promises
 * Skill Manager
 	* Object creation validation
+	* Promises
 	* Database Mocking
 * Story Manager
 	* Object creation validation
+	* Promises
 * Version Manager
 	* Object creation validation
+	* Promises
 	* Database Mocking
 
 Bugs
