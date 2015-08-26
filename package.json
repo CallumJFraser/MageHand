@@ -13,7 +13,6 @@
     "type": "git",
     "url": "http://github.com/CallumJFraser/MageHand.git"
   },
-  "private": true,
   "dependencies": {
     "async": ">=0.7",
     "bluebird": "2.9.34",
@@ -27,5 +26,9 @@
     "grunt": "^0.4.5",
     "grunt-mocha-test": "^0.12.7",
     "proxyquire": ""
-  }
+  },
+  "scripts": {
+    "test": "grunt mochaTest"
+  },
+  "private": true
 }
