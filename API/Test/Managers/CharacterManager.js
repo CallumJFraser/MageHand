@@ -333,7 +333,6 @@ describe('Character Manager', function() {
 
 			fakeManager.GetBySession(valid).then(function(result){
 				assert.notEqual(result, undefined);
-				console.log(result);
 				assert.equal(result.Reason, undefined);
 				assert.equal(result.ID, validObject.ID);
 				assert.equal(result.Name, validObject.Name);
