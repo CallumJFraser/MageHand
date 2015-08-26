@@ -3,7 +3,7 @@
   "description": "MageHand site for the Dungeons and Dragons (DnD) table top game",
   "version": "0.0.1",
   "homepage": "http://github.com/CallumJFraser/MageHand",
-  "license": "GPL-2.0",
+  "license": "MIT",
   "author": {
     "name": "Callum Fraser",
     "email": "email@callumjfraser.com",
