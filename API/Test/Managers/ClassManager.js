@@ -2,6 +2,7 @@
 
 var assert = require('assert');
 var proxyquire = require('proxyquire').noCallThru();
+var Promise = require("bluebird");
 
 var blank = undefined;
 describe('Class Manager', function(){
@@ -10,9 +11,8 @@ describe('Class Manager', function(){
 	var fakeManager = proxyquire('../../Managers/ClassManager', {
 		'../Database': fakeDatabase,
 		'../Managers/VersionManager': {
-			Get: function (data, callback) {
-				assert.notEqual(callback, undefined);
-				callback(validVersion);
+			Get: function (data) {
+				return Promise.resolve(validVersion);
 			}
 		}
 	});
@@ -38,7 +38,7 @@ describe('Class Manager', function(){
 				callback([validRow]);
 			};
 
-			fakeManager.Get(valid, function(result){
+			fakeManager.Get(valid).then(function(result){
 				assert.notEqual(result, undefined);
 				assert.equal(result.Reason, undefined);
 				assert.equal(result.ID, validRow.ID);
@@ -58,7 +58,10 @@ describe('Class Manager', function(){
 				callback([]);
 			};
 
-			fakeManager.Get(invalid, function(result){
+			fakeManager.Get(invalid).then(function(error) {
+				done(error);
+			},
+			function(result){
 				assert.notEqual(result, undefined);
 				assert.notEqual(result.Reason, undefined);
 				assert.equal(result.Success, false);
@@ -79,7 +82,10 @@ describe('Class Manager', function(){
 				callback([]);
 			};
 
-			fakeManager.Get(invalidFormat, function(result){
+			fakeManager.Get(invalidFormat).then(function(error) {
+				done(error);
+			},
+			function(result){
 				assert.notEqual(result, undefined);
 				assert.notEqual(result.Reason, undefined);
 				assert.equal(result.Success, false);
@@ -100,7 +106,10 @@ describe('Class Manager', function(){
 				callback([]);
 			};
 
-			fakeManager.Get(blank, function(result){
+			fakeManager.Get(blank).then(function(error) {
+				done(error);
+			},
+			function(result){
 				assert.notEqual(result, undefined);
 				assert.notEqual(result.Reason, undefined);
 				assert.equal(result.Success, false);
