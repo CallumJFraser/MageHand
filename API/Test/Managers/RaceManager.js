@@ -1,5 +1,6 @@
 "Use Strict";
 
+var Promise = require("bluebird");
 var assert = require('assert');
 var proxyquire = require('proxyquire').noCallThru();
 
@@ -10,13 +11,13 @@ describe('Race Manager', function () {
 	var fakeManager = proxyquire('../../Managers/RaceManager', {
 		'../Database': fakeDatabase,
 		'../Managers/SizeManager': {
-			Get: function (id, callback){
-				callback({});
+			Get: function (id){
+				return Promise.resolve({});
 			}
 		},
 		'../Managers/VersionManager': {
-			Get: function (id, callback){
-				callback({});
+			Get: function (id){
+				return Promise.resolve({});
 			}
 		}
 	});
@@ -42,7 +43,7 @@ describe('Race Manager', function () {
 				callback([validRow]);
 			};
 
-			fakeManager.Get(valid, function(result){
+			fakeManager.Get(valid).then(function(result){
 				assert.notEqual(result, undefined);
 				assert.equal(result.Reason, undefined);
 				assert.notEqual(result.ID, undefined);
@@ -52,6 +53,9 @@ describe('Race Manager', function () {
 				assert.notEqual(result.Size, undefined);
 				assert.notEqual(result.Version, undefined);
 				done();
+			},
+			function(reason){
+				done(new Error('should call resolve'));
 			});
 		})
 
@@ -64,7 +68,10 @@ describe('Race Manager', function () {
 				callback([]);
 			};
 
-			fakeManager.Get(invalid, function(result){
+			fakeManager.Get(invalid).then(function () {
+				done(new Error('should call reject'));
+			},
+			function(result){
 				assert.notEqual(result, undefined);
 				assert.notEqual(result.Reason, undefined);
 				assert.equal(result.ID, undefined);
@@ -86,7 +93,10 @@ describe('Race Manager', function () {
 				callback([]);
 			};
 
-			fakeManager.Get(invalidFormat, function(result){
+			fakeManager.Get(invalidFormat).then(function () {
+				done(new Error('should call reject'));
+			},
+			function(result){
 				assert.notEqual(result, undefined);
 				assert.notEqual(result.Reason, undefined);	
 				assert.equal(result.ID, undefined);
@@ -108,7 +118,10 @@ describe('Race Manager', function () {
 				callback([]);
 			};
 
-			fakeManager.Get(blank, function(result){
+			fakeManager.Get(blank).then(function () {
+				done(new Error('should call reject'));
+			},
+			function(result){
 				assert.notEqual(result, undefined);
 				assert.notEqual(result.Reason, undefined);
 				assert.equal(result.ID, undefined);
@@ -133,7 +146,7 @@ describe('Race Manager', function () {
 				callback([validRow]);
 			};
 
-			fakeManager.List(function(result){
+			fakeManager.List().then(function(result){
 				var first = result[0];
 				assert.notEqual(first, undefined);
 				assert.equal(first.Reason, undefined);

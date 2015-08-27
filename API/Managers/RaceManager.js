@@ -1,6 +1,6 @@
 "Use Strict";
 
-var async = require('async');
+var Promise = require("bluebird");
 var databaseObject = require('../Database');
 var sizeManager = require('../Managers/SizeManager');
 var versionManager = require('../Managers/VersionManager');
@@ -11,81 +11,74 @@ module.exports = {
 	List: GetList
 };
 
-function Race(row, callback){
-	if(row == undefined)
-		return new Failed('Missing parameter');
-	async.parallel(
-		[
-			function(parallelCallback){
-				sizeManager.Get(row.SizeID, function(result){
-					parallelCallback(null, result)
+function Race(row){
+	if(row == undefined) {
+		return Promise.reject(new Failed('Missing parameter'));
+	}
+	var sizePromise = sizeManager.Get(row.SizeID);
+	var versionPromise = versionManager.Get(row.VersionID);
+
+	return new Promise(function(resolve, reject){
+		Promise.join(
+			sizePromise,
+			versionPromise,
+			function(sizeObject, versionObject) {
+				var object = {};
+				object.ID = row.ID;
+				object.Name = row.Name;
+				object.Description = row.Description;
+				object.Speed = row.Speed;
+				object.Size = sizeObject;
+				object.Version = versionObject;
+				resolve(object);
+			}
+		);
+	});
+}
+
+function Get(id){
+	if (id == undefined) {
+		return Promise.reject(new Failed('Missing parameter'));
+	} else {
+		var intID = parseInt(id);
+		if (intID > 0) {
+			return new Promise(function (resolve, reject) {
+				databaseObject.Procedure('sp_GetRace', [id], function(rows){
+					if(rows.length > 0){
+						Race(rows[0]).then(function(value){
+							resolve(value);
+						});
+					} else {
+						reject(new Failed('No matching results'));
+					}
 				});
-			},
-			function(parallelCallback){
-				versionManager.Get(row.VersionID, function(result){
-					parallelCallback(null, result)
+			});
+		} else {
+			return Promise.reject(new Failed('Invalid parameter'));
+		}
+	}
+}
+
+function GetList(){
+	return new Promise(function(resolve, reject){
+		databaseObject.Procedure('sp_GetRaces', [], function(rows){
+			if(rows.length > 0){
+				var racePromises = rows.map(function(row){
+					return Race(row);
+				});
+
+				Promise.settle(racePromises).then(function(races) {
+					var raceArray = [];
+					races.forEach(function(item){
+						if(item.isFulfilled())
+							raceArray.push(item.value());
+					});
+					resolve(raceArray);
 				});
 			}
-		],
-		function(err, results){
-			if(err != undefined)
-				callback(undefined);
-			var object = {};
-			object.ID = row.ID;
-			object.Name = row.Name;
-			object.Description = row.Description;
-			object.Speed = row.Speed;
-			object.Size = results[0];
-			object.Version = results[1];
-			callback(object);
-		}
-	);
-}
-
-function Get(id, callback){
-	if(id == undefined){
-		callback(new Failed('Missing parameter'));
-	}
-	else{
-		var intID = parseInt(id);
-		if(intID > 0){
-			databaseObject.Procedure('sp_GetRace', [id], function(rows){
-				if(rows.length > 0){
-					Race(rows[0], function(value){
-						callback(value);
-					});
-				}
-				else{
-					callback(new Failed('No matching results'));
-				}
-			});
-		}
-		else{
-			callback(new Failed('Invalid parameter'));
-		}
-	}
-}
-
-function GetList(callback){
-	databaseObject.Procedure('sp_GetRaces', [], function(rows){
-		if(rows.length > 0){
-			async.map(rows, function(item, eachCallback){
-					Race(item, function(value){
-						eachCallback(null, value);
-					});
-				},
-				function(err, results){
-					if(err != undefined){
-						console.log('Error');
-					}
-					else{
-						callback(results);
-					}
-				}
-			);	
-		}
-		else{
-			callback(new Failed('No matching results'));
-		}
+			else{
+				reject(new Failed('No matching results'));
+			}
+		});
 	});
 }
