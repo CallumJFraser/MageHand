@@ -19,7 +19,6 @@ Tests
 	* Object creation validation
 * Class Manager
 	* Object creation validation
-	* Promises
 * Login Manager
 	* Object creation validation
 	* Promises
