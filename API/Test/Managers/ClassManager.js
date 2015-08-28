@@ -125,25 +125,26 @@ describe('Class Manager', function(){
 		})
 	})
 		
-	describe.skip('List:', function(){
+	describe('List:', function(){
 
 		it('Valid:', function(done){
+			var validRow = { ID: 1, Name: 'Name', Description: 'Description', Version: '1' };
 			fakeDatabase.Procedure = function (procedure, values, callback) {
-				console.log(procedure);
 				assert.equal(procedure, 'sp_GetClasses');
 				assert.equal(values.length, 0);
 				assert.notEqual(callback, undefined);
-				callback([validRow]);
+				callback([validRow, validRow]);
 			};
 
-			fakeManager.List(function(result){
-				var first = result[0];
-				assert.notEqual(first, undefined);
-				assert.equal(first.Reason, undefined);
-				assert.notEqual(first.ID, undefined);
-				assert.notEqual(first.Name, undefined);
-				assert.notEqual(first.Description, undefined);
-				assert.notEqual(first.Version, undefined);
+			fakeManager.List().then(function(result){
+				result.forEach(function(item) {
+					assert.notEqual(item, undefined);
+					assert.equal(item.Reason, undefined);
+					assert.equal(item.ID, validRow.ID);
+					assert.equal(item.Name, validRow.Name);
+					assert.equal(item.Description, validRow.Description);
+					assert.notEqual(item.Version, undefined);
+				});
 				done();
 			},
 			function(error){
