@@ -46,6 +46,9 @@ describe('Class Manager', function(){
 				assert.equal(result.Description, validRow.Description);
 				assert.equal(result.Version, validVersion);
 				done();
+			},
+			function(error){
+				done(new Error(error));
 			});
 		})
 
@@ -59,7 +62,7 @@ describe('Class Manager', function(){
 			};
 
 			fakeManager.Get(invalid).then(function(error) {
-				done(error);
+				done(new Error(error));
 			},
 			function(result){
 				assert.notEqual(result, undefined);
@@ -83,7 +86,7 @@ describe('Class Manager', function(){
 			};
 
 			fakeManager.Get(invalidFormat).then(function(error) {
-				done(error);
+				done(new Error(error));
 			},
 			function(result){
 				assert.notEqual(result, undefined);
@@ -107,7 +110,7 @@ describe('Class Manager', function(){
 			};
 
 			fakeManager.Get(blank).then(function(error) {
-				done(error);
+				done(new Error(error));
 			},
 			function(result){
 				assert.notEqual(result, undefined);
@@ -142,6 +145,9 @@ describe('Class Manager', function(){
 				assert.notEqual(first.Description, undefined);
 				assert.notEqual(first.Version, undefined);
 				done();
+			},
+			function(error){
+				done(new Error(error));
 			});
 		})
 	})
