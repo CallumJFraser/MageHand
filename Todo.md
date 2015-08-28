@@ -24,8 +24,6 @@ Tests
 	* Promises
 * Race Manager
 	* Object creation validation
-	* Promises
-	* ~~List functon~~
 * Size Manager
 	* Object creation validation
 	* Promises
