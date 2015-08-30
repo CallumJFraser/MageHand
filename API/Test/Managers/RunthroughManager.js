@@ -1,5 +1,6 @@
 "Use Strict";
 
+var Promise = require("bluebird");
 var assert = require('assert');
 var proxyquire = require('proxyquire').noCallThru();
 var manager = require('../../Managers/RunthroughManager.js');
@@ -11,8 +12,8 @@ describe('Runthrough Manager', function () {
 	var fakeManager = proxyquire('../../Managers/RunthroughManager.js', {
 		'../Database': fakeDatabase,
 		'../Managers/StoryManager': {
-			Get: function (item, callback) {
-				callback({});
+			Get: function (item) {
+				return Promise.resolve({});
 			}
 		}
 	});
@@ -38,12 +39,15 @@ describe('Runthrough Manager', function () {
 				callback([validRow]);
 			};
 
-			fakeManager.Get(valid, function(result){
+			fakeManager.Get(valid).then(function(result){
 				assert.notEqual(result, undefined);
 				assert.equal(result.Reason, undefined);
 				assert.notEqual(result.ID, undefined);
 				assert.notEqual(result.Story, undefined);
 				done();
+			},
+			function(error){
+				done(new Error(JSON.stringify(error)));
 			});
 		})
 
@@ -56,7 +60,10 @@ describe('Runthrough Manager', function () {
 				callback([]);
 			};
 
-			fakeManager.Get(invalid, function(result){
+			fakeManager.Get(invalid).then(function(error){
+				done(new Error(JSON.stringify(error)));
+			},
+			function(result){
 				assert.notEqual(result, undefined);
 				assert.notEqual(result.Reason, undefined);
 				assert.equal(result.ID, undefined);
@@ -74,7 +81,10 @@ describe('Runthrough Manager', function () {
 				callback([]);
 			};
 
-			fakeManager.Get(invalidFormat, function(result){
+			fakeManager.Get(invalidFormat).then(function(error){
+				done(new Error(JSON.stringify(error)));
+			},
+			function(result){
 				assert.notEqual(result, undefined);
 				assert.notEqual(result.Reason, undefined);	
 				assert.equal(result.ID, undefined);
@@ -92,7 +102,10 @@ describe('Runthrough Manager', function () {
 				callback([]);
 			};
 
-			fakeManager.Get(blank, function(result){
+			fakeManager.Get(blank).then(function(error){
+				done(new Error(JSON.stringify(error)));
+			},
+			function(result){
 				assert.notEqual(result, undefined);
 				assert.notEqual(result.Reason, undefined);
 				assert.equal(result.ID, undefined);

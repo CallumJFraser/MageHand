@@ -1,6 +1,6 @@
 "Use Strict";
 
-var async = require('async');
+var Promise = require("bluebird");
 var databaseObject = require('../Database');
 var storyManager = require('../Managers/StoryManager');
 var Failed = require('../Failed');
@@ -9,48 +9,46 @@ module.exports = {
 	Get: Get
 };
 
-function Runthrough(row, callback){
-	if(row == undefined)
-		return new Failed('Missing parameter');
-	async.map(
-		[row.StoryID],
-		function(item, parallelCallback){
-			storyManager.Get(item, function(result){
-				parallelCallback(undefined, result)
-			});
-		},
-		function(err, results){
-			if(err != undefined)
-				callback(undefined);
-				
-			var object = {};
-			object.ID = row.ID;
-			object.Story = results[0];
-			callback(object);
-		}
-	);
+function Runthrough(row){
+	if(!row)
+		return Promise.reject(new Failed('Missing parameter'));
+
+	return new Promise(function(resolve, reject){
+		var object = {};
+		object.ID = row.ID;
+		storyManager.Get(row.StoryID).then(function(storyObject){
+			if(storyObject) {
+				object.Story = storyObject;
+				resolve(object);
+			} else {
+				reject(new Failed('Missing story'));
+			}
+		});
+	});
 }
 
-function Get(id, callback){
-	if(id == undefined){
-		callback(new Failed('Missing parameter'));
-	}
-	else{
+function Get(id){
+	if (!id) {
+		return Promise.reject(new Failed('Missing parameter'));
+	} else {
 		var intID = parseInt(id);
-		if(intID > 0){
-			databaseObject.Procedure('sp_GetRunthroughByID', [id], function(rows){
-				if(rows.length > 0){
-					Runthrough(rows[0], function(value){
-						callback(value);
-					});
-				}
-				else{
-					callback(new Failed('No matching results'));
-				}
+		if(intID > 0) {
+			return new Promise(function(resolve, reject){
+				databaseObject.Procedure('sp_GetRunthroughByID', [id], function(rows){
+					if (rows.length > 0) {
+						Runthrough(rows[0]).then(function(value){
+							resolve(value);
+						},
+						function(err) {
+							reject(err);
+						});
+					} else {
+						reject(new Failed('No matching results'));
+					}
+				});
 			});
-		}
-		else{
-			callback(new Failed('Invalid parameter'));
+		} else {
+			return Promise.reject(new Failed('Invalid parameter'));
 		}
 	}
 }
