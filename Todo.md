@@ -33,7 +33,6 @@ Tests
 	* Database Mocking
 * Story Manager
 	* Object creation validation
-	* Promises
 * Version Manager
 	* Object creation validation
 	* Promises
