@@ -5,7 +5,6 @@ Tests
 ------
 
 * Command tests
-* Update tests to not rely on database calls for the tests. (i.e. using a Mock databse)
 * Account Manager
 	* Confirm Email function
 	* Change Email function
