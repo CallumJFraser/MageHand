@@ -16,15 +16,15 @@ function Character(data){
 	if(data == undefined)
 		return Promise.reject(new Failed('Missing parameter'));
 
-	return new Promise(function(fulfill, reject){
-		var classPromise = new Promise(function(resolve, reject){
+	return new Promise(function(resolve, reject){
+		var classPromise = new Promise(function(classResolve){
 			classManager.Get(data.ClassID, function(result){
-				resolve(result);
+				classResolve(result);
 			});
 		});
-		var racePromise = new Promise(function(resolve, reject){
+		var racePromise = new Promise(function(raceResolve){
 			raceManager.Get(data.RaceID, function(result){
-				resolve(result)
+				raceResolve(result)
 			});
 		});
 
@@ -56,7 +56,7 @@ function Character(data){
 				object.FlatFootedAC = data.FlatFootedAC;
 				object.Class = results[0];
 				object.Race = results[1];
-				fulfill(object);
+				resolve(object);
 			});
 		});
 }
@@ -68,11 +68,11 @@ function Get(id, callback){
 	else{
 		var intID = parseInt(id);
 		if(intID > 0){
-			return new Promise(function(fulfill, reject){
+			return new Promise(function(resolve, reject){
 				databaseObject.Procedure('sp_GetCharacterByID', [intID], function(data){
 					if(data.length > 0){
 						Character(data[0]).then(function(value){
-							fulfill(value);
+							resolve(value);
 						},
 						function(value){
 							reject(value);
@@ -97,11 +97,20 @@ function GetByAccount(id){
 	else{
 		var intID = parseInt(id);
 		if(intID > 0){
-			return new Promise(function(fulfill, reject){
-				databaseObject.Procedure('sp_GetCharacterByAccount', [intID], function(data){
-					if(data.length > 0){
-						Character(data[0]).then(function(character){
-							fulfill(character);
+			return new Promise(function(resolve, reject){
+				databaseObject.Procedure('sp_GetCharacterByAccount', [intID], function(rows){
+					if(rows.length > 0){
+						var characterPromises = rows.map(function(row){
+							return Character(row);
+						});
+
+						Promise.settle(characterPromises).then(function(characters) {
+							var characterArray = [];
+							characters.forEach(function(item){
+								if(item.isFulfilled())
+									characterArray.push(item.value());
+							});
+							resolve(characterArray);
 						});
 					}
 					else{
@@ -123,11 +132,11 @@ function GetBySession(sessionID, callback){
 	else{
 		var intSessionID = parseInt(sessionID);
 		if(intSessionID > 0){
-			return new Promise(function(fulfill, reject){
+			return new Promise(function(resolve, reject){
 				databaseObject.Procedure('sp_GetSessionCharacters', [intSessionID], function(data){
 					if(data.length > 0){
 						Character(data[0]).then(function (character){
-							fulfill(character);
+							resolve(character);
 						});
 					}
 					else{
