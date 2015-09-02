@@ -12,7 +12,6 @@ Tests
 	* Object creation validation
 * Character
 	* Duplicate characters
-	* Promises
 	* Object creation validation
 * Character Manager
 	* Object creation validation
