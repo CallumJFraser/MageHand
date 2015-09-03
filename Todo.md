@@ -12,6 +12,9 @@ Tests
 	* Object creation validation
 * Character
 	* Duplicate characters
+	* Multiple characters
+		* ~By Account~
+		* By Session
 	* Object creation validation
 * Character Manager
 	* Object creation validation
@@ -27,7 +30,6 @@ Tests
 	* Promises
 * Skill Manager
 	* Object creation validation
-	* Promises
 	* Database Mocking
 * Story Manager
 	* Object creation validation
