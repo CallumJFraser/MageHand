@@ -13,7 +13,6 @@ Tests
 * Character
 	* Duplicate characters
 	* Multiple characters
-		* ~By Account~
 		* By Session
 	* Object creation validation
 * Character Manager
