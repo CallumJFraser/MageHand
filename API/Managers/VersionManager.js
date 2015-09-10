@@ -1,5 +1,6 @@
 "Use Strict";
 
+var Promise = require("bluebird");
 var databaseObject = require('../Database');
 var Failed = require('../Failed');
 
@@ -7,35 +8,35 @@ module.exports = {
 	Get: Get
 };
 
-function Version(row, callback){
+function Version(row){
 	if(row == undefined)
-		return new Failed('Missing parameter');
+		return Promise.reject(new Failed('Missing parameter'));
 	var object = {};
 	object.ID = row.ID;
 	object.Name = row.Name;
-	callback(object);
+	return Promise.resolve(object);
 }
 
-function Get(id, callback){
+function Get(id){
 	if(id == undefined){
-		callback(new Failed('Missing parameter'));
+		return Promise.reject(new Failed('Missing parameter'));
 	}
 	else{
 		var intID = parseInt(id);
 		if(intID > 0){
-			databaseObject.Procedure('sp_GetVersion', [intID], function(data){
-				if(data.length > 0){
-					Version(data[0],function(value){
-						callback(value);
-					});
-				}
-				else{
-					callback(new Failed('No matching results'));
-				}
+			return new Promise(function(resolve, reject){
+				databaseObject.Procedure('sp_GetVersion', [intID], function(data){
+					if(data.length > 0){
+						Version(data[0]).then(resolve, reject);
+					}
+					else{
+						reject(new Failed('No matching results'));
+					}
+				});
 			});
 		}
 		else{
-			callback(new Failed('Invalid parameter'));
+			return Promise.reject(new Failed('Invalid parameter'));
 		}
 	}
 }
