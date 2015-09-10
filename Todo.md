@@ -37,6 +37,14 @@ Tests
 	* Promises
 	* Database Mocking
 
+Refactoring
+------
+
+* Create singleton for database access
+* Remove start function for API
+* API function calls as seperate modules rather than annon functions
+* Create middleware for Authorise call to remove some unnessasary code.
+
 Bugs
 ------
 
