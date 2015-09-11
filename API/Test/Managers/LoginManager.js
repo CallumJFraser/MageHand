@@ -1,5 +1,6 @@
 "Use Strict";
 
+var Promise = require("bluebird");
 var assert = require('assert');
 var proxyquire = require('proxyquire').noCallThru();
 
@@ -37,7 +38,7 @@ describe('Login Manager -', function(){
 				callback([validRow]);
 			};
 
-			fakeManager.Login(valid, validPwd, function(result){
+			fakeManager.Login(valid, validPwd).then(function(result){
 				assert.notEqual(result, undefined);
 				assert.equal(result.Success, true);
 				assert.equal(result.Reason, undefined);
@@ -46,6 +47,9 @@ describe('Login Manager -', function(){
 				assert.equal(result.AID, validRow.AID);
 				assert.notEqual(result.SID, undefined);
 				done();
+			},
+			function(err){
+				done(new Error(err));
 			});
 		})
 
@@ -62,7 +66,11 @@ describe('Login Manager -', function(){
 				});
 			};
 
-			fakeManager.Login(invalid, validPwd, function(result){
+			fakeManager.Login(invalid, validPwd).then(
+			function(err){
+				done(new Error(err));
+			},
+			function(result){
 				assert.notEqual(result, undefined);
 				assert.equal(result.Success, false);
 				assert.notEqual(result.Reason, undefined);
@@ -87,7 +95,11 @@ describe('Login Manager -', function(){
 				});
 			};
 
-			fakeManager.Login(valid, invalidPwd, function(result){
+			fakeManager.Login(valid, invalidPwd).then(
+			function(err){
+				done(new Error(err));
+			},
+			function(result){
 				assert.notEqual(result, undefined);
 				assert.equal(result.Success, false);
 				assert.notEqual(result.Reason, undefined);
@@ -100,7 +112,11 @@ describe('Login Manager -', function(){
 		})
 
 		it('Missing "Username":', function(done){
-			fakeManager.Login(blank, validPwd, function(result){
+			fakeManager.Login(blank, validPwd).then(
+			function(err){
+				done(new Error(err));
+			},
+			function(result){
 				assert.notEqual(result, undefined);
 				assert.equal(result.Success, false);
 				assert.notEqual(result.Reason, undefined);
@@ -122,7 +138,11 @@ describe('Login Manager -', function(){
 				callback(undefined);
 			};
 
-			fakeManager.Login(valid, blank, function(result){
+			fakeManager.Login(valid, blank).then(
+			function(err){
+				done(new Error(err));
+			},
+			function(result){
 				assert.notEqual(result, undefined);
 				assert.equal(result.Success, false);
 				assert.notEqual(result.Reason, undefined);
@@ -144,7 +164,11 @@ describe('Login Manager -', function(){
 				callback(undefined);
 			};
 
-			fakeManager.Login(blank, blank, function(result){
+			fakeManager.Login(blank, blank).then(
+			function(err){
+				done(new Error(err));
+			},
+			function(result){
 				assert.notEqual(result, undefined);
 				assert.equal(result.Success, false);
 				assert.notEqual(result.Reason, undefined);
@@ -183,15 +207,21 @@ describe('Login Manager -', function(){
 				}
 			};
 
-			fakeManager.Login(validUsername, validPwd, function(loginResult){
-				fakeManager.Authorise(loginResult.AID, loginResult.SID, function(result){
+			fakeManager.Login(validUsername, validPwd).then(function(loginResult){
+				fakeManager.Authorise(loginResult.AID, loginResult.SID).then(function(result){
 					assert.equal(result.Success, true);
 					assert.equal(result.SID, loginResult.SID);
 					assert.equal(result.Success, true);
 					assert.equal(result.Reason, undefined);
 					assert.notEqual(result.SID, undefined);
 					done();
+				},
+				function(err){
+					done(new Error(err));
 				});
+			},
+			function(err){
+				done(new Error(err));
 			});
 		})
 
@@ -214,8 +244,12 @@ describe('Login Manager -', function(){
 				}
 			};
 
-			fakeManager.Login(validUsername, validPwd, function(loginResult) {
-				fakeManager.Authorise(invalid, loginResult.SID, function(result){
+			fakeManager.Login(validUsername, validPwd).then(function(loginResult) {
+				fakeManager.Authorise(invalid, loginResult.SID).then(
+				function(err){
+					done(new Error(err));
+				},
+				function(result){
 					assert.notEqual(result, undefined);
 					assert.equal(result.Success, false);
 					assert.notEqual(result.Reason, undefined);
@@ -226,6 +260,9 @@ describe('Login Manager -', function(){
 					assert.notEqual(result.Reason, undefined);
 					done();
 				});
+			},
+			function(err){
+				done(new Error(err));
 			});
 		})
 
@@ -248,14 +285,21 @@ describe('Login Manager -', function(){
 				}
 			};
 
-			fakeManager.Login(validUsername, validPwd, function(loginResult){
-				fakeManager.Authorise(blank, loginResult.SID, function(result){
+			fakeManager.Login(validUsername, validPwd).then(function(loginResult){
+				fakeManager.Authorise(blank, loginResult.SID).then(
+					function(err){
+						done(new Error(err));
+					},
+					function(result){
 					assert.notEqual(result, undefined);
 					assert.equal(result.Success, false);
 					assert.notEqual(result.Reason, undefined);
 					assert.notEqual(result.Reason, undefined);
 					done();
 				});
+			},
+			function(err){
+				done(new Error(err));
 			});
 		})
 
@@ -278,14 +322,21 @@ describe('Login Manager -', function(){
 				}
 			};
 
-			fakeManager.Login(validUsername, validPwd, function(loginResult){
-				fakeManager.Authorise(loginResult.AID, blank, function(result){
+			fakeManager.Login(validUsername, validPwd).then(function(loginResult){
+				fakeManager.Authorise(loginResult.AID, blank).then(
+					function(err){
+						done(new Error(err));
+					},
+					function(result){
 					assert.notEqual(result, undefined);
 					assert.equal(result.Success, false);
 					assert.notEqual(result.Reason, undefined);
 					assert.notEqual(result.Reason, undefined);
 					done();
 				});
+			},
+			function(err){
+				done(new Error(err));
 			});
 		})
 
@@ -308,14 +359,21 @@ describe('Login Manager -', function(){
 				}
 			};
 
-			fakeManager.Login(validUsername, validPwd, function(loginResult){
-				fakeManager.Authorise(blank, blank, function(result){
+			fakeManager.Login(validUsername, validPwd).then(function(loginResult){
+					fakeManager.Authorise(blank, blank).then(
+					function(err){
+						done(new Error(err));
+					},
+					function(result){
 					assert.notEqual(result, undefined);
 					assert.equal(result.Success, false);
 					assert.notEqual(result.Reason, undefined);
 					assert.notEqual(result.Reason, undefined);
 					done();
 				});
+			},
+			function(err){
+				done(new Error(err));
 			});
 		})
 	})

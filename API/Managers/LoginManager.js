@@ -1,5 +1,6 @@
 "Use Strict";
 
+var Promise = require("bluebird");
 var databaseObject = require('../Database');
 var Failed = require('../Failed');
 
@@ -29,41 +30,43 @@ function AuthorisationResponse(sID){
 	return object;
 }
 
-function Login(username, password, callback){
+function Login(username, password){
 	if(username == undefined || password == undefined){
-		callback(new Failed('Incorrect sign-in details'));
-	}
-	else{
+		return Promise.reject(new Failed('Incorrect sign-in details'));
+	} else {
 		var date = new Date();
-		databaseObject.Procedure('sp_Login', [username, password, date.getTime()], function(rows){
-			if(rows.length > 0){
-				callback(new LoginResponse(rows[0]));
-			}
-			else{
-				callback(new Failed('Incorrect sign-in details'));
-			}
+		return new Promise(function (resolve, reject){
+			databaseObject.Procedure('sp_Login', [username, password, date.getTime()], function(rows){
+				if(rows.length > 0){
+					resolve(new LoginResponse(rows[0]));
+				}
+				else{
+					reject(new Failed('Incorrect sign-in details'));
+				}
+			});
 		});
 	}
 }
 
-function Authorise(aID, sID, callback){
+function Authorise(aID, sID){
 	if(aID == undefined || sID == undefined){
-		callback(new Failed('Missing authentication parameters'));
-	}
-	else{
-		databaseObject.Procedure('sp_Authorise', [aID], function(rows){
-			if(rows.length > 0 ){
-				var login = new LoginResponse(rows[0]);
-				if(login.Session() == sID){
-					callback(AuthorisationResponse(sID));
+		return Promise.reject(new Failed('Missing authentication parameters'));
+	} else {
+		return new Promise(function (resolve, reject){
+			databaseObject.Procedure('sp_Authorise', [aID], function(rows){
+				if(rows.length > 0 ){
+					var login = new LoginResponse(rows[0]);
+					if(login.Session() == sID){
+						resolve(AuthorisationResponse(sID));
+					}
+					else{
+						reject(new Failed('Incorrect authentication details'));
+					}
 				}
 				else{
-					callback(new Failed('Incorrect authentication details'));
+					reject(new Failed('Incorrect authentication details'));
 				}
-			}
-			else{
-				callback(new Failed('Incorrect authentication details'));
-			}
+			});
 		});
 	}
 }
