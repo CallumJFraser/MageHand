@@ -2,7 +2,7 @@
 
 var mysql = require('mysql');
 
-var connection = {};
+var connection = undefined;
 
 module.exports = new database({
 		host	: 'localhost',
@@ -22,7 +22,7 @@ function database(config){
 
 	var checkConnection = function () {	
 		if (!connection) {
-			this.Start();
+			self.Start();
 		}
 	}
 
