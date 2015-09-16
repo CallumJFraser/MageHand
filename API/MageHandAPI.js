@@ -53,14 +53,12 @@ function APIStart(successCallback){
 	});
 };
 
-function APILogin(username, password, callback){
-	loginManager.Login(username, password, callback);
+function APILogin(username, password){
+	return loginManager.Login(username, password);
 }
 
-function APIAuthorise(aID, sID, callback){
-	loginManager.Authorise(aID, sID, function(authorisation){
-		callback(authorisation);
-	});
+function APIAuthorise(aID, sID){
+	return loginManager.Authorise(aID, sID);
 }
 
 function APIGetAccount(aID, sID, username, callback){
