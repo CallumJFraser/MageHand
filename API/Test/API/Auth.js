@@ -10,14 +10,14 @@ var validPassword = 'password';
 var invalidUsername = 'invalid';
 var invalidPassword = 'clearlywrong';
 
-describe('API:', function(){
-	describe('Login:', function(){
-		it('Is a function', function(done){
+describe('API', function(){
+	describe('Login', function(){
+		it('Should be a function', function(done){
 			assert.equal(typeof(dndAPI.Login), 'function');
 			done();
 		});
 
-		it('should pass username and password to LoginManager', function(done){
+		it('Should pass username and password to LoginManager', function(done){
 			var fakeDndAPI = proxyquire('../../MageHandAPI', {
 				'./Managers/LoginManager': {
 					Login: function(username, password){
@@ -49,14 +49,14 @@ describe('API:', function(){
 		});
 	})
 
-	describe('Authorise:', function(){
+	describe('Authorise', function(){
 
-		it('Is a function', function(done){
+		it('Should be a function', function(done){
 			assert.notEqual(dndAPI.Authorise, undefined);
 			done();
 		});
 
-		it('should pass aID and sID to LoginManager', function(done){
+		it('Should pass aID and sID to LoginManager', function(done){
 			var fakeDndAPI = proxyquire('../../MageHandAPI', {
 				'./Managers/LoginManager': {
 					Login: function(username, password){
