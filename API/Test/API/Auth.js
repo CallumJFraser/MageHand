@@ -7,8 +7,6 @@ var dndAPI = require('../../MageHandAPI');
 
 var validUsername = 'Test1';
 var validPassword = 'password';
-var invalidUsername = 'invalid';
-var invalidPassword = 'clearlywrong';
 
 describe('API', function(){
 	describe('Login', function(){
